@@ -118,10 +118,6 @@ static int r848_get_imr(struct r848_priv *priv, u8 *imr)
 	return ret;
 }
 
-
-
-
-
 R848_Freq_Info_Type R848_Freq_Sel(u32 LO_freq, u32 RF_freq,R848_Standard_Type R848_Standard)
 {
 	R848_Freq_Info_Type R848_Freq_Info;
@@ -229,16 +225,10 @@ R848_Freq_Info_Type R848_Freq_Sel(u32 LO_freq, u32 RF_freq,R848_Standard_Type R8
 	return R848_Freq_Info;
 }
 
-
-
-
-
-
 R848_ErrCode R848_Cal_Prepare(struct r848_priv *priv, u8 u1CalFlag)
 {
 	R848_Cal_Info_Type Cal_Info;
 	int ret;
-
 
 	// R848:R38[3] +6dB
 	Cal_Info.FILTER_6DB = 0x08;
@@ -3507,7 +3497,6 @@ static const struct dvb_tuner_ops r848_tuner_ops = {
 	},
 
 	.release = r848_release,
-
 	.init = r848_init,
 	.sleep = r848_sleep,
 	.set_params = r848_set_params,

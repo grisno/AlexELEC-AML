@@ -21,15 +21,7 @@
 #ifndef R848_H
 #define R848_H
 
-//#include <linux/kconfig.h>
 #include "dvb_frontend.h"
-
-
-
-
-
-
-
 
 struct r848_config {
 	/* tuner i2c address */
@@ -45,19 +37,9 @@ struct r848_config {
 
 	/* dvbc/t */
 	u8 R848_SetTfType;
-
 };
 
-#if 1
 extern struct dvb_frontend *r848_attach(struct dvb_frontend *fe,
 		struct r848_config *cfg, struct i2c_adapter *i2c);
-#else
-static inline struct dvb_frontend *r848_attach(struct dvb_frontend *fe,
-		struct r848_config *cfg, struct i2c_adapter *i2c)
-{
-	printk(KERN_WARNING "%s: driver disabled by Kconfig\n", __func__);
-	return NULL;
-}
-#endif
 
 #endif /* R848_H */

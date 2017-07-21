@@ -106,7 +106,4 @@ static inline bool has_hdec(void)
 	return 0;
 }
 
-
-
 #endif				/* AMPORTS_CONFIG_HHH */
-

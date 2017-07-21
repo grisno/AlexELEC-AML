@@ -85,13 +85,6 @@ typedef struct _R848_Sys_Info_Type
 	u8		   NA_PWR_DET;  
 }R848_Sys_Info_Type;
 
-
-
-
-
-
-
-
 struct filter_cal {
 	u8 flag;
 	u8 bw;
@@ -125,15 +118,8 @@ struct r848_priv {
 
 	struct filter_cal		fc[R848_STD_SIZE];
 
-
-
 	R848_Sys_Info_Type Sys_Info1;
 };
-
-
-
-
-
 
 typedef struct _R848_Set_Info
 {
@@ -213,8 +199,6 @@ typedef struct _R848_Cal_Info_Type
 	u8		TF_CAL;
 }R848_Cal_Info_Type;
 
-
-
 typedef struct _R848_TF_Result
 {
 	u8   TF_Set;
@@ -260,7 +244,6 @@ u32 R848_TF_Freq_High[R848_TF_SIZE][R848_TF_HIGH_NUM] =
 	 { 784000, 776000, 712000, 616000, 584000, 560000, 520000, 504000},
 	 { 784000, 776000, 712000, 616000, 584000, 560000, 520000, 504000}
 };
-
 
 u32 R848_TF_Freq_Mid[R848_TF_SIZE][R848_TF_MID_NUM] = 
 {	  {608000, 584000, 560000, 536000, 488000, 440000, 416000, 392000},
@@ -366,19 +349,11 @@ u8 R848_iniArray_dvbs[R848_REG_NUM] = {
 					//  0x26  0x27  0x28  0x29  0x2A  0x2B  0x2C  0x2D  0x2E  0x2F
 
 
-
-
-
-
-
-
 typedef enum _R848_UL_TF_Type
 {
 	R848_UL_USING_BEAD = 0,            
     R848_UL_USING_270NH,                      
 }R848_UL_TF_Type;
-
-
 
 typedef enum _R848_Cal_Type
 {
@@ -400,7 +375,6 @@ typedef enum _R848_BW_Type
 	BW_200K
 }R848_BW_Type;
 
-
 enum R848_XTAL_PWR_VALUE {
 	XTAL_SMALL_LOWEST = 0,
 	XTAL_SMALL_LOW,
@@ -410,7 +384,6 @@ enum R848_XTAL_PWR_VALUE {
 	XTAL_CHECK_SIZE
 };
 
-
 typedef enum _R848_Xtal_Div_TYPE
 {
 	XTAL_DIV1 = 0,
@@ -419,15 +392,14 @@ typedef enum _R848_Xtal_Div_TYPE
 
 
 //----------------------------------------------------------//
-//                   R848 Public Parameter                     //
+//                   R848 Public Parameter                  //
 //----------------------------------------------------------//
+
 typedef enum _R848_ErrCode
 {
 	RT_Success = 0,
 	RT_Fail    = 1
 }R848_ErrCode;
-
-
 
 typedef enum _R848_GPO_Type
 {
@@ -453,10 +425,6 @@ typedef enum _R848_DVBS_AGC_Type
 	AGC_POSITIVE = 1
 }R848_DVBS_AGC_Type;
 
-
-
-
-
 typedef struct _R848_RF_Gain_Info
 {
 	u16   RF_gain_comb;
@@ -464,24 +432,5 @@ typedef struct _R848_RF_Gain_Info
 	u8   RF_gain2;
 	u8   RF_gain3;
 }R848_RF_Gain_Info;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #endif /* R848_PRIV_H */
