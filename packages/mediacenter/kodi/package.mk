@@ -263,6 +263,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/nand-config.sh $INSTALL/usr/bin
 # Drop RAM service
     cp $PKG_DIR/scripts/drop-ram.start $INSTALL/usr/bin
+# Wait network service
+    cp $PKG_DIR/scripts/wait-net.run $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
