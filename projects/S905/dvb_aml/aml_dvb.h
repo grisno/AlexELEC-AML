@@ -38,8 +38,8 @@
 #define TS_IN_COUNT       3
 #define S2P_COUNT         2
 
-#define DMX_DEV_COUNT     1
-#define FE_DEV_COUNT      1
+#define DMX_DEV_COUNT     3
+#define FE_DEV_COUNT      2
 #define CHANNEL_COUNT     31
 #define FILTER_COUNT      31
 #define FILTER_LEN        15
@@ -327,4 +327,3 @@ void dmx_reset_dmx_hw_ex_unlock(struct aml_dvb *dvb,
 				int reset_irq);
 
 #endif
-
