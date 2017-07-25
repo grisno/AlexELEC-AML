@@ -143,12 +143,8 @@ mkdir -p $BASEDIR/$LOGDIR
   LOGFILE="09_Journal-cur.log"
   getlog_cmd journalctl --no-pager -b -0
 
-# Journal (prev)
-  LOGFILE="10_Journal-prev.log"
-  getlog_cmd journalctl --no-pager -b -1
-
 # addons
-  LOGFILE="11_Addons.log"
+  LOGFILE="10_Addons.log"
   for i in /storage/.kodi/userdata/addon_data/*/*.log \
       /storage/.kodi/userdata/addon_data/*/log/* \
   ; do
@@ -156,6 +152,15 @@ mkdir -p $BASEDIR/$LOGDIR
       getlog_cmd cat $i
     fi
   done
+
+# services config
+  mkdir -p $BASEDIR/$LOGDIR/services
+  cp -f /storage/.cache/services/*.conf $BASEDIR/$LOGDIR/services
+  cp -a /storage/.cache/alexelec $BASEDIR/$LOGDIR/services
+
+# lock files
+  cp -a /var/lock $BASEDIR/$LOGDIR/
+  rm -f $BASEDIR/$LOGDIR/lock/*.tdb
 
 # pack logfiles
   mkdir -p /storage/logfiles
