@@ -3645,15 +3645,23 @@ int aml_asyncfifo_hw_reset(struct aml_asyncfifo *afifo)
 	return ret;
 }
 
+#define XPID 8191
 int aml_dmx_hw_start_feed(struct dvb_demux_feed *dvbdmxfeed)
 {
 	struct aml_dmx *dmx = (struct aml_dmx *)dvbdmxfeed->demux;
 	struct aml_dvb *dvb = (struct aml_dvb *)dmx->demux.priv;
 	unsigned long flags;
-	int ret = 0;
+	int ret = 0, pid = dvbdmxfeed->pid;
 
 	spin_lock_irqsave(&dvb->slock, flags);
-	ret = dmx_add_feed(dmx, dvbdmxfeed);
+	if (!dmx->channel[SYS_CHAN_COUNT].used) {
+		dvbdmxfeed->pid = XPID;
+		ret = dmx_add_feed(dmx, dvbdmxfeed);
+	}
+	if (pid != XPID) {
+		dvbdmxfeed->pid = pid;
+		ret = dmx_add_feed(dmx, dvbdmxfeed);
+	}
 	spin_unlock_irqrestore(&dvb->slock, flags);
 
 	return ret;
@@ -3666,7 +3674,13 @@ int aml_dmx_hw_stop_feed(struct dvb_demux_feed *dvbdmxfeed)
 	unsigned long flags;
 
 	spin_lock_irqsave(&dvb->slock, flags);
-	dmx_remove_feed(dmx, dvbdmxfeed);
+	if (dvbdmxfeed->pid != XPID)
+		dmx_remove_feed(dmx, dvbdmxfeed);
+	if (dmx->channel[SYS_CHAN_COUNT].used) {
+		dvbdmxfeed->pid = XPID;
+		dvbdmxfeed->priv = (void *)SYS_CHAN_COUNT; 
+		dmx_remove_feed(dmx, dvbdmxfeed);
+	}
 	spin_unlock_irqrestore(&dvb->slock, flags);
 
 	return 0;
@@ -4311,16 +4325,16 @@ static struct aml_dmx *get_dmx_from_src(enum aml_ts_source_t src)
 				}
 				break;
 		case AM_TS_SRC_DMX0:
-				if (0 > DMX_DEV_COUNT) 
-				 dmx = &dvb->dmx[0]; 
+				/*if (0 > DMX_DEV_COUNT) */
+				/*dmx = &dvb->dmx[0]; */
 				break;
 		case AM_TS_SRC_DMX1:
-				if (1 > DMX_DEV_COUNT)
-				 dmx = &dvb->dmx[1]; 
+				/*if (1 > DMX_DEV_COUNT) */
+				/*dmx = &dvb->dmx[1]; */
 				break;
 		case AM_TS_SRC_DMX2:
-				if (2 > DMX_DEV_COUNT)
-				 dmx = &dvb->dmx[2]; 
+				/*if (2 > DMX_DEV_COUNT) */
+				/*dmx = &dvb->dmx[2]; */
 				break;
 		default:
 				break;

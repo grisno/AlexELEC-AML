@@ -48,7 +48,7 @@
 #define SEC_BUF_GRP_COUNT 4
 #define SEC_BUF_BUSY_SIZE 4
 #define SEC_BUF_COUNT     (SEC_BUF_GRP_COUNT*8)
-#define ASYNCFIFO_COUNT   1
+#define ASYNCFIFO_COUNT   2
 
 
 enum aml_dmx_id_t {
@@ -327,3 +327,4 @@ void dmx_reset_dmx_hw_ex_unlock(struct aml_dvb *dvb,
 				int reset_irq);
 
 #endif
+
