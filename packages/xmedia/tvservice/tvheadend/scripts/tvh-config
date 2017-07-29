@@ -13,6 +13,9 @@ TVH_HOME="/storage/.config/tvheadend"
 
 . $SERVICE_DIR/tvheadend.conf
 
+[ -f "$SERVICE_DIR/dvb-driver.conf" ] && . $SERVICE_DIR/dvb-driver.conf
+[ -z "$DVB_FEINIT" ] && DVB_FEINIT=0
+
 if [ "$TVH_DEBUG" == "1" ]; then
   [ -f "$LOG_TVH" ] && mv -f $LOG_TVH $LOG_TVH_OLD
   TVHEADEND_ARG="-B -C -u root -g video -c $TVH_HOME -l $LOG_TVH -S"
@@ -43,4 +46,13 @@ fi
 
 CPU_ARCH=$(uname -m)
 [ "$CPU_ARCH" != "aarch64" ] && echo 'performance' > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+
+if [ "$DVB_FEINIT" == "1" ] ; then
+  TIMEOUT=30
+  for i in $(seq 1 $TIMEOUT) ; do
+    [ -e /dev/dvb/adapter0/frontend0 ] && break
+    sleep 1
+  done
+fi
+
 echo "TVH_ARGS=\"$TVHEADEND_ARG\"" > /run/alexelec/tvh.conf

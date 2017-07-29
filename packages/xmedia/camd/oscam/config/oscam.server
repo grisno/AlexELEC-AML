@@ -1,6 +1,8 @@
 # oscam.server generated automatically by Streamboard OSCAM 1.20-unstable_svn SVN r11388
 # Read more: http://www.streamboard.tv/svn/oscam/trunk/Distribution/doc/txt/oscam.server.txt
 
+### HTB+: Eutelsat-36B/36C 36.0E ###
+
 [reader]
 label                         = HTB
 enable                        = 0
@@ -16,6 +18,8 @@ caid                          = 0500
 group                         = 1
 audisabled                    = 1
 
+### BISS emulator ###
+
 [reader]
 label                         = BISS
 enable                        = 1
@@ -26,8 +30,42 @@ detect                        = cd
 group                         = 2
 audisabled                    = 1
 
+### Dozhd: Astra-4A/SES5 4.8E (12380 H) ###
 
-## sample EMU ##
+[reader]
+label                         = Dozhd
+enable                        = 0
+protocol                      = newcamd
+device                        = host,port
+key                           = 0102030405060708091011121314
+user                          = user
+password                      = password
+inactivitytimeout             = 20
+reconnecttimeout              = 10
+keepalive                     = 1
+caid                          = 0500
+ident                         = 0500:041200
+group                         = 3
+audisabled                    = 1
+
+### XtraTV: Eutelsat-9B 9.0E (12111 V, 12149 V, 12188 V) ###
+
+[reader]
+label                         = XtraTV
+enable                        = 0
+protocol                      = newcamd
+device                        = host,port
+key                           = 0102030405060708091011121314
+user                          = user
+password                      = password
+inactivitytimeout             = 20
+reconnecttimeout              = 10
+keepalive                     = 1
+caid                          = 0B0F
+group                         = 4
+audisabled                    = 1
+
+######################### sample EMU #########################
 
 [reader]
 label                         = BISS-PowerVu

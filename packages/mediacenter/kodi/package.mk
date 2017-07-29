@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-GIT_VERSION="9260e0a"
+GIT_VERSION="0b4cdc9"
 PKG_VERSION="17.4-rc1-$GIT_VERSION"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -263,6 +263,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/nand-config.sh $INSTALL/usr/bin
 # Drop RAM service
     cp $PKG_DIR/scripts/drop-ram.start $INSTALL/usr/bin
+# Wait network service
+    cp $PKG_DIR/scripts/wait-net.run $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
