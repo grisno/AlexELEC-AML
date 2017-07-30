@@ -24,11 +24,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-  if [ $TARGET_KERNEL_ARCH = "arm64" ]; then
-    cp driver/wetekdvb_play2.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME/wetekdvb.ko
-  else
-    cp driver/wetekdvb.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
-  fi
+    cp $PKG_DIR/module_bin/wetekdvb.ko $INSTALL/lib/modules/$(get_module_dir)/$PKG_NAME
 
   mkdir -p $INSTALL/lib/firmware
     cp firmware/* $INSTALL/lib/firmware
