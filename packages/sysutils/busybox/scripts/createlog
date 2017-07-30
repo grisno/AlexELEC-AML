@@ -143,20 +143,16 @@ mkdir -p $BASEDIR/$LOGDIR
   LOGFILE="09_Journal-cur.log"
   getlog_cmd journalctl --no-pager -b -0
 
-# addons
-  LOGFILE="10_Addons.log"
-  for i in /storage/.kodi/userdata/addon_data/*/*.log \
-      /storage/.kodi/userdata/addon_data/*/log/* \
-  ; do
-    if [ -f "$i" ] ; then
-      getlog_cmd cat $i
-    fi
-  done
+# fw_printenv
+  LOGFILE="10_Printenv.log"
+  if [ -e /usr/sbin/fw_printenv ] ; then
+    getlog_cmd fw_printenv
+  fi
 
 # services config
   mkdir -p $BASEDIR/$LOGDIR/services
   cp -f /storage/.cache/services/*.conf $BASEDIR/$LOGDIR/services
-  cp -a /storage/.cache/alexelec $BASEDIR/$LOGDIR/services
+  [ -d "/storage/.cache/alexelec" ] && cp -a /storage/.cache/alexelec $BASEDIR/$LOGDIR/services
 
 # lock files
   cp -a /var/lock $BASEDIR/$LOGDIR/
@@ -164,7 +160,9 @@ mkdir -p $BASEDIR/$LOGDIR
 
 # pack logfiles
   mkdir -p /storage/logfiles
-  zip -jq /storage/logfiles/log-$DATE.zip $BASEDIR/$LOGDIR/*
+  cd $BASEDIR
+  zip -rq /storage/logfiles/log-$DATE.zip $LOGDIR
+  cd /storage
 
 # remove logdir
   rm -rf $BASEDIR/$LOGDIR
