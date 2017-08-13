@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="inputstream.adaptive"
-PKG_VERSION="a02656d"
+PKG_VERSION="46be790"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/peak3d/inputstream.adaptive"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain kodi-platform"
 PKG_SECTION=""
 PKG_SHORTDESC="inputstream.adaptive"
 PKG_LONGDESC="inputstream.adaptive"
-
 PKG_IS_ADDON="yes"
 
 PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
@@ -20,17 +19,8 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
 
 
 post_makeinstall_target() {
-  mkdir -p wv && cd wv
-    cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF \
-        -DCMAKE_INSTALL_PREFIX=/usr \
-        -DCMAKE_MODULE_PATH=$SYSROOT_PREFIX/usr/lib/kodi \
-        -DCMAKE_PREFIX_PATH=$SYSROOT_PREFIX/usr \
-        -DDECRYPTERPATH=special://home/cdm \
-        $ROOT/$PKG_BUILD/wvdecrypter
-    make
-
-  cp -P $ROOT/$PKG_BUILD/.$TARGET_NAME/wv/libssd_wv.so $INSTALL/usr/lib
- }
+  cp -P $ROOT/$PKG_BUILD/.$TARGET_NAME/wvdecrypter/libssd_wv.so $INSTALL/usr/lib
+}
 
 addon() {
   mkdir -p $ADDON_BUILD/$PKG_ADDON_ID/
