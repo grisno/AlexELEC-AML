@@ -19,6 +19,6 @@ PKG_AUTORECONF="no"
 PKG_MAKE_OPTS_HOST="dtbTool"
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-    cp dtbTool $TOOLCHAIN/bin
+  mkdir -p $ROOT/$TOOLCHAIN/bin
+    cp dtbTool $ROOT/$TOOLCHAIN/bin
 }
