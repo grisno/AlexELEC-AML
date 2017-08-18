@@ -1,49 +1,35 @@
 diff -Naurp scan-s2-46/dump-vdr.c scan-s2-46-patch/dump-vdr.c
 --- scan-s2-46/dump-vdr.c	2017-08-18 11:40:33.000000000 +0300
-+++ scan-s2-46-patch/dump-vdr.c	2017-08-18 12:48:52.000000000 +0300
-@@ -186,15 +186,21 @@ void vdr_dump_dvb_parameters (FILE *f, t
- 		case SYS_DVBT2:
- 			fprintf (f, "%i:", t->frequency / 1000);
- 			fprintf (f, "B%s", bw_name[t->bandwidth]);
--			fprintf (f, "C%s", fec_name[t->fecHP]);
--			fprintf (f, "M%s", qam_name[t->modulation]);
--			fprintf (f, "T%s", mode_name[t->transmission_mode]);
--			fprintf (f, "G%s", guard_name[t->guard_interval]);
++++ scan-s2-46-patch/dump-vdr.c	2017-08-18 17:37:20.000000000 +0300
+@@ -190,11 +190,11 @@ void vdr_dump_dvb_parameters (FILE *f, t
+ 			fprintf (f, "M%s", qam_name[t->modulation]);
+ 			fprintf (f, "T%s", mode_name[t->transmission_mode]);
+ 			fprintf (f, "G%s", guard_name[t->guard_interval]);
 -			if(t->delivery_system == SYS_DVBT2)
 -			{
 -				fprintf (f, "S1");
-+			if(fec_name[t->fecHP] != "999")
-+				fprintf (f, "C%s", fec_name[t->fecHP]);
-+			if(qam_name[t->modulation] != "999")
-+				fprintf (f, "M%s", qam_name[t->modulation]);
-+			if(mode_name[t->transmission_mode] != "999")
-+				fprintf (f, "T%s", mode_name[t->transmission_mode]);
-+			if(guard_name[t->guard_interval] != "999")
-+				fprintf (f, "G%s", guard_name[t->guard_interval]);
++			fprintf (f, "S1");
 +			if (t->stream_id == -1)
 +				fprintf (f, "P%i", 0);
 +			else
  				fprintf (f, "P%i", t->stream_id);
 -			}
-+			fprintf (f, "Q0");
-+			fprintf (f, "S1");
-+			fprintf (f, "X0");
  			fprintf (f, ":T:27500:");
  			break;
  
-@@ -225,27 +231,49 @@ void vdr_dump_service_parameter_set (FIL
+@@ -225,27 +225,49 @@ void vdr_dump_service_parameter_set (FIL
  		vdr_dump_dvb_parameters (f, t, orbital_pos_override);
  
  		if ((s->pcr_pid != s->video_pid) && (s->video_pid > 0))
 -			fprintf (f, "%i+%i:", s->video_pid, s->pcr_pid);
 +			fprintf (f, "%i+%i", s->video_pid, s->pcr_pid);
- 		else
--			fprintf (f, "%i:", s->video_pid);
++		else
 +			fprintf (f, "%i", s->video_pid);
 +
 +		if(t->delivery_system == SYS_DVBT2)
 +			fprintf (f, "=27:");
-+		else
+ 		else
+-			fprintf (f, "%i:", s->video_pid);
 +			fprintf (f, ":");
  
  		fprintf (f, "%i", s->audio_pid[0]);
