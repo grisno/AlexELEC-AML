@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="qca9377-aml"
-PKG_VERSION="7ec8faa"
+PKG_VERSION="8e1b647"
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
