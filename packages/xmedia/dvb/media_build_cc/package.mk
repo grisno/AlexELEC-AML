@@ -54,6 +54,8 @@ make_target() {
   fi
 
   make VER=$KERNEL_VER SRCDIR=$(kernel_path) stagingconfig
+  # Geniatech T220A
+  sed -i -e "s|^.*CONFIG_DVB_CXD2820R.*$|CONFIG_DVB_CXD2820R=m|" "v4l/.config"
   make VER=$KERNEL_VER SRCDIR=$(kernel_path)
 }
 
