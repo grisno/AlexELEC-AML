@@ -4,11 +4,14 @@
 #      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-hdmimode="1080p50hz"
+display_mode=$(cat /sys/class/display/mode)
 
 # Parse command line arguments
 for arg in $(cat /proc/cmdline); do
   case ${arg} in
+    hdmitx=*)
+      hdmitx=${arg#*=}
+      ;;
     hdmimode=*)
       hdmimode=${arg#*=}
       ;;
@@ -38,7 +41,18 @@ if [ -z "$BOOT_IMAGE" -o -z "$boot" -o -z "$disk" ]; then
   echo "$cmdline" > /proc/cmdline
 fi
 
-echo "$hdmimode" > /sys/class/display/mode
+# Enable HDMI output if cable is connected and not already enabled by u-boot
+[ -z "$hdmimode" ] && hdmimode="1080p50hz"
+if [ "$(cat /sys/class/amhdmitx/amhdmitx0/hpd_state)" != "0" ] && [ "$display_mode" != "$hdmimode" ]; then
+  display_mode="$hdmimode"
+fi
+
+echo "$display_mode" > /sys/class/display/mode
+
+# Force enable CEC if configuration parameter not present or empty
+if [ -z "$hdmitx" ]; then
+  echo 0xf > /sys/class/amhdmitx/amhdmitx0/cec_config
+fi
 
 # Enable framebuffer device
 echo 0 > /sys/class/graphics/fb0/blank
@@ -59,7 +73,7 @@ yRes=720;
 
 # Get max supported display resolution by hdmi device
 maxRes=$(tail -n1 /sys/class/amhdmitx/amhdmitx0/disp_cap | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//');
-[ -z "$maxRes" ] && maxRes="$hdmimode";
+[ -z "$maxRes" ] && maxRes="$display_mode";
 
 case "$maxRes" in
   480*)
@@ -82,7 +96,7 @@ vXRes=$xRes;
 vYRes=$(( $yRes * 2 ));
 
 # Set boot resolution by hdmimode param
-case "$hdmimode" in
+case "$display_mode" in
   480*)
     if [ "$vXRes" -ge 720 -a "$vYRes" -ge 960 ]; then
       xRes=720; yRes=480;
