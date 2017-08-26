@@ -4323,22 +4323,10 @@ static struct aml_dmx *get_dmx_from_src(enum aml_ts_source_t src)
 					dmx = &dvb->dmx[i];
 					break;
 				}
-				break;
-		case AM_TS_SRC_DMX0:
-				/*if (0 > DMX_DEV_COUNT) */
-				/*dmx = &dvb->dmx[0]; */
-				break;
-		case AM_TS_SRC_DMX1:
-				/*if (1 > DMX_DEV_COUNT) */
-				/*dmx = &dvb->dmx[1]; */
-				break;
-		case AM_TS_SRC_DMX2:
-				/*if (2 > DMX_DEV_COUNT) */
-				/*dmx = &dvb->dmx[2]; */
-				break;
-		default:
-				break;
 			}
+			break;
+		default:
+			break;
 		}
 	}
 	return dmx;
