@@ -388,5 +388,5 @@ R848_ErrCode R848_GPO(struct r848_priv *priv, R848_GPO_Type R848_GPO_Conrl);
 R848_ErrCode R848_GetRfGain(struct r848_priv *priv, R848_RF_Gain_Info *pR848_rf_gain);
 R848_ErrCode R848_RfGainMode(struct r848_priv *priv, R848_RF_Gain_TYPE R848_RfGainType);
 
-extern struct dvb_frontend *r848x_attach(struct dvb_frontend *fe, struct r848_config *cfg, struct i2c_adapter *i2c);
+extern struct dvb_frontend *r848_attach(struct dvb_frontend *fe, struct r848_config *cfg, struct i2c_adapter *i2c);
 #endif
