@@ -5,8 +5,8 @@ diff -Naurp pvr.iptvsimple-adee8a7/pvr.iptvsimple/addon.xml.in pvr.iptvsimple-ad
  <?xml version="1.0" encoding="UTF-8"?>
  <addon
    id="pvr.iptvsimple"
--  version="2.4.11"
-+  version="3.4.11"
+-  version="2.4.14"
++  version="3.4.14"
    name="PVR IPTV Simple Client"
 -  provider-name="nightik">
 +  provider-name="nightik (Alex@ELEC)">
