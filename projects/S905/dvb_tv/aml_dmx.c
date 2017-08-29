@@ -3155,7 +3155,7 @@ static int dmx_chan_add_filter(struct aml_dmx *dmx, int cid,
 	}
 
 	if (id == -1) {
-		pr_error("too many filters\n");
+		//pr_error("too many filters\n");
 		return -1;
 	}
 
