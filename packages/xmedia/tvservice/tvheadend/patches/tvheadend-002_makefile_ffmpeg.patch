@@ -1,6 +1,6 @@
-diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.ffmpeg
---- tvheadend-ad943c3/Makefile.ffmpeg	2017-07-06 16:53:17.000000000 +0300
-+++ tvheadend-ad943c3-patch/Makefile.ffmpeg	2017-07-06 17:02:20.000000000 +0300
+diff -Naurp tvheadend-454bf06/Makefile.ffmpeg tvheadend-454bf06-patch/Makefile.ffmpeg
+--- tvheadend-454bf06/Makefile.ffmpeg	2017-08-31 13:08:08.000000000 +0300
++++ tvheadend-454bf06-patch/Makefile.ffmpeg	2017-08-31 13:33:07.000000000 +0300
 @@ -24,6 +24,9 @@ FFMPEG_HOST   := $(ARCH)-linux-gnu
  FFMPEG_TARGET := x86-linux-gcc
  endif
@@ -11,16 +11,16 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  unexport CFLAGS
  unexport LDFLAGS
  
-@@ -167,7 +170,7 @@ $(LIB_ROOT)/$(YASM)/.tvh_download:
+@@ -168,7 +171,7 @@ $(LIB_ROOT)/$(YASM)/.tvh_download:
  
  $(LIB_ROOT)/$(YASM)/.tvh_build: \
  		$(LIB_ROOT)/$(YASM)/.tvh_download
--	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE) \
+-	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE_PI) \
 +	cd $(LIB_ROOT)/$(YASM) && $(CONFIGURE) CC=$(HOST_CC) \
  		--libdir=/$(EPREFIX0)/lib
  	DESTDIR=$(EBUILDIR) \
  		$(MAKE) -C $(LIB_ROOT)/$(YASM) install
-@@ -260,6 +263,7 @@ $(LIB_ROOT)/$(LIBX265)/.tvh_build: \
+@@ -263,6 +266,7 @@ $(LIB_ROOT)/$(LIBX265)/.tvh_build: \
  	cd $(LIB_ROOT)/$(LIBX265)/build/linux && cmake -G "Unix Makefiles" \
  		-DCMAKE_INSTALL_PREFIX="/ffmpeg" \
  		-DENABLE_SHARED:BOOL=OFF \
@@ -28,7 +28,7 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  		../../source
  	DESTDIR=$(EBUILDIR) \
  		$(MAKE) -C $(LIB_ROOT)/$(LIBX265)/build/linux install
-@@ -293,7 +297,7 @@ endif
+@@ -296,7 +300,7 @@ endif
  ifeq (yes,$(CONFIG_LIBVPX_STATIC))
  
  ifneq (,$(FFMPEG_TARGET))
@@ -37,7 +37,7 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  endif
  
  $(LIB_ROOT)/$(LIBVPX)/.tvh_download:
-@@ -305,7 +309,7 @@ $(LIB_ROOT)/$(LIBVPX)/.tvh_build: \
+@@ -308,7 +312,7 @@ $(LIB_ROOT)/$(LIBVPX)/.tvh_build: \
  		$(LIB_ROOT)/$(YASM)/.tvh_build \
  		$(LIB_ROOT)/$(LIBVPX)/.tvh_download
  	cd $(LIB_ROOT)/$(LIBVPX) && \
@@ -46,9 +46,9 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  		--extra-cflags="$(CFLAGS_PI)" \
  		--disable-examples \
  		--disable-docs \
-@@ -384,7 +388,8 @@ $(LIB_ROOT)/$(LIBTHEORA)/.tvh_build: \
+@@ -387,7 +391,8 @@ $(LIB_ROOT)/$(LIBTHEORA)/.tvh_build: \
  	cd $(LIB_ROOT)/$(LIBTHEORA) && \
- 		CFLAGS="$(CFLAGS_PI)" $(CONFIGURE) \
+ 		$(CONFIGURE_PI) \
  		--libdir=/$(EPREFIX0)/lib \
 -		--with-ogg=$(EPREFIX) \
 +		OGG_CFLAGS=-I$(EPREFIX)/include \
@@ -56,9 +56,9 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  		--disable-examples \
  		--disable-spec \
  		$(LIBTHEORA_HOST)
-@@ -432,7 +437,8 @@ $(LIB_ROOT)/$(LIBVORBIS)/.tvh_build: \
+@@ -435,7 +440,8 @@ $(LIB_ROOT)/$(LIBVORBIS)/.tvh_build: \
  	cd $(LIB_ROOT)/$(LIBVORBIS) && \
- 		CFLAGS="$(CFLAGS_PI)" $(CONFIGURE) \
+ 		$(CONFIGURE_PI) \
  		--libdir=/$(EPREFIX0)/lib \
 -		--with-ogg=$(EPREFIX)
 +		OGG_CFLAGS=-I$(EPREFIX)/include \
@@ -66,8 +66,8 @@ diff -Naurp tvheadend-ad943c3/Makefile.ffmpeg tvheadend-ad943c3-patch/Makefile.f
  	DESTDIR=$(EBUILDIR) \
  		$(MAKE) -C $(LIB_ROOT)/$(LIBVORBIS) install
  	@touch $@
-@@ -596,6 +602,8 @@ $(LIB_ROOT)/$(FFMPEG)/.tvh_build: \
- 		$(LIB_ROOT)/$(LIBMFX)/.tvh_build \
+@@ -620,6 +626,8 @@ $(LIB_ROOT)/$(FFMPEG)/.tvh_build: \
+ 		$(LIB_ROOT)/$(LIBOPUS)/.tvh_build \
  		$(LIB_ROOT)/$(FFMPEG)/.tvh_download
  	cd $(LIB_ROOT)/$(FFMPEG) && $(CONFIGURE) \
 +		--cc=$(FFMPEG_HOST)-gcc \
