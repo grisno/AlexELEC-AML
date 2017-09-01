@@ -1,0 +1,12 @@
+################################################################################
+#  frequency settings CPU/GPU 
+################################################################################
+
+# CPU available frequencies: 1000000, 1296000, 1536000, 1752000, 2016000
+CPU_MAXFREQ="1536000"
+
+# CPU available governor: hotplug, interactive, ondemand, performance
+CPU_GOVERNOR="performance"
+
+# GPU available value: 3 (500 MHz), 4 (666 MHz), 5 (792 MHz)
+GPU_FREQ="4"

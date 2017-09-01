@@ -1,0 +1,14 @@
+[Unit]
+Description=Amlogic SOC freq service
+After=kodi.service
+ConditionPathExists=/storage/.config/freqsoc.conf
+
+[Service]
+Type=simple
+EnvironmentFile=/storage/.config/freqsoc.conf
+ExecStart=/bin/sh -c "echo $CPU_MAXFREQ > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq ; \
+echo $CPU_GOVERNOR > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ; \
+echo $GPU_FREQ > /sys/class/mpgpu/cur_freq "
+
+[Install]
+WantedBy=kodi.service
