@@ -1253,7 +1253,6 @@ static int aml_dvb_probe(struct platform_device *pdev)
 		ret = aml_dvb_asyncfifo_init(advb, &advb->asyncfifo[i], i);
 		if (ret < 0)
 			goto error;
-
 	}
 	aml_asyncfifo_hw_set_source(&advb->asyncfifo[0], AM_DMX_0);
 

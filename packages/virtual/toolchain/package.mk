@@ -1,19 +1,6 @@
 ################################################################################
-#      This file is part of OpenELEC - http://www.openelec.tv
-#      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#
-#  OpenELEC is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 of the License, or
-#  (at your option) any later version.
-#
-#  OpenELEC is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with OpenELEC.  If not, see <http://www.gnu.org/licenses/>.
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="toolchain"
@@ -21,12 +8,11 @@ PKG_VERSION=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.openelec.tv"
+PKG_SITE="http://www.alexelec.in.ua"
 PKG_URL=""
-PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host gcc:host bison:host flex:host cmake:host yasm:host"
+PKG_DEPENDS_TARGET="configtools:host make:host xz:host sed:host pkg-config:host autoconf:host automake:host libtool:host intltool:host autoconf-archive:host gcc:host bison:host flex:host cmake:host yasm:host aml-dtbtools:host"
 PKG_SECTION="virtual"
-PKG_SHORTDESC="toolchain: OpenELEC.tv' toolchain"
+PKG_SHORTDESC="toolchain: AlexELEC toolchain"
 PKG_LONGDESC="a crosscompiling toolchain to compile all packages"
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"

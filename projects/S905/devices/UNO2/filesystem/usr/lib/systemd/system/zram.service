@@ -4,10 +4,10 @@ Description=ZRAM service
 [Service]
 Type=simple
 ExecStart=/bin/sh -c "modprobe zram num_devices=4 ; \
-echo 128M > /sys/block/zram0/disksize ; \
-echo 128M > /sys/block/zram1/disksize ; \
-echo 128M > /sys/block/zram2/disksize ; \
-echo 128M > /sys/block/zram3/disksize ; \
+echo 64M > /sys/block/zram0/disksize ; \
+echo 64M > /sys/block/zram1/disksize ; \
+echo 64M > /sys/block/zram2/disksize ; \
+echo 64M > /sys/block/zram3/disksize ; \
 /sbin/mkswap /dev/zram0 ; \
 /sbin/mkswap /dev/zram1 ; \
 /sbin/mkswap /dev/zram2 ; \

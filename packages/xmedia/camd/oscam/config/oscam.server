@@ -15,6 +15,7 @@ inactivitytimeout             = 20
 reconnecttimeout              = 10
 keepalive                     = 1
 caid                          = 0500
+ident                         = 0500:060A00,060C00
 group                         = 1
 audisabled                    = 1
 

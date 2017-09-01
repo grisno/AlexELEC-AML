@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="libcec"
-PKG_VERSION="0a97062"
+PKG_VERSION="f2c4ca7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -33,17 +33,6 @@ if [ "$KODIPLAYER_DRIVER" = "libamcodec" ]; then
 else
   PKG_CMAKE_OPTS_TARGET="$PKG_CMAKE_OPTS_TARGET -DHAVE_AOCEC_API=0 -DHAVE_AMLOGIC_API=0"
 fi
-
-pre_configure_target() {
-  if [ "$KODIPLAYER_DRIVER" = "bcm2835-firmware" ]; then
-    export CXXFLAGS="$CXXFLAGS \
-      -I$SYSROOT_PREFIX/usr/include/interface/vcos/pthreads/ \
-      -I$SYSROOT_PREFIX/usr/include/interface/vmcs_host/linux"
-
-    # detecting RPi support fails without -lvchiq_arm
-    export LDFLAGS="$LDFLAGS -lvchiq_arm"
-  fi
-}
 
 post_makeinstall_target() {
   if [ -d $INSTALL/usr/lib/python2.7/dist-packages ]; then 
