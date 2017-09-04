@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="3ccebae"
+PKG_VERSION="3aa76fa"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
