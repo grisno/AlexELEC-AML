@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="pvr.puzzle.tv"
-PKG_VERSION="255f64b"
+PKG_VERSION="8ab6301"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
