@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="System-settings"
-PKG_VERSION="4ff5f76"
+PKG_VERSION="b86f625"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="prop."

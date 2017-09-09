@@ -71,23 +71,6 @@ diff -Naurp kodi-17.2-rc1-274fed4/xbmc/Application.cpp kodi-17.2-rc1-274fed4-pat
    Sleep(200);
  }
  
-diff -Naurp kodi-17.2-rc1-274fed4/xbmc/Application.cpp.orig kodi-17.2-rc1-274fed4-patch/xbmc/Application.cpp.orig
---- kodi-17.2-rc1-274fed4/xbmc/Application.cpp.orig	2017-05-09 18:16:46.000000000 +0300
-+++ kodi-17.2-rc1-274fed4-patch/xbmc/Application.cpp.orig	2017-05-09 18:14:51.000000000 +0300
-@@ -5238,3 +5238,13 @@ bool CApplication::NotifyActionListeners
-   
-   return false;
- }
-+
-+bool CApplication::ScreenSaverDisablesAutoScrolling()
-+{
-+  bool onBlackDimScreenSaver = IsInScreenSaver() && m_screenSaver &&
-+    (m_screenSaver->ID() == "screensaver.xbmc.builtin.black" ||
-+     m_screenSaver->ID() == "screensaver.xbmc.builtin.dim");
-+  bool openingStreams = m_pPlayer->IsPlaying() && g_windowManager.IsWindowActive(WINDOW_DIALOG_BUSY);
-+
-+  return onBlackDimScreenSaver || openingStreams;
-+}
 diff -Naurp kodi-17.2-rc1-274fed4/xbmc/GUIInfoManager.cpp kodi-17.2-rc1-274fed4-patch/xbmc/GUIInfoManager.cpp
 --- kodi-17.2-rc1-274fed4/xbmc/GUIInfoManager.cpp	2017-05-09 18:16:46.000000000 +0300
 +++ kodi-17.2-rc1-274fed4-patch/xbmc/GUIInfoManager.cpp	2017-05-09 18:14:51.000000000 +0300

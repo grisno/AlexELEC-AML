@@ -4,6 +4,8 @@
 #      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
+[ -z $(find /lib/modules/$(uname -r)/ -name 'aml_fe.ko') ] && exit 0
+
 AVL_ARG="$1"
 DVB_PRESET=$(cat /proc/device-tree/dvbfe/dtv_demod0)
 
