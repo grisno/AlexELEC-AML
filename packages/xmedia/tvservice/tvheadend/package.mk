@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="2f07ea0"
+PKG_VERSION="c0c6d0c"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
