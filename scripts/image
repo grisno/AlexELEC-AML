@@ -77,7 +77,7 @@ fi
 echo -e "ID=\"alexelec\"" >> $INSTALL/etc/os-release
 echo -e "VERSION_ID=\"$OS_VERSION\"" >> $INSTALL/etc/os-release
 echo -e "PRETTY_NAME=\"$DISTRONAME ($ALEXELEC_BUILD) - Version: $ALEXELEC_VERSION\"" >> $INSTALL/etc/os-release
-echo -e "HOME_URL=\"https://alexelec.in.ua\"" >> $INSTALL/etc/os-release
+echo -e "HOME_URL=\"http://alexelec.in.ua\"" >> $INSTALL/etc/os-release
 echo -e "BUG_REPORT_URL=\"$ORIGIN_URL\"" >> $INSTALL/etc/os-release
 echo -e "BUILD_ID=\"$GIT_HASH\"" >> $INSTALL/etc/os-release
 echo -e "ALEXELEC_ARCH=\"$PROJECT.$TARGET_ARCH\"" >> $INSTALL/etc/os-release
