@@ -38,6 +38,7 @@ PKG_CMAKE_OPTS_TARGET="-DLIBUSBDIR=$SYSROOT_PREFIX/usr \
 
 makeinstall_target() {
   mkdir -p  $INSTALL/usr/config/oscam
+    cp -a $PKG_DIR/bin $INSTALL/usr/config/oscam
     cp -a $PKG_DIR/config $INSTALL/usr/config/oscam
     rm -f $INSTALL/usr/config/oscam/config/SoftCam.Key
 
