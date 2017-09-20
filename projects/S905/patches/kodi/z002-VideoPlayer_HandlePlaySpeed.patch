@@ -1,0 +1,40 @@
+diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoPlayer.cpp kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoPlayer.cpp
+--- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-09-20 08:21:44.000000000 +0300
++++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-09-20 08:31:30.000000000 +0300
+@@ -1958,13 +1958,13 @@ void CVideoPlayer::HandlePlaySpeed()
+       // care for live streams
+       else if (m_pInputStream->IsRealtime())
+       {
+-        if (m_CurrentAudio.id >= 0)
++        if (m_CurrentAudio.id >= 0 && m_clock.GetClock() > DVD_MSEC_TO_TIME(0))
+         {
+           double adjust = -1.0; // a unique value
+-          if (m_clock.GetSpeedAdjust() >= 0 && m_VideoPlayerAudio->GetLevel() < 5)
++          if (m_clock.GetSpeedAdjust() >= 0 && m_VideoPlayerAudio->GetLevel() < 3)
+             adjust = -0.05;
+ 
+-          if (m_clock.GetSpeedAdjust() < 0 && m_VideoPlayerAudio->GetLevel() > 10)
++          if (m_clock.GetSpeedAdjust() < 0 && m_VideoPlayerAudio->GetLevel() > 5)
+             adjust = 0.0;
+ 
+           if (adjust != -1.0)
+@@ -2024,7 +2024,7 @@ void CVideoPlayer::HandlePlaySpeed()
+       else if (m_CurrentAudio.starttime != DVD_NOPTS_VALUE && m_CurrentAudio.packets > 0)
+       {
+         if (m_pInputStream->IsRealtime())
+-          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetotal - DVD_MSEC_TO_TIME(400);
++          clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetotal;
+         else
+           clock = m_CurrentAudio.starttime - m_CurrentAudio.cachetime;
+         if (m_CurrentVideo.starttime != DVD_NOPTS_VALUE &&
+@@ -2600,8 +2600,8 @@ void CVideoPlayer::HandleMessages()
+       // This should always be the case.
+       if(m_pDemuxer && m_pDemuxer->SeekChapter(msg.GetChapter(), &start))
+       {
+-        FlushBuffers(start, true, true);
+-        offset = DVD_TIME_TO_MSEC(start) - beforeSeek;
++        FlushBuffers(DVD_MSEC_TO_TIME(beforeSeek), true, true);
++        offset = static_cast<int>(beforeSeek) - DVD_TIME_TO_MSEC(start);
+         m_callback.OnPlayBackSeekChapter(msg.GetChapter());
+       }
+ 

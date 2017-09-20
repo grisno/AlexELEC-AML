@@ -1,0 +1,44 @@
+diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp
+--- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-09-20 08:21:45.000000000 +0300
++++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/DVDCodecs/Video/AMLCodec.cpp	2017-09-20 09:28:14.000000000 +0300
+@@ -310,7 +310,7 @@ static const int64_t INT64_0 = 0x8000000
+ #define CODEC_TAG_jpeg  (0x6765706a)
+ #define CODEC_TAG_mjpa  (0x61706a6d)
+ 
+-#define RW_WAIT_TIME    (20 * 1000) // 20ms
++#define RW_WAIT_TIME    (5 * 1000) // 5ms
+ 
+ #define P_PRE           (0x02000000)
+ #define F_PRE           (0x03000000)
+@@ -2105,7 +2105,7 @@ int CAMLCodec::DequeueBuffer()
+   v4l2_buffer vbuf = { 0 };
+   vbuf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+ 
+-  //Driver change from 10 to 0ms latency, throttle here
++  //Driver change from 5 to 0ms latency, throttle here
+   std::chrono::time_point<std::chrono::system_clock> now(std::chrono::system_clock::now());
+ 
+   if (m_amlVideoFile->IOControl(VIDIOC_DQBUF, &vbuf) < 0)
+@@ -2115,8 +2115,8 @@ int CAMLCodec::DequeueBuffer()
+ 
+     std::chrono::milliseconds elapsed(std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - now).count());
+ 
+-    if (elapsed < std::chrono::milliseconds(10))
+-      std::this_thread::sleep_for(std::chrono::milliseconds(10) - elapsed);
++    if (elapsed < std::chrono::milliseconds(5))
++      std::this_thread::sleep_for(std::chrono::milliseconds(5) - elapsed);
+ 
+     return -errno;
+   }
+diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h
+--- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h	2017-09-20 08:21:44.000000000 +0300
++++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRender/RendererAML.h	2017-09-20 09:29:41.000000000 +0300
+@@ -62,7 +62,7 @@ public:
+ private:
+ 
+   int m_iRenderBuffer;
+-  static const int m_numRenderBuffers = 4;
++  static const int m_numRenderBuffers = 6;
+ 
+   struct BUFFER
+   {
