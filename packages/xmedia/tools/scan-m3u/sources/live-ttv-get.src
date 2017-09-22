@@ -51,7 +51,7 @@ ace_run () {
   if [ ! -f "$JSON_FILE_GZ" ]; then
     /usr/bin/tor > /dev/null 2>&1 &
     sleep 6
-    curl -s -k --socks5-hostname "127.0.0.1:9050" --connect-timeout 10 --max-time 30 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "http://hmxuku36whbypzxi.onion/trash/ttv-list/acelive.json"
+    curl -s --socks5-hostname "127.0.0.1:9050" --connect-timeout 8 --max-time 30 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "http://hmxuku36whbypzxi.onion/trash/ttv-list/acelive.json"
     killall -9 tor > /dev/null 2>&1
     [ -e "$JSON_FILE_GZ" ] && TOR_STATUS="yes"
   fi
