@@ -4,12 +4,12 @@
 ################################################################################
 
 PKG_NAME="pcsc-lite"
-PKG_VERSION="1.8.16"
+PKG_VERSION="1.8.22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://pcsclite.alioth.debian.org/pcsclite.html"
-PKG_URL="https://alioth.debian.org/frs/download.php/file/4164/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_URL="https://alioth.debian.org/frs/download.php/file/4225/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libusb"
 PKG_SECTION="xmedia/camd"
 PKG_SHORTDESC="Middleware to access a smart card using SCard API (PC/SC)"
