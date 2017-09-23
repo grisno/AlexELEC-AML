@@ -1,7 +1,7 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 # oscam config
@@ -19,4 +19,17 @@ do
   [ ! -f $OSCAM_HOME/config/$config_name ] && touch $OSCAM_HOME/config/$config_name
 done
 
-exec oscam -r 2 -u -c $OSCAM_HOME/config > /dev/null 2>&1
+if [ -x $OSCAM_HOME/bin/oscam ]; then
+  BIN_CAM="$OSCAM_HOME/bin/oscam"
+else
+  BIN_CAM="/usr/bin/oscam"
+fi
+
+if [ -f $OSCAM_HOME/bin/oscam.cfg ]; then
+  . $OSCAM_HOME/bin/oscam.cfg
+  ARG_CAM="$OSCAM_ARGS"
+else
+  ARG_CAM="-r 2 -u"
+fi
+
+exec $BIN_CAM $ARG_CAM -c $OSCAM_HOME/config > /dev/null 2>&1

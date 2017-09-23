@@ -1,0 +1,24 @@
+From 2e121df12b0f94b5e04107ec18588d910fecf059 Mon Sep 17 00:00:00 2001
+From: kszaq <kszaquitto@gmail.com>
+Date: Wed, 30 Aug 2017 20:11:21 +0200
+Subject: [PATCH] Revert "drivers/amlogic/wifi/bcmdhd: replace
+ CONFIG_DHD_USE_STATIC_BUF with CONFIG_BCMDHD_USE_STATIC_BUF"
+
+This reverts commit 2b4f8a1ffc1ecf5a7e83d78bd52055a60a723e11.
+---
+ drivers/amlogic/wifi/bcmdhd/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/amlogic/wifi/bcmdhd/Makefile b/drivers/amlogic/wifi/bcmdhd/Makefile
+index 597ce1c0bd5..bd92d25353a 100644
+--- a/drivers/amlogic/wifi/bcmdhd/Makefile
++++ b/drivers/amlogic/wifi/bcmdhd/Makefile
+@@ -65,7 +65,7 @@ ifeq ($(CONFIG_BCMDHD_AG),y)
+ DHDCFLAGS += -DBAND_AG
+ endif
+ 
+-ifeq ($(CONFIG_BCMDHD_USE_STATIC_BUF),y)
++ifeq ($(CONFIG_DHD_USE_STATIC_BUF),y)
+ # add dhd_static_buf to kernel image build
+ #obj-y += dhd_static_buf.o
+ DHDCFLAGS += -DCONFIG_DHD_USE_STATIC_BUF
