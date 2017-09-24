@@ -1,0 +1,871 @@
+diff -Naurp linux-d560977/drivers/amlogic/amlnf/dev/amlnf_dev.c linux-d560977-patch/drivers/amlogic/amlnf/dev/amlnf_dev.c
+--- linux-d560977/drivers/amlogic/amlnf/dev/amlnf_dev.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/amlnf/dev/amlnf_dev.c	2017-09-24 18:55:18.000000000 +0300
+@@ -342,8 +342,7 @@ static ssize_t nand_part_table_get(struc
+ static ssize_t store_device_flag_get(struct class *class,
+ 			struct class_attribute *attr, char *buf)
+ {
+-	sprintf(buf, "%d", boot_device_flag);
+-	return 0;
++	return sprintf(buf, "%d", get_storage_dev());
+ }
+ 
+ static struct class_attribute aml_version =
+@@ -458,94 +457,7 @@ static int get_nand_platform(struct aml_
+ */
+ #endif	/* CONFIG_OF */
+ 
+-/***
+-*boot_device_flag = 0 ; indicate spi+nand boot
+-*boot_device_flag = 1;  indicate nand  boot
+-***/
+ #if 0
+-int poc_cfg_parse(void)
+-{
+-	int boot_flag;
+-	u32 cpu_type, poc_value;
+-
+-	poc_value =
+-		amlnf_read_reg32(aml_nand_dev->platform_data->poc_cfg_reg);
+-
+-	cpu_type = get_cpu_type();
+-	if (cpu_type == MESON_CPU_MAJOR_ID_GXBB) {
+-		poc_value = (poc_value >> 6) & 0x03;
+-	} else if (cpu_type >= MESON_CPU_MAJOR_ID_M8)
+-		poc_value = ((((poc_value >> 0x09) & 0x01) << 2) |
+-			((poc_value >> 6) & 0x03));
+-	else
+-		poc_value = (poc_value & 0x07);
+-
+-	if (cpu_type == MESON_CPU_MAJOR_ID_GXBB) {
+-		if (poc_value & 0x2)
+-			boot_flag = SPI_BOOT_FLAG;
+-		else {
+-			/* fixme, ... */
+-			boot_flag = NAND_BOOT_FLAG;
+-		}
+-
+-	} else if (cpu_type > MESON_CPU_MAJOR_ID_M8) {
+-		if (poc_value == 0x05)
+-			boot_flag = SPI_BOOT_FLAG;
+-		if ((poc_value == 0x03) || (poc_value == 0x01))
+-			boot_flag = EMMC_BOOT_FLAG;
+-	} else {
+-		if ((poc_value == 0x05) || (poc_value == 0x04))
+-			boot_flag = SPI_BOOT_FLAG;
+-		if (poc_value == 0x03)
+-			boot_flag = EMMC_BOOT_FLAG;
+-	}
+-
+-	if ((poc_value == 0x07) || (poc_value == 0x06))
+-		boot_flag = NAND_BOOT_FLAG;
+-	if (poc_value == 0x00)
+-		boot_flag = EMMC_BOOT_FLAG;
+-
+-	return boot_flag;
+-}
+-
+-
+-int check_storage_device(void)
+-{
+-	int value = -1, poc_cfg = -1;
+-
+-	poc_cfg = poc_cfg_parse();
+-	value = boot_device_flag;
+-
+-	if ((value == 0)
+-		|| (value == SPI_NAND_FLAG)
+-		|| (value == NAND_BOOT_FLAG)) {
+-		if ((value == 0) || (value == -1)) {
+-			if (poc_cfg == NAND_BOOT_FLAG)
+-				boot_device_flag = 1;
+-			else if (poc_cfg == EMMC_BOOT_FLAG)
+-				boot_device_flag = -1;
+-			else if (poc_cfg == SPI_BOOT_FLAG)
+-				boot_device_flag = 0;
+-			else if (poc_cfg == CARD_BOOT_FLAG)
+-				boot_device_flag = 1;
+-		} else if (value == SPI_NAND_FLAG)
+-			boot_device_flag = 0;
+-		else
+-			boot_device_flag = 1;
+-	} else
+-		boot_device_flag = -1;
+-	/* fixme, debug code... */
+-	boot_device_flag = 1;
+-
+-	if ((boot_device_flag == 0) || (boot_device_flag == 1))
+-		return 0;
+-	else {
+-		boot_device_flag = value;
+-		return -NAND_FAILED;
+-	}
+-}
+-EXPORT_SYMBOL(check_storage_device);
+-#endif
+ /* return storage device */
+ static u32 _get_storage_dev_by_gp(void)
+ {
+@@ -621,6 +533,7 @@ u32 get_storage_dev(void)
+ 	aml_nand_msg("%s return %d\n", __func__, ret);
+ 	return ret;
+ }
++#endif
+ 
+ int check_storage_device(void)
+ {
+diff -Naurp linux-d560977/drivers/amlogic/amlnf/include/phynand.h linux-d560977-patch/drivers/amlogic/amlnf/include/phynand.h
+--- linux-d560977/drivers/amlogic/amlnf/include/phynand.h	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/amlnf/include/phynand.h	2017-09-24 18:56:16.000000000 +0300
+@@ -940,4 +940,6 @@ extern void amlchip_dumpinfo(struct amln
+ #if 0
+ extern void dump_pinmux_regs(struct hw_controller *controller);
+ #endif
++
++u32 get_storage_dev(void);
+ #endif /* NAND_H_INCLUDED */
+diff -Naurp linux-d560977/drivers/amlogic/mmc/amlmmc_dtb.c linux-d560977-patch/drivers/amlogic/mmc/amlmmc_dtb.c
+--- linux-d560977/drivers/amlogic/mmc/amlmmc_dtb.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/amlmmc_dtb.c	2017-09-24 18:31:13.000000000 +0300
+@@ -20,90 +20,252 @@
+ #include <linux/device.h>
+ #include <linux/uaccess.h>
+ #include <linux/vmalloc.h>
++
+ #define DTB_NAME	"dtb"
+ #define	SZ_1M	0x00100000
+-#define		MMC_DTB_PART_OFFSET		(40*SZ_1M)
+-#define		EMMC_BLOCK_SIZE		(0x100)
+-#define		MAX_EMMC_BLOCK_SIZE		(128*1024)
++
++/*
++ * 2 copies dtb were stored in dtb area.
++ * each is 256K.
++ * timestamp&checksum are in the tail.
++ * |<--------------DTB Area-------------->|
++ * |<------DTB1------->|<------DTB2------>|
++ */
++
++#define	DTB_GLB_OFFSET		(40*SZ_1M)
++#define	DTB_BLK_SIZE		(0x200)
++#define	DTB_BLK_CNT			(512)
++#define	DTB_SIZE			(DTB_BLK_CNT * DTB_BLK_SIZE)
++#define DTB_COPIES			(2)
++#define DTB_AREA_BLK_CNT	(DTB_BLK_CNT * DTB_COPIES)
++/* pertransfer for internal opearations. */
++#define MAX_TRANS_BLK		(256)
++#define	MAX_TRANS_SIZE		(MAX_TRANS_BLK * DTB_BLK_SIZE)
++#define stamp_after(a, b)   ((int)(b) - (int)(a)  < 0)
++struct aml_dtb_rsv {
++	u8 data[DTB_BLK_SIZE*DTB_BLK_CNT - 4*sizeof(unsigned int)];
++	unsigned int magic;
++	unsigned int version;
++	unsigned int timestamp;
++	unsigned int checksum;
++};
++
++struct aml_dtb_info {
++	unsigned int stamp[2];
++	u8 valid[2];
++};
+ 
+ static dev_t amlmmc_dtb_no;
+ struct cdev amlmmc_dtb;
+ struct device *dtb_dev = NULL;
+ struct class *amlmmc_dtb_class = NULL;
+ struct mmc_card *card_dtb = NULL;
++static struct aml_dtb_info dtb_infos = {{0, 0}, {0, 0} };
+ 
+-int amlmmc_dtb_write(struct mmc_card *card,
+-		unsigned char *buf, int len)
++
++
++/* dtb read&write operation with backup updates */
++static unsigned int _calc_dtb_checksum(struct aml_dtb_rsv *dtb)
++{
++	int i = 0;
++	int size = sizeof(struct aml_dtb_rsv) - sizeof(unsigned int);
++	unsigned int *buffer;
++	unsigned int checksum = 0;
++
++	if ((u64)dtb % 4 != 0)
++		BUG();
++
++	size = size >> 2;
++	buffer = (unsigned int *) dtb;
++	while (i < size)
++		checksum += buffer[i++];
++
++	return checksum;
++}
++
++static int _verify_dtb_checksum(struct aml_dtb_rsv *dtb)
++{
++	unsigned int checksum;
++
++	checksum = _calc_dtb_checksum(dtb);
++	pr_info("calc %x, store %x\n", checksum, dtb->checksum);
++
++	return !(checksum == dtb->checksum);
++}
++
++static int _dtb_write(struct mmc_card *mmc,
++				int blk, unsigned char *buf)
+ {
+-	int ret = 0, start_blk, size, blk_cnt;
+-	int bit = card->csd.read_blkbits;
++	int ret = 0;
+ 	unsigned char *src = NULL;
++	int bit = mmc->csd.read_blkbits;
++	int cnt = CONFIG_DTB_SIZE >> bit;
+ 
+-	if (len > CONFIG_DTB_SIZE) {
+-		pr_err("%s dtb data len too much", __func__);
+-		return -EFAULT;
+-	}
+-	start_blk = MMC_DTB_PART_OFFSET;
+-	if (start_blk < 0) {
+-		ret = -EINVAL;
+-		return ret;
+-	}
+-	start_blk >>= bit;
+-	size = CONFIG_DTB_SIZE;
+-	blk_cnt = size>>bit;
+ 	src = (unsigned char *)buf;
++
++	mmc_claim_host(mmc->host);
+ 	do {
+-		ret = mmc_write_internal(card, start_blk, EMMC_BLOCK_SIZE, src);
++		ret = mmc_write_internal(mmc, blk, MAX_TRANS_BLK, src);
+ 		if (ret) {
+ 			pr_err("%s: save dtb error", __func__);
+ 			ret = -EFAULT;
+-			return ret;
++			break;
+ 		}
+-		start_blk += EMMC_BLOCK_SIZE;
+-		blk_cnt -= EMMC_BLOCK_SIZE;
+-		src = (unsigned char *)buf + MAX_EMMC_BLOCK_SIZE;
+-	} while (blk_cnt != 0);
++		blk += MAX_TRANS_BLK;
++		cnt -= MAX_TRANS_BLK;
++		src = (unsigned char *)buf + MAX_TRANS_SIZE;
++	} while (cnt != 0);
++	mmc_release_host(mmc->host);
+ 
+ 	return ret;
+ }
+ 
+-int amlmmc_dtb_read(struct mmc_card *card,
+-		unsigned char *buf, int len)
++
++static int _dtb_read(struct mmc_card *mmc,
++				int blk, unsigned char *buf)
+ {
+-	int ret = 0, start_blk, size, blk_cnt;
+-	int bit = card->csd.read_blkbits;
++	int ret = 0;
+ 	unsigned char *dst = NULL;
++	int bit = mmc->csd.read_blkbits;
++	int cnt = CONFIG_DTB_SIZE >> bit;
++
++	dst = (unsigned char *)buf;
++	mmc_claim_host(mmc->host);
++	do {
++		ret = mmc_read_internal(mmc, blk, MAX_TRANS_BLK, dst);
++		if (ret) {
++			pr_err("%s: save dtb error", __func__);
++			ret = -EFAULT;
++			break;
++		}
++		blk += MAX_TRANS_BLK;
++		cnt -= MAX_TRANS_BLK;
++		dst = (unsigned char *)buf + MAX_TRANS_SIZE;
++	} while (cnt != 0);
++	mmc_release_host(mmc->host);
++	return ret;
++}
++
++static int _dtb_init(struct mmc_card *mmc)
++{
++	int ret = 0;
++	struct aml_dtb_rsv *dtb;
++	struct aml_dtb_info *info = &dtb_infos;
++	int cpy = 1, valid = 0;
++	int bit = mmc->csd.read_blkbits;
++	int blk;
++
++	/* malloc a buffer. */
++	dtb = vmalloc(CONFIG_DTB_SIZE);
++	if (dtb == NULL) {
++		pr_err("%s: malloc buf failed", __func__);
++		return -ENOMEM;
++	}
++
++	/* read dtb2 1st, for compatibility without checksum. */
++	while (cpy >= 0) {
++		blk = (DTB_GLB_OFFSET >> bit) + cpy * DTB_BLK_CNT;
++		if (_dtb_read(mmc, blk, (unsigned char *)dtb)) {
++			pr_err("%s: block # %#x ERROR!\n",
++					__func__, blk);
++		} else {
++			ret = _verify_dtb_checksum(dtb);
++			if (!ret) {
++				info->stamp[cpy] = dtb->timestamp;
++				info->valid[cpy] = 1;
++			} else
++				pr_err("cpy %d is not valid\n", cpy);
++		}
++		valid += info->valid[cpy];
++		cpy--;
++	}
++	pr_info("total valid %d\n", valid);
++
++	vfree(dtb);
++
++	return ret;
++}
++
++int amlmmc_dtb_write(struct mmc_card *mmc,
++		unsigned char *buf, int len)
++{
++	int ret = 0, blk;
++	int bit = mmc->csd.read_blkbits;
++	int cpy, valid;
++	struct aml_dtb_rsv *dtb = (struct aml_dtb_rsv *) buf;
++	struct aml_dtb_info *info = &dtb_infos;
+ 
+ 	if (len > CONFIG_DTB_SIZE) {
+ 		pr_err("%s dtb data len too much", __func__);
+ 		return -EFAULT;
+ 	}
+-	memset(buf, 0x0, len);
++	/* set info */
++	valid = info->valid[0] + info->valid[1];
++	if (0 == valid)
++		dtb->timestamp = 0;
++	else if (1 == valid) {
++		dtb->timestamp = 1 + info->stamp[info->valid[0]?0:1];
++	} else {
++		/* both are valid */
++		if (info->stamp[0] != info->stamp[1]) {
++			pr_info("timestamp are not same %d:%d\n",
++				info->stamp[0], info->stamp[1]);
++			dtb->timestamp = 1 +
++				stamp_after(info->stamp[1], info->stamp[0]) ?
++				info->stamp[1]:info->stamp[0];
++		} else
++			dtb->timestamp = 1 + info->stamp[0];
++	}
++	/*setting version and magic*/
++	dtb->version = 1; /* base version */
++	dtb->magic = 0x00447e41; /*A~D\0*/
++	dtb->checksum = _calc_dtb_checksum(dtb);
++	pr_info("stamp %d, checksum 0x%x, version %d, magic %s\n",
++		dtb->timestamp, dtb->checksum,
++		dtb->version, (char *)&dtb->magic);
++	/* write down... */
++	for (cpy = 0; cpy < DTB_COPIES; cpy++) {
++		blk = (DTB_GLB_OFFSET >> bit) + cpy * DTB_BLK_CNT;
++		ret |= _dtb_write(mmc, blk, buf);
++	}
+ 
+-	start_blk = MMC_DTB_PART_OFFSET;
+-	if (start_blk < 0) {
++	return ret;
++}
++
++/* only read the 1st one. */
++int amlmmc_dtb_read(struct mmc_card *mmc,
++		unsigned char *buf, int len)
++{
++	int ret = 0, blk;
++	int bit = mmc->csd.read_blkbits;
++
++	if (len > CONFIG_DTB_SIZE) {
++		pr_err("%s dtb data len too much", __func__);
++		return -EFAULT;
++	}
++
++	blk = DTB_GLB_OFFSET >> bit;
++	if (blk < 0) {
+ 		ret = -EINVAL;
+ 		return ret;
+ 	}
++	ret = _dtb_read(mmc, blk, buf);
+ 
+-	start_blk >>= bit;
+-	size = CONFIG_DTB_SIZE;
+-	blk_cnt = size>>bit;
+-	dst = (unsigned char *)buf;
+-	do {
+-		ret = mmc_read_internal(card, start_blk, EMMC_BLOCK_SIZE, dst);
+-		if (ret) {
+-			pr_err("%s read dtb error", __func__);
+-			ret = -EFAULT;
+-			return ret;
+-		}
+-		start_blk += EMMC_BLOCK_SIZE;
+-		blk_cnt -= EMMC_BLOCK_SIZE;
+-		dst = (unsigned char *)buf + MAX_EMMC_BLOCK_SIZE;
+-	} while (blk_cnt != 0);
+ 	return ret;
+ }
+-static CLASS_ATTR(emmcdtb, S_IWUSR | S_IRUGO, NULL, NULL);
++
++static ssize_t emmc_dtb_show(struct class *class,
++		struct class_attribute *attr, char *buf)
++{
++	struct aml_dtb_info *i = &dtb_infos;
++	ssize_t n;
++
++	n = sprintf(buf, "dtb1: %d, %d\n", i->stamp[0], i->valid[0]);
++	n += sprintf(buf+n, "dtb2: %d, %d\n", i->stamp[1], i->valid[1]);
++	return n;
++}
++
++static CLASS_ATTR(emmcdtb, S_IWUSR | S_IRUGO, emmc_dtb_show, NULL);
+ 
+ int mmc_dtb_open(struct inode *node, struct file *file)
+ {
+@@ -133,7 +295,7 @@ ssize_t mmc_dtb_read(struct file *file,
+ 		return -ENOMEM;
+ 	}
+ 
+-	mmc_claim_host(card_dtb->host);
++	/* mmc_claim_host(card_dtb->host); */
+ 	ret = amlmmc_dtb_read(card_dtb,
+ 			(unsigned char *)dtb_ptr,
+ 			CONFIG_DTB_SIZE);
+@@ -149,7 +311,7 @@ ssize_t mmc_dtb_read(struct file *file,
+ 	ret = copy_to_user(buf, (dtb_ptr + *ppos), read_size);
+ 	*ppos += read_size;
+ exit:
+-	mmc_release_host(card_dtb->host);
++	/* mmc_release_host(card_dtb->host); */
+ 	vfree(dtb_ptr);
+ 	return read_size;
+ }
+@@ -174,7 +336,7 @@ ssize_t mmc_dtb_write(struct file *file,
+ 		pr_err("%s: malloc buf failed", __func__);
+ 		return -ENOMEM;
+ 	}
+-	mmc_claim_host(card_dtb->host);
++	/* mmc_claim_host(card_dtb->host); */
+ 
+ 	if ((*ppos + count) > CONFIG_DTB_SIZE)
+ 		write_size = CONFIG_DTB_SIZE - *ppos;
+@@ -193,7 +355,7 @@ ssize_t mmc_dtb_write(struct file *file,
+ 
+ 	*ppos += write_size;
+ exit:
+-	mmc_release_host(card_dtb->host);
++	/* mmc_release_host(card_dtb->host); */
+ 	/* kfree(dtb_ptr); */
+ 	vfree(dtb_ptr);
+ 	return write_size;
+@@ -216,6 +378,10 @@ int amlmmc_dtb_init(struct mmc_card *car
+ 	int ret = 0;
+ 	card_dtb = card;
+ 	pr_info("%s: register dtb chardev", __func__);
++
++	/*fixme, do not check return for */
++	_dtb_init(card);
++
+ 	ret = alloc_chrdev_region(&amlmmc_dtb_no, 0, 1, DTB_NAME);
+ 	if (ret < 0) {
+ 		pr_err("alloc dtb dev_t no failed");
+@@ -256,7 +422,6 @@ int amlmmc_dtb_init(struct mmc_card *car
+ 		ret = -1;
+ 		goto exit_err3;
+ 	}
+-
+ 	pr_info("%s: register dtb chardev OK", __func__);
+ 
+ 	return ret;
+diff -Naurp linux-d560977/drivers/amlogic/mmc/aml_sd_emmc.c linux-d560977-patch/drivers/amlogic/mmc/aml_sd_emmc.c
+--- linux-d560977/drivers/amlogic/mmc/aml_sd_emmc.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/aml_sd_emmc.c	2017-09-24 18:31:13.000000000 +0300
+@@ -89,6 +89,7 @@ u8 max_index;
+ #define MAX_CALI_RETRY	(3)
+ #define MAX_DELAY_CNT	(16)
+ #define CALI_BLK_CNT	(10)
++#define CALI_PATTERN_OFFSET	((SZ_1M * (36 + 3)) / 512)
+ 
+ static int is_larger(u8 value, u8 base, u8 wrap)
+ {
+@@ -145,7 +146,7 @@ static int aml_sd_emmc_cali_transfer(str
+ 	struct scatterlist sg;
+ 
+ 	cmd.opcode = opcode;
+-	cmd.arg = 0;
++	cmd.arg = CALI_PATTERN_OFFSET;
+ 	cmd.flags = MMC_RSP_R1 | MMC_CMD_ADTC;
+ 
+ 	stop.opcode = MMC_STOP_TRANSMISSION;
+@@ -801,8 +802,10 @@ tunning:
+ 	}
+ 	if (best_win_size <= 0) {
+ 		if ((tuning_num++ > MAX_TUNING_RETRY)
+-			|| (clkc->div <= 10)) {
++			|| (clkc->div >= 10)) {
+ 			kfree(blk_test);
++			pr_info("%s: final result of tuning failed\n",
++				 mmc_hostname(host->mmc));
+ 			return -1;
+ 		}
+ 		clkc->div += 1;
+@@ -2025,7 +2028,7 @@ void aml_sd_emmc_start_cmd(struct amlsd_
+ 	desc_start->init = 0;
+ 	desc_start->busy = 1;
+ 	desc_start->addr = host->desc_dma_addr>>2;
+-
++	pdata->desc_cnt = desc_cnt;
+ #if 0  /* debug */
+ 	desc_cur = (struct sd_emmc_desc_info *)host->desc_buf;
+ 	des_cmd_cur = (struct cmd_cfg *)&(desc_cur->cmd_info);
+@@ -2107,9 +2110,10 @@ void aml_sd_emmc_request_done(struct mmc
+ 
+ static void aml_sd_emmc_print_err(struct amlsd_host *host)
+ {
+-	/* not print err msg for tuning cmd */
++	/* not print err msg for tuning cmd & stop cmd we send*/
+ 	if ((host->mrq->cmd->opcode == MMC_SEND_TUNING_BLOCK)
+-		|| (host->mrq->cmd->opcode == MMC_SEND_TUNING_BLOCK_HS200)) {
++		|| (host->mrq->cmd->opcode == MMC_SEND_TUNING_BLOCK_HS200)
++		|| (host->cmd_is_stop)) {
+ 		return;
+ 	}
+ 
+@@ -2305,6 +2309,8 @@ static irqreturn_t aml_sd_emmc_irq(int i
+ 	u32 vstat = 0;
+ 	u32 virqc = 0;
+ 	u32 vstart = 0;
++	u32 err = 0;
++
+ 	struct sd_emmc_irq_en *irqc = (struct sd_emmc_irq_en *)&virqc;
+ 	struct sd_emmc_status *ista = (struct sd_emmc_status *)&vstat;
+ 	struct sd_emmc_start *desc_start = (struct sd_emmc_start *)&vstart;
+@@ -2409,53 +2415,70 @@ static irqreturn_t aml_sd_emmc_irq(int i
+ 		else
+ 			host->status = HOST_TASKLET_CMD;
+ 		mrq->cmd->error = 0;
+-	} else { /* error */
+-		if ((ista->rxd_err) || (ista->txd_err)) {
+-			host->status = HOST_DAT_CRC_ERR;
+-			mrq->cmd->error = -EILSEQ;
+-			if (host->is_tunning == 0) {
+-				sd_emmc_err("%s: warning... data crc, vstat:0x%x, virqc:%x",
+-						mmc_hostname(host->mmc),
+-						vstat, virqc);
+-				sd_emmc_err("@ cmd %d with %p; stop %d, status %d\n",
+-						mrq->cmd->opcode, mrq->data,
+-						host->cmd_is_stop,
+-						host->status);
+-			}
+-		} else if (ista->resp_err) {
+-			if (host->is_tunning == 0)
+-				sd_emmc_err("%s: warning... response crc,vstat:0x%x,virqc:%x\n",
+-						mmc_hostname(host->mmc),
+-						vstat, virqc);
+-			host->status = HOST_RSP_CRC_ERR;
+-			mrq->cmd->error = -EILSEQ;
+-		} else if (ista->resp_timeout) {
+-			if (host->is_tunning == 0)
+-				sd_emmc_err("%s: resp_timeout,vstat:0x%x,virqc:%x\n",
+-						mmc_hostname(host->mmc),
+-						vstat, virqc);
+-			host->status = HOST_RSP_TIMEOUT_ERR;
+-			mrq->cmd->error = -ETIMEDOUT;
+-		} else if (ista->desc_timeout) {
+-			if (host->is_tunning == 0)
+-				sd_emmc_err("%s: desc_timeout,vstat:0x%x,virqc:%x\n",
+-						mmc_hostname(host->mmc),
+-						vstat, virqc);
+-			host->status = HOST_DAT_TIMEOUT_ERR;
+-			mrq->cmd->error = -ETIMEDOUT;
+-		} else{
+-			host->xfer_step = XFER_IRQ_UNKNOWN_IRQ;
+-			sd_emmc_err("%s: %s Unknown Irq Ictl 0x%x, Ista 0x%x\n",
++	}
++
++	if ((vstat & 0x1FFF) && (!host->cmd_is_stop)) {
++	#if 0
++		pr_err("~~~~%s() %d, fail in %ld/%d, %s\n", __func__, __LINE__,
++			((vstart & 0xFFFFFFFC)
++			- (u32)host->desc_dma_addr)
++			/ sizeof(struct sd_emmc_desc_info),
++			pdata->desc_cnt,
++			host->cmd_is_stop ? "STOP" : "NOP");
++	#endif
++		err = 1;
++	}
++	/* error */
++	if ((ista->rxd_err) || (ista->txd_err)) {
++		host->status = HOST_DAT_CRC_ERR;
++		mrq->cmd->error = -EILSEQ;
++		if (host->is_tunning == 0) {
++			sd_emmc_err("%s: warning... data crc, vstat:0x%x, virqc:%x",
+ 					mmc_hostname(host->mmc),
+-					pdata->pinname, virqc, vstat);
++					vstat, virqc);
++			sd_emmc_err("@ cmd %d with %p; stop %d, status %d\n",
++					mrq->cmd->opcode, mrq->data,
++					host->cmd_is_stop,
++					host->status);
+ 		}
++	} else if (ista->resp_err) {
++		if (host->is_tunning == 0)
++			sd_emmc_err("%s: warning... response crc,vstat:0x%x,virqc:%x\n",
++					mmc_hostname(host->mmc),
++					vstat, virqc);
++		host->status = HOST_RSP_CRC_ERR;
++		mrq->cmd->error = -EILSEQ;
++	} else if (ista->resp_timeout) {
++		if (host->is_tunning == 0)
++			sd_emmc_err("%s: resp_timeout,vstat:0x%x,virqc:%x\n",
++					mmc_hostname(host->mmc),
++					vstat, virqc);
++		host->status = HOST_RSP_TIMEOUT_ERR;
++		mrq->cmd->error = -ETIMEDOUT;
++	} else if (ista->desc_timeout) {
++		if (host->is_tunning == 0)
++			sd_emmc_err("%s: desc_timeout,vstat:0x%x,virqc:%x\n",
++					mmc_hostname(host->mmc),
++					vstat, virqc);
++		host->status = HOST_DAT_TIMEOUT_ERR;
++		mrq->cmd->error = -ETIMEDOUT;
++	}
++#if 0
++	else{
++		host->xfer_step = XFER_IRQ_UNKNOWN_IRQ;
++		sd_emmc_err("%s: %s Unknown Irq Ictl 0x%x, Ista 0x%x\n",
++				mmc_hostname(host->mmc),
++				pdata->pinname, virqc, vstat);
++	}
++#endif
++	/* just for error show */
++	if (err) {
+ 		if (host->is_tunning == 0)
+ 			aml_host_bus_fsm_show(host, ista->bus_fsm);
+ 		if (aml_card_type_mmc(pdata))
+ 			mmc_cmd_LBA_show(mmc, mrq);
+ 	}
+ 
+-
+ 	if (host->xfer_step != XFER_IRQ_UNKNOWN_IRQ) {
+ #ifdef SD_EMMC_DATA_TASKLET
+ 		tasklet_schedule(&sd_emmc_finish_tasklet);
+@@ -2549,7 +2572,7 @@ static irqreturn_t aml_sd_emmc_data_thre
+ 		}
+ 		aml_sd_emmc_print_err(host);
+ 	}
+-
++	/* process stop cmd we sent on porpos */
+ 	if (host->cmd_is_stop) {
+ 		/* --new irq enter, */
+ 		host->cmd_is_stop = 0;
+@@ -3524,7 +3547,7 @@ static u32 get_storage_dev_by_clk(void)
+  return  1: emmc
+ 		 2: nand
+  */
+-static u32 get_storage_dev(void)
++u32 get_storage_dev(void)
+ {
+ 	u32 ret;
+ 
+@@ -3536,6 +3559,7 @@ static u32 get_storage_dev(void)
+ 	pr_err("%s return %d\n", __func__, ret);
+ 	return ret;
+ }
++EXPORT_SYMBOL(get_storage_dev);
+ 
+ int is_storage_emmc(void)
+ {
+@@ -3544,6 +3568,18 @@ int is_storage_emmc(void)
+ 		ret = 1;
+ 	return ret;
+ }
++
++/*this function tells wifi is using sd(sdiob) or sdio(sdioa)*/
++const char *get_wifi_inf(void)
++{
++	if (sdio_host != NULL)
++		return mmc_hostname(sdio_host);
++	else
++		return "sdio";
++
++}
++EXPORT_SYMBOL(get_wifi_inf);
++
+ static int aml_sd_emmc_probe(struct platform_device *pdev)
+ {
+ 	struct mmc_host *mmc = NULL;
+@@ -3616,7 +3652,7 @@ static int aml_sd_emmc_probe(struct plat
+ 	if (pdata->caps & MMC_CAP_NONREMOVABLE)
+ 		pdata->is_in = true;
+ 
+-	if (pdata->caps & MMC_PM_KEEP_POWER)
++	if (pdata->pm_caps & MMC_PM_KEEP_POWER)
+ 		mmc->pm_caps |= MMC_PM_KEEP_POWER;
+ 	pdata->host = host;
+ 	pdata->mmc = mmc;
+diff -Naurp linux-d560977/drivers/amlogic/mmc/aml_sdio.c linux-d560977-patch/drivers/amlogic/mmc/aml_sdio.c
+--- linux-d560977/drivers/amlogic/mmc/aml_sdio.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/aml_sdio.c	2017-09-24 18:31:13.000000000 +0300
+@@ -1353,7 +1353,7 @@ static int aml_sdio_probe(struct platfor
+ 		if (pdata->caps & MMC_CAP_NONREMOVABLE)
+ 			pdata->is_in = true;
+ 
+-		if (pdata->caps & MMC_PM_KEEP_POWER)
++		if (pdata->pm_caps & MMC_PM_KEEP_POWER)
+ 			mmc->pm_caps |= MMC_PM_KEEP_POWER;
+ 
+ 		if (pdata->caps & MMC_CAP_SDIO_IRQ)
+diff -Naurp linux-d560977/drivers/amlogic/mmc/amlsd_of.c linux-d560977-patch/drivers/amlogic/mmc/amlsd_of.c
+--- linux-d560977/drivers/amlogic/mmc/amlsd_of.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/amlsd_of.c	2017-09-24 18:31:13.000000000 +0300
+@@ -59,7 +59,6 @@ static const struct sd_caps host_caps[]
+ 	SD_CAPS(MMC_CAP_HW_RESET, "MMC_CAP_HW_RESET"),
+ 	SD_CAPS(MMC_CAP_RUNTIME_RESUME, "MMC_CAP_RUNTIME_RESUME"),
+ 	SD_CAPS(MMC_CAP_AGGRESSIVE_PM, "MMC_CAP_AGGRESSIVE_PM"),
+-	SD_CAPS(MMC_PM_KEEP_POWER, "MMC_PM_KEEP_POWER"),
+ };
+ 
+ static int amlsd_get_host_caps(struct device_node *of_node,
+@@ -120,6 +119,25 @@ static int amlsd_get_host_caps2(struct d
+ 	return 0;
+ }
+ 
++
++static int amlsd_get_host_pm_caps(struct device_node *of_node,
++		struct amlsd_platform *pdata)
++{
++	const char *str_caps;
++	struct property *prop;
++	u32 caps = 0;
++
++	of_property_for_each_string(of_node, "caps", prop, str_caps) {
++			if (!strcasecmp("MMC_PM_KEEP_POWER", str_caps))
++				caps |= MMC_PM_KEEP_POWER;
++	};
++
++	pdata->pm_caps = caps;
++	pr_info("%s:pdata->pm_caps = %x\n", pdata->pinname, pdata->pm_caps);
++	return 0;
++}
++
++
+ int amlsd_get_reg_base(struct platform_device *pdev,
+ 				struct amlsd_host *host)
+ {
+@@ -253,6 +271,7 @@ int amlsd_get_platform_data(struct platf
+ 						str, pdata->hw_reset);
+ 		amlsd_get_host_caps(child, pdata);
+ 		amlsd_get_host_caps2(child, pdata);
++		amlsd_get_host_pm_caps(child, pdata);
+ 		pdata->port_init = of_amlsd_init;
+ 		pdata->pwr_pre = of_amlsd_pwr_prepare;
+ 		pdata->pwr_on = of_amlsd_pwr_on;
+diff -Naurp linux-d560977/drivers/amlogic/mmc/emmc_partitions.c linux-d560977-patch/drivers/amlogic/mmc/emmc_partitions.c
+--- linux-d560977/drivers/amlogic/mmc/emmc_partitions.c	2017-09-24 18:36:38.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/emmc_partitions.c	2017-09-24 18:31:13.000000000 +0300
+@@ -619,12 +619,7 @@ static int store_device = -1;
+ static ssize_t store_device_flag_get(struct class *class,
+ 	struct class_attribute *attr, char *buf)
+ {
+-	if (store_device == -1) {
+-		pr_info("[%s]  get store device flag something wrong !\n",
+-			__func__);
+-	}
+-
+-	return sprintf(buf, "%d", store_device);
++	return sprintf(buf, "%d", get_storage_dev());
+ }
+ 
+ static ssize_t get_bootloader_offset(struct class *class,
+diff -Naurp linux-d560977/drivers/amlogic/mmc/mmc_storage.h linux-d560977-patch/drivers/amlogic/mmc/mmc_storage.h
+--- linux-d560977/drivers/amlogic/mmc/mmc_storage.h	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/mmc/mmc_storage.h	2017-09-24 18:31:13.000000000 +0300
+@@ -80,5 +80,5 @@ struct mmc_storage_info_t {
+ };
+ 
+ extern int mmc_storage_probe(struct mmc_card *card);
+-
++u32 get_storage_dev(void);
+ #endif
+diff -Naurp linux-d560977/drivers/amlogic/wifi/wifi_dt.c linux-d560977-patch/drivers/amlogic/wifi/wifi_dt.c
+--- linux-d560977/drivers/amlogic/wifi/wifi_dt.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/wifi/wifi_dt.c	2017-09-24 18:47:53.000000000 +0300
+@@ -36,6 +36,7 @@
+ #include <linux/amlogic/cpu_version.h>
+ #include <linux/amlogic/iomap.h>
+ #include <linux/io.h>
++#include <linux/uaccess.h>
+ 
+ #define OWNER_NAME "sdio_wifi"
+ 
+@@ -69,6 +70,7 @@ struct wifi_plat_info {
+ #define USB_POWER_DOWN  _IO('m', 2)
+ #define SDIO_POWER_UP    _IO('m', 3)
+ #define SDIO_POWER_DOWN  _IO('m', 4)
++#define SDIO_GET_DEV_TYPE  _IO('m', 5)
+ static struct wifi_plat_info wifi_info;
+ static dev_t wifi_power_devno;
+ static struct cdev *wifi_power_cdev;
+@@ -216,6 +218,8 @@ static long wifi_power_ioctl(struct file
+ 	unsigned int cmd, unsigned long arg)
+ {
+ 
++	char dev_type[10] = {'\0'};
++
+ 	switch (cmd) {
+ 	case USB_POWER_UP:
+ 		set_usb_wifi_power(0);
+@@ -237,6 +241,14 @@ static long wifi_power_ioctl(struct file
+ 	case SDIO_POWER_DOWN:
+ 		extern_wifi_set_enable(0);
+ 		break;
++	case SDIO_GET_DEV_TYPE:
++		memcpy(dev_type, get_wifi_inf(), strlen(get_wifi_inf()));
++		WIFI_INFO("wifi interface dev type: %s, length = %d\n",
++				dev_type, (int)strlen(dev_type));
++		if (copy_to_user((char __user *)arg,
++				dev_type, strlen(dev_type)))
++			return -ENOTTY;
++		break;
+ 	default:
+ 		WIFI_INFO("usb wifi_power_ioctl: default !!!\n");
+ 		return -EINVAL;
+diff -Naurp linux-d560977/include/linux/amlogic/sd.h linux-d560977-patch/include/linux/amlogic/sd.h
+--- linux-d560977/include/linux/amlogic/sd.h	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/include/linux/amlogic/sd.h	2017-09-24 18:57:41.000000000 +0300
+@@ -98,6 +98,7 @@ struct amlsd_platform {
+ 	unsigned int width;
+ 	unsigned int caps;
+ 	unsigned int caps2;
++	unsigned int pm_caps;
+ 	unsigned int card_capacity;
+ 	unsigned int tx_phase;
+ 	unsigned int tx_delay;
+@@ -183,7 +184,8 @@ struct amlsd_platform {
+ 	/*for inand partition: struct mtd_partition, easy porting from nand*/
+ 	struct mtd_partition *parts;
+ 	unsigned int nr_parts;
+-
++	/* fixme, debug code */
++	unsigned int desc_cnt;
+ 	struct resource *resource;
+ 	void (*xfer_pre)(struct amlsd_platform *pdata);
+ 	void (*xfer_post)(struct amlsd_platform *pdata);
+diff -Naurp linux-d560977/include/linux/amlogic/wifi_dt.h linux-d560977-patch/include/linux/amlogic/wifi_dt.h
+--- linux-d560977/include/linux/amlogic/wifi_dt.h	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/include/linux/amlogic/wifi_dt.h	2017-09-24 18:48:44.000000000 +0300
+@@ -19,6 +19,7 @@
+ #define _wifi_dt_h_
+ 
+ extern void sdio_reinit(void);
++extern char *get_wifi_inf(void);
+ void extern_wifi_set_enable(int is_on);
+ int wifi_irq_num(void);
+ 
