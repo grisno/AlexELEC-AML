@@ -9,9 +9,7 @@
 
 # cache in memory
 ACE_USER_ARG="--live-cache-type memory \
-              --live-buffer 30 \
-              --live-cache-size 20971520 \
-              --cache-limit 5 \
+              --live-mem-cache-size 104857600 \
               --bind-all \
               --access-token alexelec \
               --login user \
@@ -19,10 +17,47 @@ ACE_USER_ARG="--live-cache-type memory \
 
 # cache in disk
 ACE_USER_ARG="--live-cache-type disk \
-              --vod-buffer 30 \
+              --vod-buffer 60 \
               --cache-limit 14 \
-              --live-diskc-cache-size 15032385536 \
               --bind-all \
               --access-token alexelec \
               --login user \
               --password pass"
+
+################################################################################
+# acestreamengine optional arguments:
+################################################################################
+#  --download-limit DOWNLOAD_LIMIT
+#                        download limit, Kb/s
+#  --upload-limit UPLOAD_LIMIT
+#                        upload limit, Kb/s
+#  --max-connections MAX_CONNECTIONS
+#                        total max connections
+#  --max-peers MAX_PEERS
+#                        max connections to peers
+#  --max-peers-limit MAX_PEERS_LIMIT
+#                        max connections to peers
+#  --max-timeshift-peers MAX_TIMESHIFT_PEERS
+#                        reserve connections for timeshift peers
+#  --max-upload-slots MAX_UPLOAD_SLOTS
+#                        max upload slots
+#  --live-cache-type LIVE_CACHE_TYPE
+#                        Cache type (memory or disk)
+#  --live-diskc-cache-size LIVE_DISKC_CACHE_SIZE
+#                        Disk cache max size in bytes
+#  --live-mem-cache-size LIVE_MEM_CACHE_SIZE
+#                        Memory cache max size in bytes
+#  --bind-all            bind on all interfaces
+#
+#  --cache-limit CACHE_LIMIT
+#                        cache limit, Gb
+#  --vod-buffer VOD_BUFFER
+#                        VOD buffer in seconds
+#  --login LOGIN         user login
+#
+#  --password PASSWORD   use password
+################################################################################
+
+################################################################################
+# webui: http://ip-address:6878/webui/app/alexelec/server
+################################################################################
