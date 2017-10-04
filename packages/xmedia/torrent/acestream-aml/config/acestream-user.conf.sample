@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 ################################################################################
@@ -14,16 +14,15 @@ ACE_USER_ARG="--live-cache-type memory \
               --cache-limit 5 \
               --bind-all \
               --access-token alexelec \
-              --login LOGIN \
-              --password PASSWORD"
+              --login user \
+              --password pass"
 
 # cache in disk
 ACE_USER_ARG="--live-cache-type disk \
-              --live-buffer 60 \
-              --cache-limit 10 \
-              --max-file-size 5368709120 \
-              --live-diskc-cache-size 8589934592 \
+              --vod-buffer 30 \
+              --cache-limit 14 \
+              --live-diskc-cache-size 15032385536 \
               --bind-all \
               --access-token alexelec \
-              --login LOGIN \
-              --password PASSWORD"
+              --login user \
+              --password pass"
