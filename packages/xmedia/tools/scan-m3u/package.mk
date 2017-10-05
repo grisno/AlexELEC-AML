@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="scan-m3u"
-PKG_VERSION="1.3"
+PKG_VERSION="1.4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -29,7 +29,6 @@ make_target() {
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f scan-ttv.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv-get.src
-  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f iptvx.src
 }
 
 makeinstall_target() {
@@ -40,9 +39,6 @@ makeinstall_target() {
     cp scan-ttv.src.x $INSTALL/usr/bin/scan-ttv
     cp live-ttv.src.x $INSTALL/usr/bin/live-ttv
     cp live-ttv-get.src.x $INSTALL/usr/bin/live-ttv-get
-    cp iptvx.src.x $INSTALL/usr/bin/iptvx
   mkdir -p $INSTALL/usr/config/acestream
-    cp $PKG_DIR/config/ttv-logo.list $INSTALL/usr/config/acestream
-  mkdir -p $INSTALL/usr/config/iptvx
-    cp $PKG_DIR/config/playlist.conf $INSTALL/usr/config/iptvx
+    cp $PKG_DIR/config/* $INSTALL/usr/config/acestream
 }
