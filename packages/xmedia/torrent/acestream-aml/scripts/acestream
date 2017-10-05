@@ -12,7 +12,9 @@ CHROOT_DIR="/storage/.config/acestream"
 [ -z $ACE_LOGIN ] && ACE_LOGIN="user"
 [ -z $ACE_PASSW ] && ACE_PASSW="pass"
 
-ACE_ARG="--live-cache-type disk \
+ACE_ARG="--live-cache-type memory \
+         --vod-buffer 60 \
+         --cache-limit 14 \
          --bind-all \
          --access-token alexelec \
          --login $ACE_LOGIN \

@@ -4,19 +4,10 @@
 ################################################################################
 
 ################################################################################
-# acestreamengine user arguments sample (use only args: memory or disk)
+# acestreamengine user arguments sample:
 ################################################################################
 
-# cache in memory
 ACE_USER_ARG="--live-cache-type memory \
-              --live-mem-cache-size 104857600 \
-              --bind-all \
-              --access-token alexelec \
-              --login user \
-              --password pass"
-
-# cache in disk
-ACE_USER_ARG="--live-cache-type disk \
               --vod-buffer 60 \
               --cache-limit 14 \
               --bind-all \
