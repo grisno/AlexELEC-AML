@@ -1,6 +1,6 @@
 diff -Naurp tvheadend-1873c1c/src/webui/webui.c tvheadend-1873c1c-patch/src/webui/webui.c
 --- tvheadend-1873c1c/src/webui/webui.c	2017-10-18 17:38:30.000000000 +0300
-+++ tvheadend-1873c1c-patch/src/webui/webui.c	2017-10-18 18:24:35.000000000 +0300
++++ tvheadend-1873c1c-patch/src/webui/webui.c	2017-10-19 16:02:44.000000000 +0300
 @@ -553,9 +553,9 @@ http_m3u_playlist_add(htsbuf_queue_t *hq
    htsbuf_append_str(hq, "#EXTINF:-1");
    if (logo) {
@@ -13,45 +13,3 @@ diff -Naurp tvheadend-1873c1c/src/webui/webui.c tvheadend-1873c1c-patch/src/webu
    }
    if (epgid)
      htsbuf_qprintf(hq, " tvg-id=\"%s\"", epgid);
-@@ -568,6 +568,29 @@ http_m3u_playlist_add(htsbuf_queue_t *hq
-  *
-  */
- static void
-+http_m3u_playlist_add_tag(htsbuf_queue_t *hq, const char *hostpath,
-+                      const char *url_remain, const char *profile,
-+                      const char *svcname, const char *logo,
-+                      const char *tag, access_t *access)
-+{
-+  htsbuf_append_str(hq, "#EXTINF:-1");
-+  if (tag)
-+    htsbuf_qprintf(hq, " group-title=\"%s\"", tag);
-+  if (logo) {
-+    if (strncmp(logo, "imagecache/", 11) == 0)
-+      htsbuf_qprintf(hq, " tvg-logo=\"%s/%s\"", hostpath, logo);
-+    else
-+      htsbuf_qprintf(hq, " tvg-logo=\"%s\"", logo);
-+  }
-+  htsbuf_qprintf(hq, ",%s\n%s%s?ticket=%s", svcname, hostpath, url_remain,
-+                     access_ticket_create(url_remain, access));
-+  htsbuf_qprintf(hq, "&profile=%s\n", profile);
-+}
-+
-+/*
-+ *
-+ */
-+static void
- http_e2_playlist_add(htsbuf_queue_t *hq, const char *hostpath,
-                      const char *url_remain, const char *profile,
-                      const char *svcname)
-@@ -720,9 +743,9 @@ http_tag_playlist(http_connection_t *hc,
-     snprintf(buf, sizeof(buf), "/stream/channelid/%d", channel_get_id(ch));
-     name = channel_get_name(ch, blank);
-     if (pltype == PLAYLIST_M3U) {
--      http_m3u_playlist_add(hq, hostpath, buf, profile, name,
-+      http_m3u_playlist_add_tag(hq, hostpath, buf, profile, name,
-                             channel_get_icon(ch),
--                            channel_get_uuid(ch, ubuf),
-+                            tag->ct_name,
-                             hc->hc_access);
-     } else if (pltype == PLAYLIST_E2) {
-       htsbuf_qprintf(hq, "#NAME %s\n", name);
