@@ -1,12 +1,15 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
+
+#GIT_URL="https://github.com/AndreyPavlenko/aceproxy.git"
+GIT_URL="https://github.com/pepsik-kiev/aceproxy.git"
 
 echo "getting sources..."
   if [ ! -d aceproxy.git ]; then
-    git clone https://github.com/AndreyPavlenko/aceproxy.git aceproxy.git
+    git clone $GIT_URL aceproxy.git
   fi
 
   cd aceproxy.git
@@ -32,7 +35,7 @@ cat > install <<EOF
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 FW_DIR="\$DESTDIR/usr/config"

@@ -1,18 +1,18 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 SERVICE_DIR="/storage/.cache/services"
 ACEPROXY_DIR="/storage/.config/aceproxy"
 ACEPROXY_CONFDIR="$ACEPROXY_DIR/plugins/config"
 
-[ -f $SERVICE_DIR/aceproxy.conf ] && . $SERVICE_DIR/aceproxy.conf
+ACEPROXY_DEBUG="INFO"
+ACEPROXY_LOGIN="none"
+ACEPROXY_PASSW="none"
 
-[ -z $ACEPROXY_DEBUG ] && ACEPROXY_DEBUG="INFO"
-[ -z $ACEPROXY_LOGIN ] && ACEPROXY_LOGIN="none"
-[ -z $ACEPROXY_PASSW ] && ACEPROXY_PASSW="none"
+[ -f $SERVICE_DIR/aceproxy.conf ] && . $SERVICE_DIR/aceproxy.conf
 
 rm -f $ACEPROXY_DIR/aceconfig.pyo
 
