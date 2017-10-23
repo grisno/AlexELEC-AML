@@ -38,20 +38,7 @@ diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoRenderers/HwDecRen
  
    int m_iRenderBuffer;
 -  static const int m_numRenderBuffers = 4;
-+  static const int m_numRenderBuffers = 8;
++  static const int m_numRenderBuffers = 6;
  
    struct BUFFER
    {
-diff -Naurp kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoRenderers/BaseRenderer.h kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoRenderers/BaseRenderer.h
---- kodi-17.5-rc1-07424d3/xbmc/cores/VideoPlayer/VideoRenderers/BaseRenderer.h	2017-09-20 08:21:44.000000000 +0300
-+++ kodi-17.5-rc1-07424d3-patch/xbmc/cores/VideoPlayer/VideoRenderers/BaseRenderer.h	2017-09-20 09:29:41.000000000 +0300
-@@ -30,7 +30,7 @@
- 
- #define MAX_PLANES 3
- #define MAX_FIELDS 3
--#define NUM_BUFFERS 6
-+#define NUM_BUFFERS 8
- 
- class CSetting;
- 
---
