@@ -1,11 +1,11 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="kodi"
-GIT_VERSION="2852c5e"
-PKG_VERSION="17.5-rc1-$GIT_VERSION"
+GIT_VERSION="5bd45ab"
+PKG_VERSION="17.5-$GIT_VERSION"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
