@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="acestream-aml"
-PKG_VERSION="3.1.19"
+PKG_VERSION="3.1.19.1"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

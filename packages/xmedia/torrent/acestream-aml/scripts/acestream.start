@@ -17,7 +17,6 @@ mkdir -p $CHROOT_DIR/system/data/data/org.acestream.engine/files/.ACEStream
 
 [ -z "$ACE_MOUNT_SD" ] && ACE_MOUNT_SD="none"
 [ -z "$ACE_MOUNT_USB" ] && ACE_MOUNT_USB="none"
-[ -z "$ACE_CLEAN_CACHE" ] && ACE_CLEAN_CACHE="0"
 
 mkdir -p $CHROOT_DIR/dev
 mkdir -p $CHROOT_DIR/sys
@@ -53,7 +52,7 @@ if [ "$MOUNT_DISK" != "none" ]; then
   fi
 fi
 
-[ "$ACE_CLEAN_CACHE" == "1" ] && rm -fR $CHROOT_DIR/media/acecache &>/dev/null
+[ "$ACE_CLEAN_CACHE" == "1" ] && rm -fR "$CHROOT_DIR/media/acecache/.acestream_cache" &>/dev/null
 
 /sbin/chroot $CHROOT_DIR /system/bin/sh -c "cd /system/data/data/org.acestream.engine/files ; /system/bin/acestream.sh"  > $LOG_FILE 2>&1 - << EOF
 import os

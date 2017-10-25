@@ -1,14 +1,14 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="aceproxy"
-PKG_VERSION="10d0051"
+PKG_VERSION="2fb80f9"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/AndreyPavlenko/aceproxy"
+PKG_SITE="https://github.com/pepsik-kiev/aceproxy"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto"
 PKG_SECTION="xmedia/torrent"

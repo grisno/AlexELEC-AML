@@ -1,15 +1,16 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="libretro-picodrive"
-PKG_VERSION="cbc93b6"
+PKG_VERSION="9ae88ef"
+PKG_CYCLONE="66dda84"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/libretro/picodrive"
-PKG_URL="https://github.com/libretro/picodrive/archive/$PKG_VERSION.tar.gz"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_SOURCE_DIR="picodrive-$PKG_VERSION*"
 PKG_DEPENDS_TARGET="toolchain $PKG_NAME:host"
 PKG_SECTION="xmedia/games"
@@ -21,10 +22,8 @@ PKG_AUTORECONF="no"
 post_unpack() {
   cd $PKG_BUILD
   git clone https://github.com/notaz/cyclone68000.git cpu/cyclone
-  git clone https://github.com/notaz/libpicofe.git platform/libpicofe
-  rm -rf cpu/cyclone/.git
-  rm -rf platform/libpicofe/.git
-  rm -rf .git
+  cd cpu/cyclone
+  git reset --hard $PKG_CYCLONE
   cd $ROOT
 }
 
@@ -57,18 +56,7 @@ configure_target() {
 }
 
 make_target() {
-  case $PROJECT in
-    S805)
-       project=armv-aml805
-      ;;
-    S812)
-      project=armv-aml812
-      ;;
-    S905)
-      project=armv-aml905
-      ;;
-  esac
-  make -f Makefile.libretro platform=$project
+  make -f Makefile.libretro GIT_VERSION=$PKG_VERSION
 }
 
 makeinstall_target() {

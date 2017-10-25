@@ -9,17 +9,12 @@ CHROOT_DIR="/storage/.config/acestream"
 
 [ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
 
-[ -z $ACE_CACHE_TYPE ] && ACE_CACHE_TYPE="memory"
-[ -z $ACE_CACHE_LIMIT ] && ACE_CACHE_LIMIT="5"
-[ -z $ACE_LIFE_BUFFER ] && ACE_LIFE_BUFFER="30"
-[ -z $ACE_LIFE_CACHE_SIZE ] && ACE_LIFE_CACHE_SIZE="20971520"
 [ -z $ACE_LOGIN ] && ACE_LOGIN="user"
 [ -z $ACE_PASSW ] && ACE_PASSW="pass"
 
-ACE_ARG="--live-cache-type $ACE_CACHE_TYPE \
-         --live-buffer $ACE_LIFE_BUFFER \
-         --cache-limit $ACE_CACHE_LIMIT \
-         --live-cache-size $ACE_LIFE_CACHE_SIZE \
+ACE_ARG="--live-cache-type memory \
+         --vod-buffer 60 \
+         --cache-limit 14 \
          --bind-all \
          --access-token alexelec \
          --login $ACE_LOGIN \

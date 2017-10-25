@@ -23,6 +23,18 @@ TMP_LIST="/tmp/tmp-acettv.list"
 TOR_STATUS="none"
 RUN_STATUS=
 
+URL_FILE="$ACE_DIR/trash-url.conf"
+URL_TRASH="https://pomoyka.win"
+
+if [ -f "$URL_FILE" ]; then
+  . $URL_FILE
+  [ -n "$TRASH" ] && URL_TRASH=$TRASH
+fi
+
+URL_JSON="$URL_TRASH/trash/ttv-list/acelive.json"
+URL_M3U=$(echo $URL_JSON | sed 's|\.json|\/|; s|:|%3A|g; s|\/|%2F|g')
+
+
 [ -f $SERVICE_DIR/acettv.conf ] && . $SERVICE_DIR/acettv.conf
 [ -f $SERVICE_DIR/acerun.conf ] && . $SERVICE_DIR/acerun.conf
 
@@ -46,7 +58,7 @@ ace_run () {
     STAT_OLD=`stat $JSON_FILE_GZ | grep 'Modify:'`
   fi
 
-  curl -s -k --connect-timeout 5 --max-time 20 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "https://pomoyka.win/trash/ttv-list/acelive.json"
+  curl -s -k --connect-timeout 5 --max-time 20 -R -z "$JSON_FILE_GZ" -o "$JSON_FILE_GZ" -H "Accept-Encoding: gzip" "$URL_JSON"
 
   if [ ! -f "$JSON_FILE_GZ" ]; then
     /usr/bin/tor > /dev/null 2>&1 &
@@ -111,7 +123,7 @@ ace_run () {
 
       [ "$TOR_STATUS" == "none" ] && echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U
       echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U_DIRECT
-      [ "$TOR_STATUS" == "none" ] && echo "http://${URL_IP}:6878/ace/getstream?url=https%3A%2F%2Fpomoyka.win%2Ftrash%2Fttv-list%2Facelive%2F${CH_PATH}&.mp4" >> $ACE_M3U
+      [ "$TOR_STATUS" == "none" ] && echo "http://${URL_IP}:6878/ace/getstream?url=${URL_M3U}${CH_PATH}&.mp4" >> $ACE_M3U
       echo "http://${URL_IP}:6878/ace/getstream?id=${CH_CID}&.mp4" >> $ACE_M3U_DIRECT
     done
 
