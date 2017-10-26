@@ -1,7 +1,15 @@
-diff -Naurp aceproxy-2fb80f9/aceproxy/aceconfig.py aceproxy-2fb80f9-patch/aceproxy/aceconfig.py
---- aceproxy-2fb80f9/aceproxy/aceconfig.py	2017-10-20 10:38:40.000000000 +0300
-+++ aceproxy-2fb80f9-patch/aceproxy/aceconfig.py	2017-10-20 10:49:28.000000000 +0300
-@@ -162,7 +162,7 @@ class AceConfig(acedefconfig.AceDefConfi
+diff -Naurp aceproxy-d4a2ee1/aceproxy/aceconfig.py aceproxy-d4a2ee1-patch/aceproxy/aceconfig.py
+--- aceproxy-d4a2ee1/aceproxy/aceconfig.py	2017-10-26 10:08:56.000000000 +0300
++++ aceproxy-d4a2ee1-patch/aceproxy/aceconfig.py	2017-10-26 13:32:15.000000000 +0300
+@@ -3,7 +3,6 @@ AceProxy configuration scrip
+ Edit this file.
+ '''
+ import logging
+-import colorer
+ import acedefconfig
+ from aceclient.acemessages import AceConst
+ 
+@@ -163,7 +162,7 @@ class AceConfig(acedefconfig.AceDefConfi
      # Prefered audio language in translation on start http://xml.coverpages.org/nisoLang3-1994.html
      preferred_audio_language = 'rus'
      # ----------------------------------------------------
@@ -10,7 +18,7 @@ diff -Naurp aceproxy-2fb80f9/aceproxy/aceconfig.py aceproxy-2fb80f9-patch/acepro
      # Obey PAUSE and RESUME commands from Engine
      # (stops sending data to client, should prevent annoying buffering)
      # !!!
-@@ -174,19 +174,19 @@ class AceConfig(acedefconfig.AceDefConfi
+@@ -175,19 +174,19 @@ class AceConfig(acedefconfig.AceDefConfi
      # !!!
      # PLEASE set this to 0 if you use VLC
      # !!!
@@ -34,7 +42,7 @@ diff -Naurp aceproxy-2fb80f9/aceproxy/aceconfig.py aceproxy-2fb80f9-patch/acepro
      #
      # If True - use *.aclive/torrent files given in playlist and do START TORRENT acestream command for start translation
      # If False - then at the beginning we try to obtain CID from *.aclive/torrent file and do START PID for start translation
-@@ -207,13 +207,13 @@ class AceConfig(acedefconfig.AceDefConfi
+@@ -208,13 +207,13 @@ class AceConfig(acedefconfig.AceDefConfi
      # Logging configuration
      #
      # Log level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
