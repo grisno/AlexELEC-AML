@@ -3,17 +3,17 @@
 #      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-PKG_NAME="requests"
-PKG_VERSION="2.18.4"
+PKG_NAME="urllib3"
+PKG_VERSION="1.22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Apache"
-PKG_SITE="https://github.com/requests/requests"
-PKG_URL="$PKG_SITE/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host urllib3 idna chardet"
+PKG_SITE="https://github.com/shazow/urllib3"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="xmedia/torrent"
-PKG_SHORTDESC="Python HTTP for Humans"
-PKG_LONGDESC="Python HTTP for Humans."
+PKG_SHORTDESC="HTTP library with thread-safe connection pooling and file post support"
+PKG_LONGDESC="HTTP library with thread-safe connection pooling and file post support."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 

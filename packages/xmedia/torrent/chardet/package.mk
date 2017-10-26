@@ -3,17 +3,17 @@
 #      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-PKG_NAME="requests"
-PKG_VERSION="2.18.4"
+PKG_NAME="chardet"
+PKG_VERSION="3.0.4"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="Apache"
-PKG_SITE="https://github.com/requests/requests"
-PKG_URL="$PKG_SITE/archive/v$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host urllib3 idna chardet"
+PKG_LICENSE="LGPL"
+PKG_SITE="https://github.com/chardet/chardet"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="xmedia/torrent"
-PKG_SHORTDESC="Python HTTP for Humans"
-PKG_LONGDESC="Python HTTP for Humans."
+PKG_SHORTDESC="Python module for character encoding auto-detection"
+PKG_LONGDESC="Python module for character encoding auto-detection."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -27,6 +27,7 @@ make_target() {
 
 makeinstall_target() {
   python setup.py install --root=$INSTALL --prefix=/usr
+  rm -fR $INSTALL/usr/bin
 }
 
 post_makeinstall_target() {
