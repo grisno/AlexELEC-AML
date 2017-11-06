@@ -1,7 +1,7 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 
@@ -34,10 +34,10 @@ if [ ! -d $HOME/.kodi/addons ]; then
 fi
 
 # add default addons settings
-if [ ! -d $HOME/.kodi/userdata/addon_data/weather.openweathermap.extended ]; then
-  if [ -d /usr/share/kodi/config/weather.openweathermap.extended ]; then
+if [ ! -d $HOME/.kodi/userdata/addon_data/weather.gismeteo ]; then
+  if [ -d /usr/share/kodi/config/weather.gismeteo ]; then
     mkdir -p $HOME/.kodi/userdata/addon_data
-    cp -R /usr/share/kodi/config/weather.openweathermap.extended $HOME/.kodi/userdata/addon_data
+    cp -R /usr/share/kodi/config/weather.gismeteo $HOME/.kodi/userdata/addon_data
   fi
 fi
 
