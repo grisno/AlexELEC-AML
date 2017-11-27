@@ -4,13 +4,13 @@
 ################################################################################
 
 PKG_NAME="aceproxy"
-PKG_VERSION="413a947"
+PKG_VERSION="d4a2ee1"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/pepsik-kiev/aceproxy"
 PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto requests bencode"
+PKG_DEPENDS_TARGET="toolchain gevent psutil M2Crypto requests"
 PKG_SECTION="xmedia/torrent"
 PKG_SHORTDESC="AceProxy: Ace Stream HTTP Proxy"
 PKG_LONGDESC="AceProxy: Ace Stream HTTP Proxy."
