@@ -26,7 +26,6 @@ fi
 
 pre_configure_target() {
   sed -i 's,hw_cap_p2p = on,hw_cap_p2p = off,g' ssv6051/firmware/ssv6051-wifi.cfg
-  sed -i 's|firmware_path = /usr/lib/firmware/ssv6051/|firmware_path = /lib/firmware/ssv6051/|' ssv6051/firmware/ssv6051-wifi.cfg
 }
 
 make_target() {
