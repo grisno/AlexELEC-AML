@@ -46,7 +46,7 @@
         <trafficadvisoryvolume default="true">10</trafficadvisoryvolume>
     </pvrplayback>
     <weather>
-        <addon>weather.openweathermap.extended</addon>
+        <addon>weather.gismeteo</addon>
         <currentlocation default="true">1</currentlocation>
     </weather>
     <audio>

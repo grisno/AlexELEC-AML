@@ -73,7 +73,7 @@
         <autoplaynextitem>false</autoplaynextitem>
     </videoplayer>
     <weather>
-        <addon>weather.openweathermap.extended</addon>
+        <addon>weather.gismeteo</addon>
         <currentlocation default="true">1</currentlocation>
     </weather>
     <audio>
