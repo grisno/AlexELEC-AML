@@ -263,6 +263,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/nand-config.sh $INSTALL/usr/bin
 # Drop RAM service
     cp $PKG_DIR/scripts/drop-ram.start $INSTALL/usr/bin
+# RGB service
+    cp $PKG_DIR/scripts/forcergb.start $INSTALL/usr/bin
 # Wait network service
     cp $PKG_DIR/scripts/wait-net.run $INSTALL/usr/bin
 
@@ -392,4 +394,6 @@ post_install() {
   enable_service gui-switch.service
 # Drop RAM service
   enable_service drop-ram.service
+# RGB service
+  enable_service forcergb.service
 }
