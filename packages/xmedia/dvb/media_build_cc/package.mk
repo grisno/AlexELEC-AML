@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="media_build_cc"
@@ -45,7 +45,7 @@ make_target() {
   fi
 
   # Amlogic DVB driver avl6862 & wetekdvb
-  if [ "$PROJECT" = "S905" ]; then
+  if [ "$PROJECT" = "S905" -o "$PROJECT" = "S912" ]; then
     if [ -d $PROJECT_DIR/$PROJECT/dvb_tv ]; then
       cp -a $PROJECT_DIR/$PROJECT/dvb_tv linux/drivers/media
       echo "obj-y += dvb_tv/" >> linux/drivers/media/Makefile

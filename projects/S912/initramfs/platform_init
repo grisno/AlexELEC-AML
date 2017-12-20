@@ -27,6 +27,9 @@ for arg in $(cat /proc/cmdline); do
   esac
 done
 
+# Force 1080p50hz HDMI mode for S912
+hdmimode="1080p50hz"
+
 # Add information where to run AlexELEC from
 if [ -z "$BOOT_IMAGE" -o -z "$boot" -o -z "$disk" ]; then
   cmdline=$(cat /proc/cmdline)
@@ -39,14 +42,13 @@ if [ -z "$BOOT_IMAGE" -o -z "$boot" -o -z "$disk" ]; then
 fi
 
 # Enable HDMI output if cable is connected and not already enabled by u-boot
-[ -z "$hdmimode" ] && hdmimode="1080p50hz"
 if [ "$(cat /sys/class/amhdmitx/amhdmitx0/hpd_state)" != "0" ] && [ "$display_mode" != "$hdmimode" ]; then
+  echo "$hdmimode" > /sys/class/display/mode
   display_mode="$hdmimode"
-  echo "$display_mode" > /sys/class/display/mode
 fi
 
 # Set framebuffer geometry to match the resolution
-case $display_mode in
+case $hdmimode in
   480*)            X=720  Y=480  ;;
   576*)            X=720  Y=576  ;;
   720p*)           X=1280 Y=720  ;;
@@ -60,7 +62,7 @@ echo 0 > /sys/class/graphics/fb1/free_scale
 echo 1 > /sys/class/video/disable_video
 
 # Enable scaling for 4K output
-case $display_mode in
+case $hdmimode in
   4k*|smpte*|2160*)
     echo 0 0 1919 1079 > /sys/class/graphics/fb0/free_scale_axis
     echo 0 0 3839 2159 > /sys/class/graphics/fb0/window_axis
@@ -83,6 +85,10 @@ echo 1 > /sys/class/graphics/fb1/blank
 for part in /sys/block/*/queue/add_random; do
   echo 0 > "$part"
 done
+
+# Set 1GHz minimum CPU speed for both clusters
+echo 1000000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 1000000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
 
 # set smp_affinity
 #            Binary       Hex

@@ -1,0 +1,12 @@
+diff -Naurp kodi-17.4-rc1-02af98c/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp kodi-17.4-rc1-02af98c-patch/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp
+--- kodi-17.4-rc1-02af98c/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp	2017-08-17 09:29:43.000000000 +0300
++++ kodi-17.4-rc1-02af98c-patch/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp	2017-08-17 09:35:44.000000000 +0300
+@@ -153,6 +153,8 @@ bool CEGLNativeTypeAmlogic::SetNativeRes
+   }
+ #endif
+ 
++  aml_handle_display_stereo_mode(RENDER_STEREO_MODE_OFF);
++
+   // Don't set the same mode as current
+   RESOLUTION_INFO current_resolution;
+   GetNativeResolution(&current_resolution);
