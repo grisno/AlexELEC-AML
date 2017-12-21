@@ -1,0 +1,14 @@
+diff -Naurp kodi-17.6-a9a7a20/xbmc/Application.cpp kodi-17.6-a9a7a20-patch/xbmc/Application.cpp
+--- kodi-17.6-a9a7a20/xbmc/Application.cpp	2017-12-21 10:11:39.000000000 +0200
++++ kodi-17.6-a9a7a20-patch/xbmc/Application.cpp	2017-12-21 10:15:54.000000000 +0200
+@@ -3022,8 +3022,8 @@ void CApplication::Stop(int exitCode)
+   else if (m_ExitCode == EXITCODE_GAMES)
+   {
+     remove("/var/lock/start.kodi");
+-    creat("/var/lock/start.games", S_IRUSR|S_IROTH);
+-    system("systemctl start emustation.service");
++    creat("/var/lock/start.retro", S_IRUSR|S_IROTH);
++    system("systemctl start retroarch.service");
+   }
+ 
+   Sleep(200);

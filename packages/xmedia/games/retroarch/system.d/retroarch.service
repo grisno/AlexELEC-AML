@@ -8,6 +8,8 @@ Environment=SDL_MOUSE_RELATIVE=0
 Environment=FB_MULTI_BUFFER=2
 Environment=HOME=/storage
 ExecStart=/usr/bin/retroarch
+ExecStartPre=-/usr/bin/remotecfg /storage/.config/amremote/remote-games.conf
+ExecStartPre=/usr/bin/emustation-config
 KillMode=process
 TimeoutStopSec=3
 Restart=on-failure
