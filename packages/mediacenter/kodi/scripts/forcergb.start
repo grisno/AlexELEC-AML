@@ -1,0 +1,37 @@
+#!/bin/sh
+################################################################################
+#      This file is part of Alex@ELEC - http://www.alexelec.in.ua
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
+################################################################################
+
+LOCK_RGB="/var/lock/rgb.lock"
+SERVICE_DIR="/storage/.cache/services"
+[ -f "$SERVICE_DIR/forcergb.conf" ] && . $SERVICE_DIR/forcergb.conf
+
+[ -z "$ATTR_RGB" ] && ATTR_RGB="none"
+[ -z "$OUTPUT_RGB" ] && OUTPUT_RGB="0"
+
+if [ "$ATTR_RGB" == "none" -a "$OUTPUT_RGB" == "0" ]; then
+  [ ! -f "$LOCK_RGB" ] && exit 0
+fi
+
+BITS_RGB="/sys/class/amhdmitx/amhdmitx0/attr"
+FORCE_RGB="/sys/class/amhdmitx/amhdmitx0/output_rgb"
+
+if [ -e "$FORCE_RGB" ]; then
+  echo $OUTPUT_RGB > $FORCE_RGB
+fi
+
+if [ -e "$BITS_RGB" ]; then
+  if [ "$ATTR_RGB" != "none" ]; then
+    echo "rgb,$ATTR_RGB" > $BITS_RGB
+  else
+    echo '' > $BITS_RGB
+  fi
+  RES=$(cat /sys/class/display/mode)
+  echo null > /sys/class/display/mode
+  echo $RES > /sys/class/display/mode
+fi
+
+touch $LOCK_RGB
+exit 0

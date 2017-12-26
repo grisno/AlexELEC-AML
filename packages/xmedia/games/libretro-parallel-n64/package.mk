@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="libretro-parallel-n64"
@@ -34,7 +34,7 @@ make_target() {
     S812)
       project=armv-aml812
       ;;
-    S905)
+    S9*)
       project=armv-aml905
       ;;
   esac

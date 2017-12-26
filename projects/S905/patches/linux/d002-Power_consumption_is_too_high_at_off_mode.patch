@@ -1,0 +1,163 @@
+diff --git a/drivers/amlogic/display/vout/vout_notify.c b/drivers/amlogic/display/vout/vout_notify.c
+index 739075caf90..4d476e3ab6f 100644
+--- a/drivers/amlogic/display/vout/vout_notify.c
++++ b/drivers/amlogic/display/vout/vout_notify.c
+@@ -347,6 +347,23 @@ enum vmode_e validate_vmode(char *name)
+ }
+ EXPORT_SYMBOL(validate_vmode);
+ 
++/*
++*interface export to client who want to shutdown.
++*/
++int vout_shutdown(void)
++{
++	int ret = -1;
++	struct vout_server_s *p_server;
++
++	list_for_each_entry(p_server, &vout_module.vout_server_list, list) {
++		if (p_server->op.vout_shutdown)
++			ret = p_server->op.vout_shutdown();
++	}
++
++	return ret;
++}
++EXPORT_SYMBOL(vout_shutdown);
++
+ /*
+ *here we offer two functions to get and register vout module server
+ *vout module server will set and store tvmode attributes for vout encoder
+diff --git a/drivers/amlogic/display/vout/vout_serve.c b/drivers/amlogic/display/vout/vout_serve.c
+index 9024655a3c7..67a271ae0fd 100644
+--- a/drivers/amlogic/display/vout/vout_serve.c
++++ b/drivers/amlogic/display/vout/vout_serve.c
+@@ -726,6 +726,12 @@ static int meson_vout_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static void meson_vout_shutdown(struct platform_device *pdev)
++{
++	vout_log_info("%s\n", __func__);
++	vout_shutdown();
++}
++
+ static const struct of_device_id meson_vout_dt_match[] = {
+ 	{ .compatible = "amlogic, meson-vout",},
+ 	{ },
+@@ -745,6 +751,7 @@ static struct platform_driver
+ 	vout_driver = {
+ 	.probe      = meson_vout_probe,
+ 	.remove     = meson_vout_remove,
++	.shutdown   = meson_vout_shutdown,
+ #ifdef CONFIG_PM
+ 	.suspend  = meson_vout_suspend,
+ 	.resume    = meson_vout_resume,
+@@ -761,7 +768,7 @@ static struct platform_driver
+ static int __init vout_init_module(void)
+ {
+ 	int ret = 0;
+-	vout_log_info("%s\n", __func__);
++	/*vout_log_info("%s\n", __func__);*/
+ 
+ 	if (platform_driver_register(&vout_driver)) {
+ 		vout_log_err("failed to register VOUT driver\n");
+@@ -773,7 +780,7 @@ static int __init vout_init_module(void)
+ 
+ static __exit void vout_exit_module(void)
+ {
+-	vout_log_info("%s\n", __func__);
++	/*vout_log_info("%s\n", __func__);*/
+ 	platform_driver_unregister(&vout_driver);
+ }
+ 
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 6274f20cec0..83fbd11ea39 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -772,6 +772,42 @@ static int dwc3_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
++#ifdef CONFIG_AMLOGIC_USB
++void dwc3_shutdown(struct platform_device *pdev)
++{
++	struct dwc3 *dwc = platform_get_drvdata(pdev);
++
++	dwc3_debugfs_exit(dwc);
++
++	switch (dwc->dr_mode) {
++	case USB_DR_MODE_PERIPHERAL:
++		dwc3_gadget_exit(dwc);
++		break;
++	case USB_DR_MODE_HOST:
++		dwc3_host_exit(dwc);
++		break;
++	case USB_DR_MODE_OTG:
++		dwc3_host_exit(dwc);
++		dwc3_gadget_exit(dwc);
++		break;
++	default:
++		/* do nothing */
++		break;
++	}
++
++	dwc3_event_buffers_cleanup(dwc);
++	dwc3_free_event_buffers(dwc);
++
++	usb_phy_set_suspend(dwc->usb2_phy, 1);
++	usb_phy_set_suspend(dwc->usb3_phy, 1);
++
++	dwc3_core_exit(dwc);
++
++	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_disable(&pdev->dev);
++}
++#endif
++
+ static int dwc3_remove(struct platform_device *pdev)
+ {
+ 	struct dwc3	*dwc = platform_get_drvdata(pdev);
+@@ -927,6 +963,9 @@ static const struct dev_pm_ops dwc3_dev_pm_ops = {
+ static struct platform_driver dwc3_driver = {
+ 	.probe		= dwc3_probe,
+ 	.remove		= dwc3_remove,
++#ifdef CONFIG_AMLOGIC_USB
++	.shutdown       = dwc3_shutdown,
++#endif
+ 	.driver		= {
+ 		.name	= "dwc3",
+ 		.of_match_table	= of_match_ptr(of_dwc3_match),
+diff --git a/include/linux/amlogic/vout/vout_notify.h b/include/linux/amlogic/vout/vout_notify.h
+index c3449f097b6..d3b0406ab7c 100644
+--- a/include/linux/amlogic/vout/vout_notify.h
++++ b/include/linux/amlogic/vout/vout_notify.h
+@@ -39,6 +39,7 @@ struct vout_op_s {
+ 	int (*get_vframe_rate_policy)(void);
+ 	int (*vout_suspend)(void);
+ 	int (*vout_resume)(void);
++	int (*vout_shutdown)(void);
+ };
+ 
+ struct vout_server_s {
+@@ -83,6 +84,7 @@ extern void set_vout_mode_fr_auto(char *name);
+ 
+ extern int vout_suspend(void);
+ extern int vout_resume(void);
++extern int vout_shutdown(void);
+ 
+ extern int get_power_level(void);
+ 
+diff --git a/sound/soc/aml/m8/aml_m8.c b/sound/soc/aml/m8/aml_m8.c
+index 54cb030176a..812c2c21a6f 100644
+--- a/sound/soc/aml/m8/aml_m8.c
++++ b/sound/soc/aml/m8/aml_m8.c
+@@ -748,6 +748,10 @@ static int aml_m8_audio_probe(struct platform_device *pdev)
+ static void aml_audio_shutdown(struct platform_device *pdev)
+ {
+ 	struct pinctrl_state *state;
++	struct snd_soc_card *card;
++
++	card = platform_get_drvdata(pdev);
++	aml_suspend_pre(card);
+ 
+ 	if (IS_ERR_OR_NULL(p_audio->pin_ctl)) {
+ 		pr_info("no audio pin_ctrl to shutdown\n");
