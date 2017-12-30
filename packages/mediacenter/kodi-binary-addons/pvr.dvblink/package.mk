@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="pvr.dvblink"
-PKG_VERSION="17d1263"
+PKG_VERSION="339c3ea"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

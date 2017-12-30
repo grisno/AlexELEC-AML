@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="pvr.vuplus"
-PKG_VERSION="25c4883"
+PKG_VERSION="c1e6a22"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

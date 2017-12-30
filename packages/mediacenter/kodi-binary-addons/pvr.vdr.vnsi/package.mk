@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="pvr.vdr.vnsi"
-PKG_VERSION="fa1e4f5"
+PKG_VERSION="782590c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
