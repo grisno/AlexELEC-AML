@@ -14,7 +14,6 @@ ACE_M3U_DIRECT="$M3U_DIR/AceLive-TTV-Direct.m3u"
 
 NOX_DIR="/storage/.config/noxbit"
 NOX_FILE="$NOX_DIR/ttv-m3u/noxbit.m3u"
-NOX_FILE_GZ="$NOX_FILE.gz"
 
 ACE_DIR="/storage/.config/acestream"
 JSON_FILE="$ACE_DIR/ttv-m3u/acelive.json"
@@ -155,9 +154,9 @@ nox_run () {
   mkdir -p $NOX_DIR/ttv-m3u
   rm -rf $NOX_DIR/ttv-m3u/*
 
-  curl -s --connect-timeout 5 --max-time 20 -o "$NOX_FILE_GZ" -H "Accept-Encoding: gzip" "$NOX_LIST_URL"
+  curl -s --connect-timeout 5 --max-time 20 -o "$NOX_FILE" "$NOX_LIST_URL"
 
-  if [ ! -f "$NOX_FILE_GZ" ]; then
+  if [ ! -f "$NOX_FILE" ]; then
     if [ -n "$RUN_STATUS" ]; then
       echo "$RUN_STATUS"
     else
@@ -166,7 +165,6 @@ nox_run () {
     exit
   fi
 
-  gunzip -c "$NOX_FILE_GZ" > "$NOX_FILE"
   cp -f $NOX_FILE $NOX_M3U
 
   [ "$CAT_SHOW" == 0 ] && del_cat "Развлекательные"
