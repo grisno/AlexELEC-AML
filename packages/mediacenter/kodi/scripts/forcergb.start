@@ -24,7 +24,7 @@ fi
 
 if [ -e "$BITS_RGB" ]; then
   if [ "$ATTR_RGB" != "none" ]; then
-    echo "rgb,$ATTR_RGB" > $BITS_RGB
+    echo "$ATTR_RGB" > $BITS_RGB
   else
     echo '' > $BITS_RGB
   fi
