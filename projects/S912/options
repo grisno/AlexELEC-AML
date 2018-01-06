@@ -32,6 +32,14 @@
 
   # Kernel extra targets to build
     KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb gxm_q201_1g.dtb gxm_q201_2g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_1g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_2g_minix.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_3g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q200_k3.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q201_1g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q201_2g.dtb"
+      #KERNEL_UBOOT_EXTRA_TARGET="gxm_q201_3g.dtb"
 
   # Build Android kernel image using mkbootimg
     BUILD_ANDROID_BOOTIMG="yes"
