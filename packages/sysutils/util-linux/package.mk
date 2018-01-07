@@ -1,20 +1,19 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="util-linux"
-PKG_VERSION="2.28"
+PKG_VERSION="2.29"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.28/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="http://www.kernel.org/pub/linux/utils/util-linux/v2.29/$PKG_NAME-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain"
 PKG_SECTION="system"
 PKG_SHORTDESC="util-linux: Miscellaneous system utilities for Linux"
 PKG_LONGDESC="The util-linux package contains a large variety of low-level system utilities that are necessary for a Linux system to function. Among many features, Util-linux contains the fdisk configuration tool and the login program."
-
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="yes"
 
@@ -24,7 +23,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --enable-tls \
                           --disable-all-programs \
                           --enable-chsh-only-listed \
-                          --enable-libmount-force-mountinfo \
                           --disable-bash-completion \
                           --disable-colors-default \
                           --disable-pylibmount \
@@ -39,7 +37,6 @@ UTILLINUX_CONFIG_DEFAULT="--disable-gtk-doc \
                           --without-ncurses \
                           --without-readline \
                           --without-slang \
-                          --without-termcap \
                           --without-tinfo \
                           --without-utempter \
                           --without-util \
@@ -57,6 +54,7 @@ PKG_CONFIGURE_OPTS_TARGET="$UTILLINUX_CONFIG_DEFAULT \
                            --enable-libsmartcols \
                            --enable-losetup \
                            --enable-fsck \
+                           --enable-fstrim \
                            --enable-blkid"
 
 if [ "$SWAP_SUPPORT" = "yes" ]; then
