@@ -1,7 +1,7 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 ################################################################################
@@ -133,6 +133,13 @@ install_to_nand() {
     echo ""
   fi
 }
+
+if [ ! -e /dev/boot -o ! -e /dev/system -o ! -e /dev/data -o ! -e /dev/dtb ]; then
+  echo ""
+  echo -e "${COL_RED}One of BOOT, SYTEM, DATA or DTB partitions is missing.${COL_RESET}"
+  echo -e "${COL_BLUE}Make sure that you are using a correct device tree and a device with internal memory!${COL_RESET}"
+  exit 0
+fi
 
 echo ""
 echo -e "${COL_RED}This script will erase BOOT, SYSTEM, DATA and DTB on your device${COL_RESET}"
