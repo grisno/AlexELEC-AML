@@ -948,12 +948,15 @@
   prepare_sysroot() {
     progress "Preparing system"
 
-    if [ "$SYSTEM_TORAM" = "no" -o "$INSTALLED_MEMORY" -lt "$SYSTEM_TORAM_LIMIT" ]; then
-      mount_part "/flash/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
-    else
-      cp /flash/$IMAGE_SYSTEM /dev/$IMAGE_SYSTEM
-      mount_part "/dev/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
-    fi
+    #if [ "$SYSTEM_TORAM" = "no" -o "$INSTALLED_MEMORY" -lt "$SYSTEM_TORAM_LIMIT" ]; then
+    #  mount_part "/flash/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
+    #else
+    #  cp /flash/$IMAGE_SYSTEM /dev/$IMAGE_SYSTEM
+    #  mount_part "/dev/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
+    #fi
+    
+    # do not copy to RAM for Amlogic
+    mount_part "/flash/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
 
     mount --move /flash /sysroot/flash
     mount --move /storage /sysroot/storage
