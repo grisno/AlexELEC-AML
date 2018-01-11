@@ -1,11 +1,11 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.ru
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.ru)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.ru)
 ################################################################################
 
 PKG_NAME="oscam"
-PKG_VERSION="a44df8f"
-PKG_VERSION_NUMBER="11392"
+PKG_VERSION="d3b3898"
+PKG_VERSION_NUMBER="11398"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
