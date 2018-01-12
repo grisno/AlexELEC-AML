@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="c34114f"
+PKG_VERSION="84047da"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -23,9 +23,7 @@ unpack() {
   cd $PKG_BUILD
   git reset --hard $PKG_VERSION
   TVH_VERSION_NUMBER=`git describe --match "v*" | sed 's/-g.*$//'`
-  echo ""
   echo "****** Tvheadend version: $TVH_VERSION_NUMBER ******"
-  echo ""
   sed -e 's/VER="0.0.0~unknown"/VER="'$TVH_VERSION_NUMBER' ~ Alex@ELEC"/g' -i support/version
   sed -e 's|'/usr/bin/pngquant'|'$ROOT/$TOOLCHAIN/bin/pngquant'|g' -i support/mkbundle
   rm -rf .git
