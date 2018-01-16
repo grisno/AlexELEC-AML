@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="7452830"
+PKG_VERSION="a22a262"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,7 +40,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-libav \
                            --disable-vaapi \
                            --disable-bintray_cache \
-                           --enable-hdhomerun_client \
+                           --disable-hdhomerun_static \
                            --enable-avahi \
                            --enable-dvbcsa \
                            --enable-tvhcsa \
@@ -48,6 +48,8 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
+                           --enable-ccdebug \
+                           --enable-tsdebug \
                            --nowerror \
                            --python=$ROOT/$TOOLCHAIN/bin/python"
 
@@ -62,6 +64,7 @@ pre_configure_target() {
 
 post_make_target() {
   $CC -O -fbuiltin -fomit-frame-pointer -fPIC -shared -o capmt_ca.so src/extra/capmt_ca.c -ldl
+  $STRIP $ROOT/$PKG_BUILD/build.linux/tvheadend
 }
 
 post_makeinstall_target() {
