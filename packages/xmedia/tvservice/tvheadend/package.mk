@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="84047da"
+PKG_VERSION="7452830"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -34,22 +34,17 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --arch=$TARGET_ARCH \
                            --cpu=$TARGET_CPU \
                            --cc=$CC \
-                           --disable-avahi \
-                           --disable-dbus_1 \
                            --disable-uriparser \
                            --disable-dvbscan \
-                           --disable-hdhomerun_client \
-                           --disable-hdhomerun_static \
-                           --disable-nvenc \
                            --disable-ffmpeg_static \
                            --disable-libav \
+                           --disable-vaapi \
                            --disable-bintray_cache \
+                           --enable-hdhomerun_client \
+                           --enable-avahi \
                            --enable-dvbcsa \
                            --enable-tvhcsa \
-                           --enable-dvben50221 \
                            --enable-bundle \
-                           --enable-trace \
-                           --enable-timeshift \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
@@ -67,7 +62,6 @@ pre_configure_target() {
 
 post_make_target() {
   $CC -O -fbuiltin -fomit-frame-pointer -fPIC -shared -o capmt_ca.so src/extra/capmt_ca.c -ldl
-  $STRIP $ROOT/$PKG_BUILD/build.linux/tvheadend
 }
 
 post_makeinstall_target() {
