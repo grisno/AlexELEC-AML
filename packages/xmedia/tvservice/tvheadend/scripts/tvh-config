@@ -53,6 +53,8 @@ if [ "$DVB_FEINIT" == "1" ] ; then
     [ -e /dev/dvb/adapter0/frontend0 ] && break
     sleep 1
   done
+else
+  [ -f "$SERVICE_DIR/oscam.conf" ] && sleep 3
 fi
 
 echo "TVH_ARGS=\"$TVHEADEND_ARG\"" > /run/alexelec/tvh.conf
