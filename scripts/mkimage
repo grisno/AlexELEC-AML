@@ -1,7 +1,7 @@
 #!/bin/bash
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 ################################################################################
@@ -98,9 +98,11 @@ trap cleanup SIGINT
   mcopy $TARGET_IMG/$IMAGE_NAME.system ::/SYSTEM
   mcopy $RELEASE_DIR/target/KERNEL.md5 "::/$KERNEL_NAME.md5"
   mcopy $RELEASE_DIR/target/SYSTEM.md5 ::/SYSTEM.md5
-  if [ -f $TARGET_IMG/$IMAGE_NAME.dtb -a "$PROJECT" = "S905" ]; then
-    echo "image: copy dtb if exist to part1..."
-    mcopy $TARGET_IMG/$IMAGE_NAME.dtb ::/dtb.img
+  if [ -f $TARGET_IMG/$IMAGE_NAME.dtb ]; then
+    if [ "$PROJECT" = "S905" -o "$PROJECT" = "S912" ]; then
+      echo "image: copy dtb if exist to part1..."
+      mcopy $TARGET_IMG/$IMAGE_NAME.dtb ::/dtb.img
+    fi
   fi
 
   for src in $INSTALL_SRC_DIR/*autoscript.src ; do

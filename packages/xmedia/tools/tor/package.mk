@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="tor"
@@ -9,7 +9,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.torproject.org"
-PKG_URL="https://www.torproject.org/dist/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="https://archive.torproject.org/tor-package-archive/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl libevent"
 PKG_SECTION="xmedia/tools"
 PKG_SHORTDESC="Anonymizing overlay network"

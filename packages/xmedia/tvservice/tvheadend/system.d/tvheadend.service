@@ -1,7 +1,8 @@
 [Unit]
 Description=Tvheadend
-After=network-online.target
+After=network-online.target oscam.service
 Before=kodi.service
+Wants=oscam.service
 ConditionPathExists=/storage/.cache/services/tvheadend.conf
 
 [Service]

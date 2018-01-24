@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="c69368b"
+PKG_VERSION="b16e53c"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -19,14 +19,19 @@ PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
 unpack() {
+  RED="\033[0;31m"
+  YELLOW="\033[1;33m"
+  ENDCOLOR="\033[0m"
+
   git clone -b 'master' https://github.com/tvheadend/tvheadend.git $PKG_BUILD
   cd $PKG_BUILD
   git reset --hard $PKG_VERSION
   TVH_VERSION_NUMBER=`git describe --match "v*" | sed 's/-g.*$//'`
-  echo "****** Tvheadend version: $TVH_VERSION_NUMBER ******"
+  echo "-----------------------------------------------------------"
+  echo -e $RED"****** Tvheadend version:"$ENDCOLOR $YELLOW"$TVH_VERSION_NUMBER"$ENDCOLOR $RED"******"$ENDCOLOR
+  echo "-----------------------------------------------------------"
   sed -e 's/VER="0.0.0~unknown"/VER="'$TVH_VERSION_NUMBER' ~ Alex@ELEC"/g' -i support/version
   sed -e 's|'/usr/bin/pngquant'|'$ROOT/$TOOLCHAIN/bin/pngquant'|g' -i support/mkbundle
-  rm -rf .git
   cd $ROOT
 }
 
@@ -34,25 +39,22 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --arch=$TARGET_ARCH \
                            --cpu=$TARGET_CPU \
                            --cc=$CC \
-                           --disable-avahi \
-                           --disable-dbus_1 \
                            --disable-uriparser \
                            --disable-dvbscan \
-                           --disable-hdhomerun_client \
-                           --disable-hdhomerun_static \
-                           --disable-nvenc \
                            --disable-ffmpeg_static \
                            --disable-libav \
+                           --disable-vaapi \
                            --disable-bintray_cache \
+                           --disable-hdhomerun_static \
+                           --disable-avahi \
+                           --disable-dbus_1 \
                            --enable-dvbcsa \
                            --enable-tvhcsa \
-                           --enable-dvben50221 \
                            --enable-bundle \
-                           --enable-trace \
-                           --enable-timeshift \
                            --enable-epoll \
                            --enable-inotify \
                            --enable-pngquant \
+                           --enable-ccdebug \
                            --nowerror \
                            --python=$ROOT/$TOOLCHAIN/bin/python"
 

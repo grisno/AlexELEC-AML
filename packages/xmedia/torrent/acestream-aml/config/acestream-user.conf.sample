@@ -18,6 +18,9 @@ ACE_USER_ARG="--live-cache-type memory \
 ################################################################################
 # acestreamengine optional arguments:
 ################################################################################
+#  --cache-limit CACHE_LIMIT
+#                        cache limit, Gb
+#  --bind-all            bind on all interfaces
 #  --download-limit DOWNLOAD_LIMIT
 #                        download limit, Kb/s
 #  --upload-limit UPLOAD_LIMIT
@@ -33,15 +36,17 @@ ACE_USER_ARG="--live-cache-type memory \
 #  --max-upload-slots MAX_UPLOAD_SLOTS
 #                        max upload slots
 #  --live-cache-type LIVE_CACHE_TYPE
-#                        Cache type (memory or disk)
-#  --live-diskc-cache-size LIVE_DISKC_CACHE_SIZE
+#                        Live cache type (memory or disk)
+#  --live-disk-cache-size LIVE_DISK_CACHE_SIZE
 #                        Disk cache max size in bytes
 #  --live-mem-cache-size LIVE_MEM_CACHE_SIZE
 #                        Memory cache max size in bytes
-#  --bind-all            bind on all interfaces
-#
-#  --cache-limit CACHE_LIMIT
-#                        cache limit, Gb
+#  --vod-cache-type VOD_CACHE_TYPE
+#                        VOD cache type (memory or disk)
+#  --disk-cache-limit DISK_CACHE_LIMIT
+#                        Max size of cache on disk, in bytes
+#  --memory-cache-limit MEMORY_CACHE_LIMIT
+#                        Max size of cache in RAM, in bytes
 #  --vod-buffer VOD_BUFFER
 #                        VOD buffer in seconds
 #  --login LOGIN         user login
