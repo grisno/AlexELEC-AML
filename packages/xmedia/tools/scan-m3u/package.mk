@@ -29,6 +29,7 @@ make_target() {
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f scan-ttv.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv-get.src
+  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-direct-get.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-logo.src
 }
 
@@ -40,6 +41,7 @@ makeinstall_target() {
     cp scan-ttv.src.x $INSTALL/usr/bin/scan-ttv
     cp live-ttv.src.x $INSTALL/usr/bin/live-ttv
     cp live-ttv-get.src.x $INSTALL/usr/bin/live-ttv-get
+    cp ttv-direct-get.src.x $INSTALL/usr/bin/ttv-direct-get
     cp ttv-logo.src.x $INSTALL/usr/bin/ttv-logo
   mkdir -p $INSTALL/usr/config/acestream
     cp $PKG_DIR/config/* $INSTALL/usr/config/acestream

@@ -24,7 +24,7 @@ TOR_STATUS="none"
 RUN_STATUS=
 
 URL_FILE="$ACE_DIR/trash-url.conf"
-URL_TRASH="https://pomoyka.win"
+URL_TRASH="http://pomoyka.win"
 
 if [ -f "$URL_FILE" ]; then
   . $URL_FILE
@@ -32,7 +32,7 @@ if [ -f "$URL_FILE" ]; then
 fi
 
 URL_JSON="$URL_TRASH/trash/ttv-list/acelive.json"
-URL_M3U=$(echo $URL_JSON | sed 's|\.json|\/|; s|:|%3A|g; s|\/|%2F|g')
+URL_M3U=$(echo $URL_JSON | sed 's|\.json|\/|')
 
 
 [ -f $SERVICE_DIR/acettv.conf ] && . $SERVICE_DIR/acettv.conf
@@ -41,12 +41,38 @@ URL_M3U=$(echo $URL_JSON | sed 's|\.json|\/|; s|:|%3A|g; s|\/|%2F|g')
 [ -z "$ACETTV_IP" ] && ACETTV_IP="0"
 [ -z "$CAT_ALLFON" ] && CAT_ALLFON="0"
 [ -z "$TTV_SOFT" ] && TTV_SOFT="All"
+[ -z "$TRANSLATE" ] && TRANSLATE="All"
 
 # clean Nox categories
 del_cat () {
   CAT=$1
   cat $NOX_FILE | sed -n "p; /$CAT/n" | sed "/$CAT/d" > $NOX_M3U
   cp -f $NOX_M3U $NOX_FILE
+}
+
+# AceStream create M3U
+build_m3u()
+{
+INFILE=$1
+cat $INFILE |  
+  while read -r LINE ; do
+      CH_CAT=`echo $LINE | awk -F\\# '{print $1}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      CH_NAME=`echo $LINE | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      CH_PATH=`echo $LINE | awk -F\\# '{print $3}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      CH_CID=`echo $LINE | awk -F\\# '{print $4}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+      CH_LOGO=`grep -i -m 1 "$CH_NAME #" $LOGO_LIST | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+
+      if [ "$TOR_STATUS" == "none" ]; then
+          echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $INFILE.ace
+          echo "http://${URL_IP}:6878/ace/getstream?url=${URL_M3U}${CH_PATH}&.mp4" >> $INFILE.ace
+
+          echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $INFILE.tvh
+          echo "pipe://ffmpeg -loglevel quiet -i http://${URL_IP}:6878/ace/getstream?url=${URL_M3U}${CH_PATH}&.mp4 -c copy -f mpegts pipe:1" >> $INFILE.tvh
+      fi
+      echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $INFILE.dct
+      echo "http://${URL_IP}:6878/ace/getstream?id=${CH_CID}&.mp4" >> $INFILE.dct
+  done
+  rm -f $INFILE
 }
 
 # AceStream start
@@ -92,48 +118,148 @@ ace_run () {
   fi
 
   gunzip -c "$JSON_FILE_GZ" > "$JSON_FILE"
-  /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source!="as.json")|select(.source!=null)|select(.name!=null)|select(.cat!=null)| .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE > $TMP_LIST
 
-  [ "$CAT_SHOW" == 0 ] && sed '/^Развлекательные/d' -i $TMP_LIST
+  case "$TRANSLATE" in
+    Torrent-TV)
+      /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source=="ttv.json")|select(.name!=null)|select(.cat!=null) | .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE > $TMP_LIST
+    ;;
+    AceStream)
+      /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source=="as.json")|select(.provkey=="ace")|select(.name!=null)|select(.cat!=null) | .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE > $TMP_LIST
+    ;;
+    All)
+      /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source=="ttv.json")|select(.name!=null)|select(.cat!=null) | .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE > $TMP_LIST
+      /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source=="as.json")|select(.provkey=="ace")|select(.name!=null)|select(.cat!=null) | .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE >> $TMP_LIST
+    ;;
+  esac
+
+  # del categories
   [ "$CAT_COMM" == 0 ] && sed '/^Общие/d' -i $TMP_LIST
-  [ "$CAT_FILMS" == 0 ] && sed '/^Фильмы/d' -i $TMP_LIST
-  [ "$CAT_EROS" == 0 ] && sed '/^Эротика/d' -i $TMP_LIST
-  [ "$CAT_NEWS" == 0 ] && sed '/^Новостные/d' -i $TMP_LIST
-  [ "$CAT_REGION" == 0 ] && sed '/^Региональные/d' -i $TMP_LIST
-  [ "$CAT_MUSIC" == 0 ] && sed '/^Музыка/d' -i $TMP_LIST
-  [ "$CAT_CHILDREN" == 0 ] && sed '/^Детские/d' -i $TMP_LIST
-  [ "$CAT_SPORT" == 0 ] && sed '/^Спорт/d' -i $TMP_LIST
   [ "$CAT_RELIGION" == 0 ] && sed '/^Религиозные/d' -i $TMP_LIST
   [ "$CAT_MAN" == 0 ] && sed '/^Мужские/d' -i $TMP_LIST
-  [ "$CAT_LEARN" == 0 ] && sed '/^Познавательные/d' -i $TMP_LIST
-  [ "$CAT_ALLFON" == 0 ] && sed '/^allfon/d' -i $TMP_LIST
 
+  if [ "$CAT_LEARN" == 0 ]; then
+    sed '/^educational/d' -i $TMP_LIST
+    sed '/^Познавательные/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_SHOW" == 0 ]; then
+    sed '/^entertaining/d' -i $TMP_LIST
+    sed '/^Развлекательные/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_EROS" == 0 ]; then
+    sed '/^erotic_18_plus/d' -i $TMP_LIST
+    sed '/^Эротика/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_NEWS" == 0 ]; then
+    sed '/^informational/d' -i $TMP_LIST
+    sed '/^Новостные/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_CHILDREN" == 0 ]; then
+    sed '/^kids/d' -i $TMP_LIST
+    sed '/^Детские/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_FILMS" == 0 ]; then
+    sed '/^movies/d' -i $TMP_LIST
+    sed '/^series/d' -i $TMP_LIST
+    sed '/^Фильмы/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_MUSIC" == 0 ]; then
+    sed '/^music/d' -i $TMP_LIST
+    sed '/^Музыка/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_REGION" == 0 ]; then
+    sed '/^regional/d' -i $TMP_LIST
+    sed '/^Региональные/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_SPORT" == 0 ]; then
+    sed '/^sport/d' -i $TMP_LIST
+    sed '/^Спорт/d' -i $TMP_LIST
+  fi
+
+  if [ "$CAT_ALLFON" == 1 ]; then
+    /usr/bin/jq -r '.|= sort_by(.cat,.name)|.[]|select(.source=="allfon.json")|select(.name!=null)|select(.cat!=null) | .cat + " # " + .name + " # " + .fname + " # " + .cid' $JSON_FILE >> $TMP_LIST
+  fi
   sed '/^$/d' -i $TMP_LIST
- 
+
+  PART_DIR="/tmp/ttv-get"
+  mkdir -p $PART_DIR
+  COUNT_LINES=`wc -l $TMP_LIST | awk '{print $1}'`
+
+  if [ $COUNT_LINES -gt 200 ]; then
+    sed -n '1,100p' $TMP_LIST > $PART_DIR/ttv.part1
+    sed -n '101,200p' $TMP_LIST > $PART_DIR/ttv.part2
+    sed -e '1,200d' -i $TMP_LIST
+    COUNT_LINES=`wc -l $TMP_LIST | awk '{print $1}'`
+    if [ $COUNT_LINES -gt 200 ]; then
+      sed -n '1,100p' $TMP_LIST > $PART_DIR/ttv.part3
+      sed -n '101,200p' $TMP_LIST > $PART_DIR/ttv.part4
+      sed -e '1,200d' -i $TMP_LIST
+      COUNT_LINES=`wc -l $TMP_LIST | awk '{print $1}'`
+      if [ $COUNT_LINES -gt 200 ]; then
+        sed -n '1,100p' $TMP_LIST > $PART_DIR/ttv.part5
+        sed -n '101,200p' $TMP_LIST > $PART_DIR/ttv.part6
+        sed -e '1,200d' -i $TMP_LIST
+        COUNT_LINES=`wc -l $TMP_LIST | awk '{print $1}'`
+        if [ $COUNT_LINES -gt 200 ]; then
+          sed -n '1,100p' $TMP_LIST > $PART_DIR/ttv.part7
+          sed -n '101,$p' $TMP_LIST > $PART_DIR/ttv.part8
+        else
+          cp -f $TMP_LIST $PART_DIR/ttv.part7
+        fi
+      else
+        cp -f $TMP_LIST $PART_DIR/ttv.part5
+      fi
+    else
+      cp -f $TMP_LIST $PART_DIR/ttv.part3
+    fi
+  else
+    if [ $COUNT_LINES -gt 100 ]; then
+      sed -n '1,50p' $TMP_LIST > $PART_DIR/ttv.part1
+      sed -n '51,$p' $TMP_LIST > $PART_DIR/ttv.part2
+    else
+      cp -f $TMP_LIST $PART_DIR/ttv.part1
+    fi
+  fi
+
+  rm -f $TMP_LIST
+
+  for fpart in $(ls $PART_DIR); do
+    build_m3u "$PART_DIR/$fpart" &
+  done
+
+  while true; do
+    usleep 100
+    if [ -d "$PART_DIR" ]; then
+      fcount=`find $PART_DIR -name "ttv.part[1-9]" | wc -l  2>/dev/null`
+      [ $fcount -eq 0 ] && break
+    else
+      break
+    fi
+  done
+
   if [ "$TOR_STATUS" == "none" ]; then
       echo '#EXTM3U' > $ACE_M3U
       echo '#EXTM3U' > $TVH_M3U
   fi
   echo '#EXTM3U' > $ACE_M3U_DIRECT
 
-  cat $TMP_LIST |  
-    while read -r LINE ; do
-      CH_CAT=`echo $LINE | awk -F\\# '{print $1}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
-      CH_NAME=`echo $LINE | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
-      CH_PATH=`echo $LINE | awk -F\\# '{print $3}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
-      CH_CID=`echo $LINE | awk -F\\# '{print $4}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
-      CH_LOGO=`grep -i -m 1 "$CH_NAME #" $LOGO_LIST | awk -F\\# '{print $2}' | sed 's/^[ \t]*//; s/[ \t]*$//'`
+  PART_ACE=`ls $PART_DIR/*.ace`
+  cat $PART_ACE >> $ACE_M3U
 
-      if [ "$TOR_STATUS" == "none" ]; then
-          echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U
-          echo "http://${URL_IP}:6878/ace/getstream?url=${URL_M3U}${CH_PATH}&.mp4" >> $ACE_M3U
+  PART_TVH=`ls $PART_DIR/*.tvh`
+  cat $PART_TVH >> $TVH_M3U
 
-          echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $TVH_M3U
-          echo "pipe://ffmpeg -loglevel quiet -i http://${URL_IP}:6878/ace/getstream?url=${URL_M3U}${CH_PATH}&.mp4 -c copy -f mpegts pipe:1" >> $TVH_M3U
-      fi
-      echo "#EXTINF:-1 group-title=\"$CH_CAT\" tvg-logo=\"$CH_LOGO\",$CH_NAME" >> $ACE_M3U_DIRECT
-      echo "http://${URL_IP}:6878/ace/getstream?id=${CH_CID}&.mp4" >> $ACE_M3U_DIRECT
-    done
+  PART_DIRECT=`ls $PART_DIR/*.dct`
+  cat $PART_DIRECT >> $ACE_M3U_DIRECT
+
+  rm -fr $PART_DIR
 
   [ "$1" == "next" ] && RUN_STATUS="Done! Playlist created."
 }
