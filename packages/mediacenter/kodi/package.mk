@@ -366,6 +366,10 @@ post_makeinstall_target() {
       cp -R $PKG_DIR/config/pvr.hts $INSTALL/usr/share/kodi/config
   fi
 
+  if [ -d $PKG_DIR/config/service.system.settings ]; then
+      cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config
+  fi
+
 # install AV-output (cvbs)
   if [ -f $PKG_DIR/config/cvbs_fallback ]; then
       cp -R $PKG_DIR/config/cvbs_fallback $INSTALL/usr/share/kodi/config
