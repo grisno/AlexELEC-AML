@@ -38,12 +38,6 @@ if [ ! -f $ETC_DIR/hosts ]; then
   echo "212.129.33.59 dht.transmissionbt.com" >> $ETC_DIR/hosts
 fi
 
-if [ ! -f $ENGINE_DIR/aceconfig.py ]; then
-  mkdir -p $ENGINE_DIR
-  DNS_SERVER=`cat /run/connman/resolv.conf |grep -i '^nameserver'|head -n1|cut -d ' ' -f2`
-  echo "resolvers = ['$DNS_SERVER']" > $ENGINE_DIR/aceconfig.py
-fi
-
 if [ ! -f $CHROOT_DIR/installed.busybox ]; then
   rm -fr $CHROOT_DIR/bin
   rm -fr $CHROOT_DIR/sbin
