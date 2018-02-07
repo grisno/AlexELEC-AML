@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="timezone-data"
-PKG_VERSION="2017b"
+PKG_VERSION="2018c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Public Domain"
@@ -25,8 +25,8 @@ makeinstall_target() {
 }
 
 post_makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/zoneinfo
-    mv $INSTALL/etc/zoneinfo/* $INSTALL/usr/share/zoneinfo
+  rm -rf $INSTALL/usr/bin $INSTALL/usr/sbin $INSTALL/usr/lib
+  rm -rf $INSTALL/usr/share/man $INSTALL/usr/share/zoneinfo-*
 
   rm -rf $INSTALL/etc
   mkdir -p $INSTALL/etc
