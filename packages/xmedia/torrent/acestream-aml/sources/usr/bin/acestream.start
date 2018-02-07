@@ -9,6 +9,7 @@ CHROOT_DIR="/storage/.config/acestream"
 LOG_FILE="/var/log/acestream.log"
 MOUNT_STATE="$CHROOT_DIR/disk.mount"
 ETC_DIR="$CHROOT_DIR/system/etc"
+ENGINE_DIR="$CHROOT_DIR/acestream.engine"
 
 rm -f $MOUNT_STATE
 mkdir -p $CHROOT_DIR/system/data/data/org.acestream.engine/files/.ACEStream
@@ -37,6 +38,21 @@ if [ ! -f $ETC_DIR/hosts ]; then
   echo "212.129.33.59 dht.transmissionbt.com" >> $ETC_DIR/hosts
 fi
 
+if [ ! -f $ENGINE_DIR/aceconfig.py ]; then
+  mkdir -p $ENGINE_DIR
+  DNS_SERVER=`cat /run/connman/resolv.conf |grep -i '^nameserver'|head -n1|cut -d ' ' -f2`
+  echo "resolvers = ['$DNS_SERVER']" > $ENGINE_DIR/aceconfig.py
+fi
+
+if [ ! -f $CHROOT_DIR/installed.busybox ]; then
+  rm -fr $CHROOT_DIR/bin
+  rm -fr $CHROOT_DIR/sbin
+  mkdir -p $CHROOT_DIR/bin
+  mkdir -p $CHROOT_DIR/sbin
+  /sbin/chroot $CHROOT_DIR /system/bin/busybox --install -s
+  touch $CHROOT_DIR/installed.busybox
+fi
+
 MOUNT_DISK="none"
 IS_MOUNT_SD=$(/bin/mount | grep '/dev/mmcblk.* on /var/media')
 IS_MOUNT_USB=$(/bin/mount | grep '/dev/sd[a-z][1-9] on /var/media')
@@ -52,16 +68,14 @@ if [ "$MOUNT_DISK" != "none" ]; then
 
   if [ "$MOUNT_TYPE" == "vfat" -o "$MOUNT_TYPE" == "ext4" -o "$MOUNT_TYPE" == "ext3" -o "$MOUNT_TYPE" == "ext2" ]; then
     rm -fR $CHROOT_DIR/media/acecache &>/dev/null
-    /sbin/chroot $CHROOT_DIR /system/bin/toolbox mount -t $MOUNT_TYPE $MOUNT_DISK /media &>/dev/null
+    /sbin/chroot $CHROOT_DIR /bin/mount -t $MOUNT_TYPE $MOUNT_DISK /media &>/dev/null
     echo "$MOUNT_DISK" > $MOUNT_STATE
   fi
 fi
 
 [ "$ACE_CLEAN_CACHE" == "1" ] && rm -fR "$CHROOT_DIR/media/acecache/.acestream_cache" &>/dev/null
 
-/sbin/chroot $CHROOT_DIR /system/bin/sh -c "cd /system/data/data/org.acestream.engine/files ; /system/bin/acestream.sh"  > $LOG_FILE 2>&1 - << EOF
-import os
-import argparse
+/sbin/chroot $CHROOT_DIR /bin/sh -c "/system/bin/acestream.sh"  > $LOG_FILE 2>&1 - << EOF
 from acestreamengine import Core
 
 params = "$@".split(' ')

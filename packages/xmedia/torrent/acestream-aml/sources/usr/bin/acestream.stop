@@ -15,7 +15,7 @@ pkill -9 -f "/system/bin/acestream.sh" &>/dev/null
 [ -f $SERVICE_DIR/acestream.disabled ] && . $SERVICE_DIR/acestream.disabled
 
 if [ -f "$MOUNT_STATE" ]; then
-  /sbin/chroot $CHROOT_DIR /system/bin/toolbox umount /media &>/dev/null
+  /sbin/chroot $CHROOT_DIR /bin/umount /media &>/dev/null
   rm -fR $CHROOT_DIR/media/acecache &>/dev/null
 fi
 
