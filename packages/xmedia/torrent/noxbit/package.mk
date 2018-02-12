@@ -1,10 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="noxbit"
-PKG_VERSION="2503772"
+PKG_VERSION="41e4ddf"
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
