@@ -8,7 +8,7 @@ SERVICE_DIR="/storage/.cache/services"
 CHROOT_DIR="/storage/.config/acestream"
 MOUNT_STATE="$CHROOT_DIR/disk.mount"
 
-pkill -9 -f "/system/data/data/org.acestream.engine/files/python/bin/python" &>/dev/null
+pkill -9 -f "/acestream.engine/python/bin/python" &>/dev/null
 pkill -9 -f "/system/bin/acestream.sh" &>/dev/null
  
 [ -f $SERVICE_DIR/acestream.conf ] && . $SERVICE_DIR/acestream.conf
