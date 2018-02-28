@@ -23,8 +23,9 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-# add AlexELEC addons
-if [ ! -d $HOME/.kodi/addons ]; then
+# add/update AlexELEC addons
+if [ ! -d $HOME/.kodi/addons ] || [ -f $HOME/.kodi/update.addons ]; then
+  rm -f $HOME/.kodi/update.addons
   if [ -e /usr/share/kodi/config/addons-alexelec/plugins.tbz2 ]; then
     mkdir -p $HOME/.kodi/addons
     tar xjf /usr/share/kodi/config/addons-alexelec/plugins.tbz2 -C $HOME/.kodi/addons
