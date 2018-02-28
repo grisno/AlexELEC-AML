@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --cpu=$TARGET_CPU \
                            --cc=$CC \
                            --disable-uriparser \
-                           --disable-dvbscan \
                            --disable-ffmpeg_static \
                            --disable-libav \
                            --disable-vaapi \
