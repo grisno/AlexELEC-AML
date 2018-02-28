@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-GIT_VERSION="816d15e"
+GIT_VERSION="7e52c1d"
 PKG_VERSION="17.6-$GIT_VERSION"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -326,12 +326,14 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.system.settings" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.alexelec.settings" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "resource.language.ru_ru" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "weather.gismeteo" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.skinshortcuts" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "skin.aeon.nox.5ae" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.search.db" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "skin.aeon.nox.5ae" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.search.db" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.future" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simpleplugin3" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "weather.gismeteo" $ADDON_MANIFEST
 
   # more binaddons cross compile badness meh
   sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
