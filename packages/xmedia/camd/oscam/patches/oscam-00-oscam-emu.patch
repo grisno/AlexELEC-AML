@@ -1,6 +1,6 @@
-diff -Naurp oscam-d3b3898/CMakeLists.txt oscam-d3b3898-patch/CMakeLists.txt
---- oscam-d3b3898/CMakeLists.txt	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/CMakeLists.txt	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/CMakeLists.txt oscam-26ad530-patch/CMakeLists.txt
+--- oscam-26ad530/CMakeLists.txt	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/CMakeLists.txt	2018-02-23 12:26:42.495834475 +0200
 @@ -101,6 +101,7 @@ include_directories (
      ${CMAKE_CURRENT_SOURCE_DIR}/csctapi
      ${CMAKE_CURRENT_SOURCE_DIR}/cscrypt
@@ -92,9 +92,9 @@ diff -Naurp oscam-d3b3898/CMakeLists.txt oscam-d3b3898-patch/CMakeLists.txt
 +endif (WITH_EMU)
 +
  message (STATUS "")
-diff -Naurp oscam-d3b3898/config.h oscam-d3b3898-patch/config.h
---- oscam-d3b3898/config.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/config.h	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/config.h oscam-26ad530-patch/config.h
+--- oscam-26ad530/config.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/config.h	2018-02-23 12:26:42.495834475 +0200
 @@ -1,6 +1,7 @@
  #ifndef CONFIG_H_
  #define CONFIG_H_
@@ -103,9 +103,9 @@ diff -Naurp oscam-d3b3898/config.h oscam-d3b3898-patch/config.h
  #define WEBIF 1
  #define WEBIF_LIVELOG 1
  #define WEBIF_JQUERY 1
-diff -Naurp oscam-d3b3898/config.sh oscam-d3b3898-patch/config.sh
---- oscam-d3b3898/config.sh	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/config.sh	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/config.sh oscam-26ad530-patch/config.sh
+--- oscam-26ad530/config.sh	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/config.sh	2018-02-23 12:26:42.499834423 +0200
 @@ -1,6 +1,6 @@
  #!/bin/sh
  
@@ -161,9 +161,9 @@ diff -Naurp oscam-d3b3898/config.sh oscam-d3b3898-patch/config.sh
  		2> ${tempfile}
  
  	opt=${?}
-diff -Naurp oscam-d3b3898/cscrypt/aes.c oscam-d3b3898-patch/cscrypt/aes.c
---- oscam-d3b3898/cscrypt/aes.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/cscrypt/aes.c	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/cscrypt/aes.c oscam-26ad530-patch/cscrypt/aes.c
+--- oscam-26ad530/cscrypt/aes.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/cscrypt/aes.c	2018-02-23 12:26:42.499834423 +0200
 @@ -1250,4 +1250,71 @@ void AES_decrypt(const unsigned char *in
  		rk[3];
  	PUTU32(out + 12, s3);
@@ -236,9 +236,9 @@ diff -Naurp oscam-d3b3898/cscrypt/aes.c oscam-d3b3898-patch/cscrypt/aes.c
 +	}
 +}
  #endif
-diff -Naurp oscam-d3b3898/cscrypt/aes.h oscam-d3b3898-patch/cscrypt/aes.h
---- oscam-d3b3898/cscrypt/aes.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/cscrypt/aes.h	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/cscrypt/aes.h oscam-26ad530-patch/cscrypt/aes.h
+--- oscam-26ad530/cscrypt/aes.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/cscrypt/aes.h	2018-02-23 12:26:42.499834423 +0200
 @@ -42,6 +42,9 @@ void AES_encrypt(const unsigned char *in
  void AES_decrypt(const unsigned char *in, unsigned char *out,
  				 const AES_KEY *key);
@@ -249,9 +249,9 @@ diff -Naurp oscam-d3b3898/cscrypt/aes.h oscam-d3b3898-patch/cscrypt/aes.h
  #endif /* !HEADER_AES_H */
  
  #endif
-diff -Naurp oscam-d3b3898/cscrypt/md5.c oscam-d3b3898-patch/cscrypt/md5.c
---- oscam-d3b3898/cscrypt/md5.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/cscrypt/md5.c	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/cscrypt/md5.c oscam-26ad530-patch/cscrypt/md5.c
+--- oscam-26ad530/cscrypt/md5.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/cscrypt/md5.c	2018-02-23 12:26:42.499834423 +0200
 @@ -25,13 +25,6 @@
  
  #if !defined(WITH_SSL) && !defined(WITH_LIBCRYPTO)
@@ -293,9 +293,9 @@ diff -Naurp oscam-d3b3898/cscrypt/md5.c oscam-d3b3898-patch/cscrypt/md5.c
  {
  	unsigned count;
  	unsigned char *p;
-diff -Naurp oscam-d3b3898/cscrypt/md5.h oscam-d3b3898-patch/cscrypt/md5.h
---- oscam-d3b3898/cscrypt/md5.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/cscrypt/md5.h	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/cscrypt/md5.h oscam-26ad530-patch/cscrypt/md5.h
+--- oscam-26ad530/cscrypt/md5.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/cscrypt/md5.h	2018-02-23 12:26:42.499834423 +0200
 @@ -7,8 +7,16 @@
  #define MD5_DIGEST_LENGTH 16
  
@@ -315,9 +315,9 @@ diff -Naurp oscam-d3b3898/cscrypt/md5.h oscam-d3b3898-patch/cscrypt/md5.h
 +#endif
 +char *__md5_crypt(const char *text_pass, const char *salt, char *crypted_passwd);
  #endif
-diff -Naurp oscam-d3b3898/csctapi/cardreaders.h oscam-d3b3898-patch/csctapi/cardreaders.h
---- oscam-d3b3898/csctapi/cardreaders.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/csctapi/cardreaders.h	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/csctapi/cardreaders.h oscam-26ad530-patch/csctapi/cardreaders.h
+--- oscam-26ad530/csctapi/cardreaders.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/csctapi/cardreaders.h	2018-02-23 12:26:42.499834423 +0200
 @@ -14,5 +14,6 @@ extern const struct s_cardreader cardrea
  extern const struct s_cardreader cardreader_stapi;
  extern const struct s_cardreader cardreader_stinger;
@@ -325,9 +325,9 @@ diff -Naurp oscam-d3b3898/csctapi/cardreaders.h oscam-d3b3898-patch/csctapi/card
 +extern const struct s_cardreader cardreader_emu;
  
  #endif
-diff -Naurp oscam-d3b3898/ffdecsa/CMakeLists.txt oscam-d3b3898-patch/ffdecsa/CMakeLists.txt
---- oscam-d3b3898/ffdecsa/CMakeLists.txt	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/CMakeLists.txt	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/ffdecsa/CMakeLists.txt oscam-26ad530-patch/ffdecsa/CMakeLists.txt
+--- oscam-26ad530/ffdecsa/CMakeLists.txt	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/CMakeLists.txt	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,8 @@
 +project (ffdecsa)
 +
@@ -337,9 +337,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/CMakeLists.txt oscam-d3b3898-patch/ffdecsa/CMa
 +set (lib_name "ffdecsa")
 +
 +add_library (${lib_name} STATIC ${ffdecsa_srcs} ${ffdecsa_hdrs})
-diff -Naurp oscam-d3b3898/ffdecsa/COPYING oscam-d3b3898-patch/ffdecsa/COPYING
---- oscam-d3b3898/ffdecsa/COPYING	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/COPYING	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/ffdecsa/COPYING oscam-26ad530-patch/ffdecsa/COPYING
+--- oscam-26ad530/ffdecsa/COPYING	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/COPYING	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,339 @@
 +		    GNU GENERAL PUBLIC LICENSE
 +		       Version 2, June 1991
@@ -680,9 +680,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/COPYING oscam-d3b3898-patch/ffdecsa/COPYING
 +consider it more useful to permit linking proprietary applications with the
 +library.  If this is what you want to do, use the GNU Library General
 +Public License instead of this License.
-diff -Naurp oscam-d3b3898/ffdecsa/ffdecsa.c oscam-d3b3898-patch/ffdecsa/ffdecsa.c
---- oscam-d3b3898/ffdecsa/ffdecsa.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/ffdecsa.c	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/ffdecsa.c oscam-26ad530-patch/ffdecsa/ffdecsa.c
+--- oscam-26ad530/ffdecsa/ffdecsa.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/ffdecsa.c	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,926 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1610,9 +1610,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/ffdecsa.c oscam-d3b3898-patch/ffdecsa/ffdecsa.
 +
 +  return advanced;
 +}
-diff -Naurp oscam-d3b3898/ffdecsa/ffdecsa.h oscam-d3b3898-patch/ffdecsa/ffdecsa.h
---- oscam-d3b3898/ffdecsa/ffdecsa.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/ffdecsa.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/ffdecsa.h oscam-26ad530-patch/ffdecsa/ffdecsa.h
+--- oscam-26ad530/ffdecsa/ffdecsa.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/ffdecsa.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,62 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1676,9 +1676,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/ffdecsa.h oscam-d3b3898-patch/ffdecsa/ffdecsa.
 +int decrypt_packets(void *keys, unsigned char **cluster);
 +
 +#endif
-diff -Naurp oscam-d3b3898/ffdecsa/fftable.h oscam-d3b3898-patch/ffdecsa/fftable.h
---- oscam-d3b3898/ffdecsa/fftable.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/fftable.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/fftable.h oscam-26ad530-patch/ffdecsa/fftable.h
+--- oscam-26ad530/ffdecsa/fftable.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/fftable.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,56 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1736,15 +1736,15 @@ diff -Naurp oscam-d3b3898/ffdecsa/fftable.h oscam-d3b3898-patch/ffdecsa/fftable.
 +}
 +
 +#endif //FFTABLE_H 
-diff -Naurp oscam-d3b3898/ffdecsa/Makefile oscam-d3b3898-patch/ffdecsa/Makefile
---- oscam-d3b3898/ffdecsa/Makefile	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/Makefile	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/ffdecsa/Makefile oscam-26ad530-patch/ffdecsa/Makefile
+--- oscam-26ad530/ffdecsa/Makefile	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/Makefile	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,2 @@
 +parent:
 +	@$(MAKE) --no-print-directory -C ..
-diff -Naurp oscam-d3b3898/ffdecsa/parallel_032_int.h oscam-d3b3898-patch/ffdecsa/parallel_032_int.h
---- oscam-d3b3898/ffdecsa/parallel_032_int.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/parallel_032_int.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/parallel_032_int.h oscam-26ad530-patch/ffdecsa/parallel_032_int.h
+--- oscam-26ad530/ffdecsa/parallel_032_int.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/parallel_032_int.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,55 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1801,9 +1801,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/parallel_032_int.h oscam-d3b3898-patch/ffdecsa
 +#define B_FFN_ALL_80() 0x80808080
 +
 +#define M_EMPTY()
-diff -Naurp oscam-d3b3898/ffdecsa/parallel_064_long.h oscam-d3b3898-patch/ffdecsa/parallel_064_long.h
---- oscam-d3b3898/ffdecsa/parallel_064_long.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/parallel_064_long.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/parallel_064_long.h oscam-26ad530-patch/ffdecsa/parallel_064_long.h
+--- oscam-26ad530/ffdecsa/parallel_064_long.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/parallel_064_long.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,39 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1844,9 +1844,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/parallel_064_long.h oscam-d3b3898-patch/ffdecs
 +#define M_EMPTY()
 +
 +#include "fftable.h"
-diff -Naurp oscam-d3b3898/ffdecsa/parallel_128_sse2.h oscam-d3b3898-patch/ffdecsa/parallel_128_sse2.h
---- oscam-d3b3898/ffdecsa/parallel_128_sse2.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/parallel_128_sse2.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/parallel_128_sse2.h oscam-26ad530-patch/ffdecsa/parallel_128_sse2.h
+--- oscam-26ad530/ffdecsa/parallel_128_sse2.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/parallel_128_sse2.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,82 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1930,9 +1930,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/parallel_128_sse2.h oscam-d3b3898-patch/ffdecs
 +}
 +
 +#include "fftable.h"
-diff -Naurp oscam-d3b3898/ffdecsa/parallel_generic.h oscam-d3b3898-patch/ffdecsa/parallel_generic.h
---- oscam-d3b3898/ffdecsa/parallel_generic.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/parallel_generic.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/parallel_generic.h oscam-26ad530-patch/ffdecsa/parallel_generic.h
+--- oscam-26ad530/ffdecsa/parallel_generic.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/parallel_generic.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,102 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2036,9 +2036,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/parallel_generic.h oscam-d3b3898-patch/ffdecsa
 +
 +#define END_MM             do{ }while(0);
 +#endif
-diff -Naurp oscam-d3b3898/ffdecsa/parallel_std_def.h oscam-d3b3898-patch/ffdecsa/parallel_std_def.h
---- oscam-d3b3898/ffdecsa/parallel_std_def.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/parallel_std_def.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/parallel_std_def.h oscam-26ad530-patch/ffdecsa/parallel_std_def.h
+--- oscam-26ad530/ffdecsa/parallel_std_def.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/parallel_std_def.h	2018-02-23 12:26:42.499834423 +0200
 @@ -0,0 +1,29 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2069,9 +2069,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/parallel_std_def.h oscam-d3b3898-patch/ffdecsa
 +#define B_FFXOR(a,b) ((a)^(b))
 +#define B_FFSH8L(a,n) ((a)<<(n))
 +#define B_FFSH8R(a,n) ((a)>>(n))
-diff -Naurp oscam-d3b3898/ffdecsa/stream.c oscam-d3b3898-patch/ffdecsa/stream.c
---- oscam-d3b3898/ffdecsa/stream.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/ffdecsa/stream.c	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/ffdecsa/stream.c oscam-26ad530-patch/ffdecsa/stream.c
+--- oscam-26ad530/ffdecsa/stream.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/ffdecsa/stream.c	2018-02-23 12:26:42.503834371 +0200
 @@ -0,0 +1,906 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2979,9 +2979,9 @@ diff -Naurp oscam-d3b3898/ffdecsa/stream.c oscam-d3b3898-patch/ffdecsa/stream.c
 +
 +}
 +
-diff -Naurp oscam-d3b3898/globals.h oscam-d3b3898-patch/globals.h
---- oscam-d3b3898/globals.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/globals.h	2018-01-22 10:46:41.474770578 +0200
+diff -Naurp oscam-26ad530/globals.h oscam-26ad530-patch/globals.h
+--- oscam-26ad530/globals.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/globals.h	2018-02-23 12:26:42.503834371 +0200
 @@ -389,17 +389,17 @@ typedef unsigned char uchar;
  #define CS_ECM_RINGBUFFER_MAX 0x10 // max size for ECM last responsetimes ringbuffer. Keep this set to power of 2 values!
  
@@ -3049,7 +3049,7 @@ diff -Naurp oscam-d3b3898/globals.h oscam-d3b3898-patch/globals.h
  	uint8_t cnxlastecm; // == 0 - las ecm has not been paired ecm, > 0 last ecm has been paired ecm
  	LLIST           *emmstat; //emm stats
  	CS_MUTEX_LOCK   emmstat_lock;
-@@ -2161,6 +2178,7 @@ struct s_config
+@@ -2164,6 +2181,7 @@ struct s_config
  	int8_t      dvbapi_read_sdt;
  	int8_t      dvbapi_write_sdt_prov;
  	int8_t      dvbapi_extended_cw_api;
@@ -3057,7 +3057,7 @@ diff -Naurp oscam-d3b3898/globals.h oscam-d3b3898-patch/globals.h
  #endif
  
  #ifdef CS_ANTICASC
-@@ -2207,6 +2225,18 @@ struct s_config
+@@ -2210,6 +2228,18 @@ struct s_config
  	IN_ADDR_T   scam_srvip;
  	struct s_ip *scam_allowed;
  #endif
@@ -3076,7 +3076,7 @@ diff -Naurp oscam-d3b3898/globals.h oscam-d3b3898-patch/globals.h
  	int32_t    max_cache_time;  //seconds ecms are stored in ecmcwcache
  	int32_t    max_hitcache_time;  //seconds hits are stored in cspec_hitcache (to detect dyn wait_time)
  
-@@ -2388,4 +2418,8 @@ static inline bool caid_is_bulcrypt(uint
+@@ -2391,4 +2421,8 @@ static inline bool caid_is_bulcrypt(uint
  static inline bool caid_is_dre(uint16_t caid) { return caid == 0x4AE0 || caid == 0x4AE1 || caid == 0x2710;}
  const char *get_cardsystem_desc_by_caid(uint16_t caid);
  
@@ -3085,9 +3085,9 @@ diff -Naurp oscam-d3b3898/globals.h oscam-d3b3898-patch/globals.h
 +#endif
 +
  #endif
-diff -Naurp oscam-d3b3898/Makefile oscam-d3b3898-patch/Makefile
---- oscam-d3b3898/Makefile	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/Makefile	2018-01-22 10:46:41.470770624 +0200
+diff -Naurp oscam-26ad530/Makefile oscam-26ad530-patch/Makefile
+--- oscam-26ad530/Makefile	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/Makefile	2018-02-23 12:26:42.495834475 +0200
 @@ -65,6 +65,13 @@ STRIP = $(CROSS_DIR)$(CROSS)strip
  
  LDFLAGS = -Wl,--gc-sections
@@ -3124,7 +3124,7 @@ diff -Naurp oscam-d3b3898/Makefile oscam-d3b3898-patch/Makefile
  SRC-$(CONFIG_CS_CACHEEX) += module-csp.c
  SRC-$(CONFIG_CW_CYCLE_CHECK) += module-cw-cycle-check.c
  SRC-$(CONFIG_WITH_AZBOX) += module-dvbapi-azbox.c
-@@ -365,7 +387,7 @@ SRC := $(subst config.c,$(OBJDIR)/config
+@@ -366,7 +388,7 @@ SRC := $(subst config.c,$(OBJDIR)/config
  # starts the compilation.
  all:
  	@./config.sh --use-flags "$(USE_FLAGS)" --objdir "$(OBJDIR)" --make-config.mak
@@ -3133,9 +3133,9 @@ diff -Naurp oscam-d3b3898/Makefile oscam-d3b3898-patch/Makefile
  	@-printf "\
  +-------------------------------------------------------------------------------\n\
  | OSCam ver: $(VER) rev: $(SVN_REV) target: $(TARGET)\n\
-diff -Naurp oscam-d3b3898/module-dvbapi.c oscam-d3b3898-patch/module-dvbapi.c
---- oscam-d3b3898/module-dvbapi.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-dvbapi.c	2018-01-22 10:46:41.478770534 +0200
+diff -Naurp oscam-26ad530/module-dvbapi.c oscam-26ad530-patch/module-dvbapi.c
+--- oscam-26ad530/module-dvbapi.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-dvbapi.c	2018-02-23 12:26:42.503834371 +0200
 @@ -1471,7 +1471,15 @@ void dvbapi_start_emm_filter(int32_t dem
  			}
  			if(match)
@@ -3328,9 +3328,9 @@ diff -Naurp oscam-d3b3898/module-dvbapi.c oscam-d3b3898-patch/module-dvbapi.c
  		switch(selected_api)
  		{
  #if defined(WITH_STAPI) || defined(WITH_STAPI5)
-diff -Naurp oscam-d3b3898/module-dvbapi.h oscam-d3b3898-patch/module-dvbapi.h
---- oscam-d3b3898/module-dvbapi.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-dvbapi.h	2018-01-22 10:46:41.478770534 +0200
+diff -Naurp oscam-26ad530/module-dvbapi.h oscam-26ad530-patch/module-dvbapi.h
+--- oscam-26ad530/module-dvbapi.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-dvbapi.h	2018-02-23 12:26:42.503834371 +0200
 @@ -136,6 +136,7 @@ struct s_ecmpids
  	int8_t useMultipleIndices;
  	uint32_t streams;
@@ -3349,9 +3349,9 @@ diff -Naurp oscam-d3b3898/module-dvbapi.h oscam-d3b3898-patch/module-dvbapi.h
  } FILTERTYPE;
  
  struct s_emmpids
-diff -Naurp oscam-d3b3898/module-emulator.c oscam-d3b3898-patch/module-emulator.c
---- oscam-d3b3898/module-emulator.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/module-emulator.c	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-emulator.c oscam-26ad530-patch/module-emulator.c
+--- oscam-26ad530/module-emulator.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/module-emulator.c	2018-02-23 12:26:42.511834268 +0200
 @@ -0,0 +1,904 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
@@ -4257,10 +4257,10 @@ diff -Naurp oscam-d3b3898/module-emulator.c oscam-d3b3898-patch/module-emulator.
 +
 +	cs_log("OSCam-Emu version %d", GetOSemuVersion());
 +}
-diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emulator-osemu.c
---- oscam-d3b3898/module-emulator-osemu.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/module-emulator-osemu.c	2018-01-22 10:46:41.482770488 +0200
-@@ -0,0 +1,6461 @@
+diff -Naurp oscam-26ad530/module-emulator-osemu.c oscam-26ad530-patch/module-emulator-osemu.c
+--- oscam-26ad530/module-emulator-osemu.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/module-emulator-osemu.c	2018-02-23 12:26:42.507834320 +0200
+@@ -0,0 +1,6470 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
 +#include "globals.h"
@@ -4295,7 +4295,7 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +// Version info
 +uint32_t GetOSemuVersion(void)
 +{
-+	return atoi("$Version: 766 $"+10);
++	return atoi("$Version: 767 $"+10);
 +}
 +
 +/*
@@ -7543,7 +7543,7 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +static void PowervuHashMode01CustomMD5(uint8_t *data, uint8_t *hash)
 +{
 +	int i, j, s;
-+	uint32_t a, b, c, d, f, g;
++	uint32_t a, b, c, d, f = 0, g;
 +	
 +	uint32_t T[] = {0x783E16F6, 0xC267AC13, 0xA2B17F12, 0x6B8A31A4, 0xF910654D, 0xB702DBCB, 0x266CEF60, 0x5145E47C,
 +					0xB92E00D6, 0xE80A4A64, 0x8A07FA77, 0xBA7D89A9, 0xEBED8022, 0x653AAF2B, 0xF118B03B, 0x6CC16544,
@@ -7562,7 +7562,7 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +	uint32_t h[] = {0xEAD81D2E, 0xCE4DC6E9, 0xF9B5C301, 0x10325476}; // CUSTOM h0, h1, h2  STANDARD h3
 +	uint32_t dataLongs[0x10];
 +	
-+	for(i = 0; i < 0x10; i++)
++	for (i = 0; i < 0x10; i++)
 +	{
 +		dataLongs[i] = (data[4 * i + 0] << 0) + (data[4 * i + 1] << 8) + (data[4 * i + 2] << 16) + (data[4 * i + 3] << 24);
 +	}
@@ -7572,21 +7572,21 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +	c = h[2];
 +	d = h[3];
 +	
-+	for(i = 0; i < 4; i++)
++	for (i = 0; i < 4; i++)
 +	{
 +		g = tIdxInit[i];
 +		
-+		for(j = 0; j < 16; j++)
++		for (j = 0; j < 16; j++)
 +		{
-+			if(i == 0)
++			if (i == 0)
 +			{
 +				f = (b & c) | (~b & d);
 +			}
-+			else if(i == 1)
++			else if (i == 1)
 +			{
 +				f = (b & d) | (~d & c);
 +			}
-+			else if(i == 2)
++			else if (i == 2)
 +			{
 +				f = (b ^ c ^ d);
 +			}
@@ -7614,7 +7614,7 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +	h[2] += c;
 +	h[3] += d;
 +	
-+	for(i = 0; i < 4; i++)
++	for (i = 0; i < 4; i++)
 +	{
 +		hash[4 * i + 0] = h[i] >> 0;
 +		hash[4 * i + 1] = h[i] >> 8;
@@ -7626,7 +7626,7 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +static void PowervuHashMode02(uint8_t *data, uint8_t *hash)
 +{
 +	int i;
-+	uint32_t a, b, c, d, e, f, tmp;
++	uint32_t a, b, c, d, e, f = 0, tmp;
 +	uint32_t h[] = {0x81887F3A, 0x36CCA480, 0x99056FB1, 0x79705BAE};
 +	uint32_t dataLongs[0x50];
 +
@@ -7681,8 +7681,8 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +static void PowervuHashMode03(uint8_t *data, uint8_t *hash)
 +{
 +	int i, j, k, s, s2, tmp;
-+	uint32_t a, b, c, d, f, g;
-+	uint32_t a2, b2, c2, d2, f2, g2;
++	uint32_t a, b, c, d, f = 0, g;
++	uint32_t a2, b2, c2, d2, f2 = 0, g2;
 +
 +	uint32_t T[] = { 0xC88F3F2E, 0x967506BA, 0xDA877A7B, 0x0DECCDFE };
 +	uint32_t T2[] = { 0x01F42668, 0x39C7CDA5, 0xD490E2FE, 0x9965235D };
@@ -7786,6 +7786,11 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +					  0x18, 0x13, 0x14, 0x15, 0x19, 0x1C, 0x1A, 0x1B, 0x1C, 0x1E, 0x1F, 0x23, 0x24, 0x25, 0x29, 0x2D,
 +					  0x30, 0x31, 0x32, 0x36, 0x37, 0x38, 0x33, 0x34, 0x0A, 0x0B, 0x0C, 0x0E, 0x0F, 0x35, 0x39, 0x3D };
 +
++uint8_t table07[] = { 0x10, 0x11, 0x12, 0x17, 0x1C, 0x1E, 0x0E, 0x38, 0x39, 0x3A, 0x13, 0x14, 0x29, 0x2A, 0x16, 0x1F,
++					  0x00, 0x01, 0x02, 0x3C, 0x3D, 0x3E, 0x3F, 0x07, 0x08, 0x09, 0x03, 0x04, 0x05, 0x06, 0x3B, 0x0A,
++					  0x20, 0x21, 0x22, 0x19, 0x1A, 0x1B, 0x1C, 0x0B, 0x0C, 0x15, 0x23, 0x24, 0x25, 0x26, 0x18, 0x0F,
++					  0x30, 0x31, 0x2B, 0x33, 0x34, 0x35, 0x36, 0x37, 0x27, 0x28, 0x2C, 0x2D, 0x2E, 0x2F, 0x32, 0x0D };
++
 +uint8_t table09[] = { 0x20, 0x21, 0x24, 0x22, 0x23, 0x2A, 0x2B, 0x33, 0x35, 0x38, 0x39, 0x36, 0x2D, 0x2C, 0x2E, 0x2F,
 +					  0x00, 0x01, 0x04, 0x02, 0x25, 0x28, 0x08, 0x09, 0x06, 0x07, 0x0A, 0x0B, 0x0D, 0x0C, 0x0E, 0x0F,
 +					  0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x19, 0x16, 0x29, 0x26, 0x03, 0x17, 0x1A, 0x1C, 0x1C, 0x1E,
@@ -7838,6 +7843,10 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +
 +		case 6:
 +			PowervuHashModes04to0ATables(dataPadded, hash, table06);
++			break;
++
++		case 7:
++			PowervuHashModes04to0ATables(dataPadded, hash, table07);
 +			break;
 +
 +		case 9:
@@ -10722,9 +10731,9 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.c oscam-d3b3898-patch/module-emu
 +
 +	return result;
 +}
-diff -Naurp oscam-d3b3898/module-emulator-osemu.h oscam-d3b3898-patch/module-emulator-osemu.h
---- oscam-d3b3898/module-emulator-osemu.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/module-emulator-osemu.h	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-emulator-osemu.h oscam-26ad530-patch/module-emulator-osemu.h
+--- oscam-26ad530/module-emulator-osemu.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/module-emulator-osemu.h	2018-02-23 12:26:42.511834268 +0200
 @@ -0,0 +1,127 @@
 +#include "globals.h"
 +#include "module-emulator-stream.h"
@@ -10853,9 +10862,9 @@ diff -Naurp oscam-d3b3898/module-emulator-osemu.h oscam-d3b3898-patch/module-emu
 +#endif
 +
 +#endif
-diff -Naurp oscam-d3b3898/module-emulator-stream.c oscam-d3b3898-patch/module-emulator-stream.c
---- oscam-d3b3898/module-emulator-stream.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/module-emulator-stream.c	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-emulator-stream.c oscam-26ad530-patch/module-emulator-stream.c
+--- oscam-26ad530/module-emulator-stream.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/module-emulator-stream.c	2018-02-23 12:26:42.511834268 +0200
 @@ -0,0 +1,1105 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
@@ -11962,9 +11971,9 @@ diff -Naurp oscam-d3b3898/module-emulator-stream.c oscam-d3b3898-patch/module-em
 +	shutdown(glistenfd, 2);
 +	close(glistenfd);
 +}
-diff -Naurp oscam-d3b3898/module-emulator-stream.h oscam-d3b3898-patch/module-emulator-stream.h
---- oscam-d3b3898/module-emulator-stream.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/module-emulator-stream.h	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-emulator-stream.h oscam-26ad530-patch/module-emulator-stream.h
+--- oscam-26ad530/module-emulator-stream.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/module-emulator-stream.h	2018-02-23 12:26:42.511834268 +0200
 @@ -0,0 +1,75 @@
 +#ifndef EMU_STREAM_SERVER_H_
 +#define EMU_STREAM_SERVER_H_
@@ -12041,9 +12050,9 @@ diff -Naurp oscam-d3b3898/module-emulator-stream.h oscam-d3b3898-patch/module-em
 +#endif
 +
 +#endif
-diff -Naurp oscam-d3b3898/module-newcamd.c oscam-d3b3898-patch/module-newcamd.c
---- oscam-d3b3898/module-newcamd.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-newcamd.c	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-newcamd.c oscam-26ad530-patch/module-newcamd.c
+--- oscam-26ad530/module-newcamd.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-newcamd.c	2018-02-23 12:26:42.511834268 +0200
 @@ -919,6 +919,13 @@ static int8_t newcamd_auth_client(IN_ADD
  			// set userfilter for au enabled clients
  			if(aureader)
@@ -12114,9 +12123,9 @@ diff -Naurp oscam-d3b3898/module-newcamd.c oscam-d3b3898-patch/module-newcamd.c
  					if(!found)
  					{
  						mbuf[22 + 11 * j] = 0x00;
-diff -Naurp oscam-d3b3898/module-newcamd-des.c oscam-d3b3898-patch/module-newcamd-des.c
---- oscam-d3b3898/module-newcamd-des.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-newcamd-des.c	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-newcamd-des.c oscam-26ad530-patch/module-newcamd-des.c
+--- oscam-26ad530/module-newcamd-des.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-newcamd-des.c	2018-02-23 12:26:42.511834268 +0200
 @@ -5,10 +5,7 @@
  #define DES_IP              1
  #define DES_IP_1            2
@@ -12137,9 +12146,9 @@ diff -Naurp oscam-d3b3898/module-newcamd-des.c oscam-d3b3898-patch/module-newcam
  {
  	unsigned char i;
  	unsigned char left[8];
-diff -Naurp oscam-d3b3898/module-newcamd-des.h oscam-d3b3898-patch/module-newcamd-des.h
---- oscam-d3b3898/module-newcamd-des.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-newcamd-des.h	2018-01-22 10:46:41.482770488 +0200
+diff -Naurp oscam-26ad530/module-newcamd-des.h oscam-26ad530-patch/module-newcamd-des.h
+--- oscam-26ad530/module-newcamd-des.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-newcamd-des.h	2018-02-23 12:26:42.511834268 +0200
 @@ -1,8 +1,15 @@
  #ifndef MODULE_NEWCAMD_DES_H_
  #define MODULE_NEWCAMD_DES_H_
@@ -12156,9 +12165,9 @@ diff -Naurp oscam-d3b3898/module-newcamd-des.h oscam-d3b3898-patch/module-newcam
 +	void nc_des(unsigned char key[], unsigned char mode, unsigned char data[]);
 +
  #endif
-diff -Naurp oscam-d3b3898/module-stat.c oscam-d3b3898-patch/module-stat.c
---- oscam-d3b3898/module-stat.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-stat.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/module-stat.c oscam-26ad530-patch/module-stat.c
+--- oscam-26ad530/module-stat.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-stat.c	2018-02-23 12:26:42.511834268 +0200
 @@ -903,7 +903,7 @@ void check_lb_auto_betatunnel_mode(ECM_R
  
  uint16_t get_rdr_caid(struct s_reader *rdr)
@@ -12177,9 +12186,9 @@ diff -Naurp oscam-d3b3898/module-stat.c oscam-d3b3898-patch/module-stat.c
  			{
  				prv = ea;
  				continue; // proxy can convert or reject
-diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
---- oscam-d3b3898/module-webif.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-webif.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/module-webif.c oscam-26ad530-patch/module-webif.c
+--- oscam-26ad530/module-webif.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-webif.c	2018-02-23 12:26:42.515834216 +0200
 @@ -101,6 +101,7 @@ static bool use_srvid2 = false;
  #define MNU_CFG_LCD			14
  #define MNU_CFG_MONITOR		15
@@ -12199,7 +12208,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  
  static void set_status_info_var(struct templatevars *vars, char *varname, int no_data, char *fmt, double value) {
  	if (no_data)
-@@ -1216,6 +1218,34 @@ static char *send_oscam_config_scam(stru
+@@ -1219,6 +1221,34 @@ static char *send_oscam_config_scam(stru
  }
  #endif
  
@@ -12234,7 +12243,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  #ifdef MODULE_CCCAM
  static char *send_oscam_config_cccam(struct templatevars *vars, struct uriparams *params)
  {
-@@ -1554,6 +1584,10 @@ static char *send_oscam_config_dvbapi(st
+@@ -1557,6 +1587,10 @@ static char *send_oscam_config_dvbapi(st
  	tpl_printf(vars, TPLADD, "TMP", "EXTENDEDCWAPISELECTED%d", cfg.dvbapi_extended_cw_api);
  	tpl_addVar(vars, TPLADD, tpl_getVar(vars, "TMP"), "selected");
  
@@ -12245,7 +12254,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  	//write_sdt_prov
  	if(cfg.dvbapi_write_sdt_prov > 0)
  		{ tpl_addVar(vars, TPLADD, "WRITESDTPROVCHECKED", "checked"); } 
-@@ -1631,6 +1665,9 @@ static char *send_oscam_config(struct te
+@@ -1634,6 +1668,9 @@ static char *send_oscam_config(struct te
  #ifdef MODULE_SCAM
  	else if(!strcmp(part, "scam")) { return send_oscam_config_scam(vars, params); }
  #endif
@@ -12255,7 +12264,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  #ifdef MODULE_CCCAM
  	else if(!strcmp(part, "cccam")) { return send_oscam_config_cccam(vars, params); }
  #endif
-@@ -2093,7 +2130,7 @@ static char *send_oscam_reader_config(st
+@@ -2096,7 +2133,7 @@ static char *send_oscam_reader_config(st
  		chk_reader("services", servicelabels, rdr);
  		chk_reader("lb_whitelist_services", servicelabelslb, rdr);
  
@@ -12264,7 +12273,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  		{
  			restart_cardreader(rdr, 1);
  		}
-@@ -2671,6 +2708,31 @@ static char *send_oscam_reader_config(st
+@@ -2674,6 +2711,31 @@ static char *send_oscam_reader_config(st
  	tpl_addVar(vars, TPLADD, "USERSCRIPT", rdr->userscript);
  #endif
  
@@ -12296,7 +12305,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  	tpl_addVar(vars, TPLADD, "PROTOCOL", reader_get_type_desc(rdr, 0));
  
  	// Show only parameters which needed for the reader
-@@ -2692,6 +2754,9 @@ static char *send_oscam_reader_config(st
+@@ -2695,6 +2757,9 @@ static char *send_oscam_reader_config(st
  	case R_CAMD35 :
  		tpl_addVar(vars, TPLAPPEND, "READERDEPENDINGCONFIG", tpl_getTpl(vars, "READERCONFIGCAMD35BIT"));
  		break;
@@ -12306,7 +12315,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  	case R_CS378X :
  		tpl_addVar(vars, TPLAPPEND, "READERDEPENDINGCONFIG", tpl_getTpl(vars, "READERCONFIGCS378XBIT"));
  		break;
-@@ -4414,9 +4479,38 @@ static char *send_oscam_entitlement(stru
+@@ -4417,9 +4482,38 @@ static char *send_oscam_entitlement(stru
  
  					tpl_addVar(vars, TPLAPPEND, "LOGHISTORY", "<BR><BR>New Structure:<BR>");
  					char tbuffer[83];
@@ -12345,7 +12354,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  						localtime_r(&item->start, &start_t);
  						localtime_r(&item->end, &end_t);
  
-@@ -4892,6 +4986,9 @@ static char *send_oscam_status(struct te
+@@ -4895,6 +4989,9 @@ static char *send_oscam_status(struct te
  #else
  						filtered = (type == cl->typ);
  #endif
@@ -12355,7 +12364,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  					}
  				}
  
-@@ -6336,6 +6433,9 @@ static char *send_oscam_files(struct tem
+@@ -6339,6 +6436,9 @@ static char *send_oscam_files(struct tem
  		{ "expired.info",    MNU_GBX_FEXPINF,   FTYPE_GBOX },     // id 28
  		{ "info.log",        MNU_GBX_INFOLOG,   FTYPE_GBOX },     // id 29
  #endif
@@ -12365,7 +12374,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  		{ NULL, 0, 0 },
  	};
  
-@@ -6806,7 +6906,7 @@ static char *send_oscam_EMM_running(stru
+@@ -6809,7 +6909,7 @@ static char *send_oscam_EMM_running(stru
  		else if(!proxy && rdr->csystem_active)     // local active reader
  		{
  			csystem = rdr->csystem;
@@ -12374,7 +12383,7 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  		}
  
  		if(csystem)
-@@ -7813,8 +7913,8 @@ static int32_t readRequest(FILE * f, IN_
+@@ -7816,8 +7916,8 @@ static int32_t readRequest(FILE * f, IN_
  		memcpy(*result + bufsize, buf2, n);
  		bufsize += n;
  
@@ -12385,9 +12394,9 @@ diff -Naurp oscam-d3b3898/module-webif.c oscam-d3b3898-patch/module-webif.c
  		{
  			cs_log("error: too much data received from %s", cs_inet_ntoa(in));
  			NULLFREE(*result);
-diff -Naurp oscam-d3b3898/module-webif-tpl.c oscam-d3b3898-patch/module-webif-tpl.c
---- oscam-d3b3898/module-webif-tpl.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/module-webif-tpl.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/module-webif-tpl.c oscam-26ad530-patch/module-webif-tpl.c
+--- oscam-26ad530/module-webif-tpl.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/module-webif-tpl.c	2018-02-23 12:26:42.511834268 +0200
 @@ -457,6 +457,7 @@ char *tpl_getUnparsedTpl(const char *nam
  											check_conf(WITH_SSL, ptr2);
  											check_conf(WITH_STAPI, ptr2);
@@ -12396,9 +12405,9 @@ diff -Naurp oscam-d3b3898/module-webif-tpl.c oscam-d3b3898-patch/module-webif-tp
  										} // for
  										if(ok == 0)
  										{
-diff -Naurp oscam-d3b3898/oscam-aes.c oscam-d3b3898-patch/oscam-aes.c
---- oscam-d3b3898/oscam-aes.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-aes.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/oscam-aes.c oscam-26ad530-patch/oscam-aes.c
+--- oscam-26ad530/oscam-aes.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-aes.c	2018-02-23 12:26:42.515834216 +0200
 @@ -37,6 +37,16 @@ void aes_encrypt_idx(struct aes_keys *ae
  	}
  }
@@ -12416,9 +12425,9 @@ diff -Naurp oscam-d3b3898/oscam-aes.c oscam-d3b3898-patch/oscam-aes.c
  /* Creates an AES_ENTRY and adds it to the given linked list. */
  void add_aes_entry(AES_ENTRY **list, uint16_t caid, uint32_t ident, int32_t keyid, uchar *aesKey)
  {
-diff -Naurp oscam-d3b3898/oscam-aes.h oscam-d3b3898-patch/oscam-aes.h
---- oscam-d3b3898/oscam-aes.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-aes.h	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/oscam-aes.h oscam-26ad530-patch/oscam-aes.h
+--- oscam-26ad530/oscam-aes.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-aes.h	2018-02-23 12:26:42.515834216 +0200
 @@ -5,6 +5,8 @@ void aes_set_key(struct aes_keys *aes, c
  bool aes_set_key_alloc(struct aes_keys **aes, char *key);
  void aes_decrypt(struct aes_keys *aes, uchar *buf, int32_t n);
@@ -12428,9 +12437,9 @@ diff -Naurp oscam-d3b3898/oscam-aes.h oscam-d3b3898-patch/oscam-aes.h
  
  void add_aes_entry(AES_ENTRY **list, uint16_t caid, uint32_t ident, int32_t keyid, uchar *aesKey);
  void parse_aes_entry(AES_ENTRY **list, char *label, char *value);
-diff -Naurp oscam-d3b3898/oscam.c oscam-d3b3898-patch/oscam.c
---- oscam-d3b3898/oscam.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam.c	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam.c oscam-26ad530-patch/oscam.c
+--- oscam-26ad530/oscam.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam.c	2018-02-23 12:26:42.519834164 +0200
 @@ -41,6 +41,11 @@
  #include "reader-common.h"
  #include "module-gbox.h"
@@ -12481,9 +12490,9 @@ diff -Naurp oscam-d3b3898/oscam.c oscam-d3b3898-patch/oscam.c
  	webif_close();
  	azbox_close();
  	coolapi_close_all();
-diff -Naurp oscam-d3b3898/oscam-chk.c oscam-d3b3898-patch/oscam-chk.c
---- oscam-d3b3898/oscam-chk.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-chk.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/oscam-chk.c oscam-26ad530-patch/oscam-chk.c
+--- oscam-26ad530/oscam-chk.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-chk.c	2018-02-23 12:26:42.515834216 +0200
 @@ -758,7 +758,7 @@ int32_t matching_reader(ECM_REQUEST *er,
  		return 0;
  	}
@@ -12520,9 +12529,9 @@ diff -Naurp oscam-d3b3898/oscam-chk.c oscam-d3b3898-patch/oscam-chk.c
  	{
  		return 1; //reader caid is not real caid
  	}
-diff -Naurp oscam-d3b3898/oscam-config-global.c oscam-d3b3898-patch/oscam-config-global.c
---- oscam-d3b3898/oscam-config-global.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-config-global.c	2018-01-22 10:46:41.486770442 +0200
+diff -Naurp oscam-26ad530/oscam-config-global.c oscam-26ad530-patch/oscam-config-global.c
+--- oscam-26ad530/oscam-config-global.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-config-global.c	2018-02-23 12:26:42.515834216 +0200
 @@ -854,6 +854,30 @@ static const struct config_list scam_opt
  #else
  static const struct config_list scam_opts[] = { DEF_LAST_OPT };
@@ -12554,7 +12563,7 @@ diff -Naurp oscam-d3b3898/oscam-config-global.c oscam-d3b3898-patch/oscam-config
  #ifdef MODULE_RADEGAST
  static bool radegast_should_save_fn(void *UNUSED(var))
  {
-@@ -1236,6 +1260,7 @@ static const struct config_list dvbapi_o
+@@ -1262,6 +1286,7 @@ static const struct config_list dvbapi_o
  	DEF_OPT_INT8("read_sdt"		, OFS(dvbapi_read_sdt),	0),
  	DEF_OPT_INT8("write_sdt_prov", OFS(dvbapi_write_sdt_prov),	0),
  	DEF_OPT_INT8("extended_cw_api", OFS(dvbapi_extended_cw_api),	0),
@@ -12562,7 +12571,7 @@ diff -Naurp oscam-d3b3898/oscam-config-global.c oscam-d3b3898-patch/oscam-config
  	DEF_OPT_FUNC("boxtype"		, OFS(dvbapi_boxtype),		dvbapi_boxtype_fn),
  	DEF_OPT_FUNC("services"		, OFS(dvbapi_sidtabs.ok),	dvbapi_services_fn),
  	// OBSOLETE OPTIONS
-@@ -1289,6 +1314,7 @@ static const struct config_sections osca
+@@ -1315,6 +1340,7 @@ static const struct config_sections osca
  	{ "cccam",	cccam_opts },
  	{ "pandora",	pandora_opts },
  	{ "scam",	scam_opts },
@@ -12570,9 +12579,9 @@ diff -Naurp oscam-d3b3898/oscam-config-global.c oscam-d3b3898-patch/oscam-config
  	{ "dvbapi",	dvbapi_opts },
  	{ "monitor",	monitor_opts },
  	{ "webif",	webif_opts },
-diff -Naurp oscam-d3b3898/oscam-config.h oscam-d3b3898-patch/oscam-config.h
---- oscam-d3b3898/oscam-config.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-config.h	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam-config.h oscam-26ad530-patch/oscam-config.h
+--- oscam-26ad530/oscam-config.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-config.h	2018-02-23 12:26:42.515834216 +0200
 @@ -22,6 +22,7 @@ void    free_reader(struct s_reader *rdr
  int32_t free_readerdb(void);
  int32_t write_server(void);
@@ -12591,9 +12600,9 @@ diff -Naurp oscam-d3b3898/oscam-config.h oscam-d3b3898-patch/oscam-config.h
  };
  
  void ftab_fn(const char *token, char *value, void *setting, long ftab_type, FILE *f);
-diff -Naurp oscam-d3b3898/oscam-config-reader.c oscam-d3b3898-patch/oscam-config-reader.c
---- oscam-d3b3898/oscam-config-reader.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-config-reader.c	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam-config-reader.c oscam-26ad530-patch/oscam-config-reader.c
+--- oscam-26ad530/oscam-config-reader.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-config-reader.c	2018-02-23 12:26:42.515834216 +0200
 @@ -109,6 +109,7 @@ static void protocol_fn(const char *toke
  			{ "newcamd525", R_NEWCAMD },
  			{ "newcamd524", R_NEWCAMD },
@@ -12636,10 +12645,10 @@ diff -Naurp oscam-d3b3898/oscam-config-reader.c oscam-d3b3898-patch/oscam-config
  	DEF_OPT_INT8("deprecated"           , OFS(deprecated),              0),
  	DEF_OPT_INT8("audisabled"           , OFS(audisabled),              0),
  	DEF_OPT_FUNC("auprovid"             , 0,                            auprovid_fn),
-diff -Naurp oscam-d3b3898/oscam-ecm.c oscam-d3b3898-patch/oscam-ecm.c
---- oscam-d3b3898/oscam-ecm.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-ecm.c	2018-01-22 10:46:41.490770398 +0200
-@@ -1584,7 +1584,7 @@ int32_t write_ecm_answer(struct s_reader
+diff -Naurp oscam-26ad530/oscam-ecm.c oscam-26ad530-patch/oscam-ecm.c
+--- oscam-26ad530/oscam-ecm.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-ecm.c	2018-02-23 12:26:42.515834216 +0200
+@@ -1585,7 +1585,7 @@ int32_t write_ecm_answer(struct s_reader
  
  	if(reader && cw && rc < E_NOTFOUND)
  	{
@@ -12648,9 +12657,9 @@ diff -Naurp oscam-d3b3898/oscam-ecm.c oscam-d3b3898-patch/oscam-ecm.c
  		{
  			uint8_t selectedForIgnChecksum = chk_if_ignore_checksum(er, cfg.disablecrccws, &cfg.disablecrccws_only_for)
  					+ chk_if_ignore_checksum(er, reader->disablecrccws, &reader->disablecrccws_only_for);
-diff -Naurp oscam-d3b3898/oscam-emm.c oscam-d3b3898-patch/oscam-emm.c
---- oscam-d3b3898/oscam-emm.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-emm.c	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam-emm.c oscam-26ad530-patch/oscam-emm.c
+--- oscam-26ad530/oscam-emm.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-emm.c	2018-02-23 12:26:42.519834164 +0200
 @@ -50,7 +50,14 @@ static int8_t do_simple_emm_filter(struc
  	unsigned int j, filter_count = 0;
  
@@ -12692,9 +12701,9 @@ diff -Naurp oscam-d3b3898/oscam-emm.c oscam-d3b3898-patch/oscam-emm.c
  	if(prid == provid)
  	{
  		rdr_log_dbg(reader, D_EMM, "reader auprovid = %06X matching with emm provid = %06X -> SEND!", prid, provid);
-diff -Naurp oscam-d3b3898/oscam-string.c oscam-d3b3898-patch/oscam-string.c
---- oscam-d3b3898/oscam-string.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-string.c	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam-string.c oscam-26ad530-patch/oscam-string.c
+--- oscam-26ad530/oscam-string.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-string.c	2018-02-23 12:26:42.519834164 +0200
 @@ -510,6 +510,62 @@ uint32_t crc32(uint32_t crc, const uint8
  	return crc ^ 0xffffffffL;
  }
@@ -12758,9 +12767,9 @@ diff -Naurp oscam-d3b3898/oscam-string.c oscam-d3b3898-patch/oscam-string.c
  static uint16_t ccitt_crc_table [256] =
  {
  	0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5,
-diff -Naurp oscam-d3b3898/oscam-string.h oscam-d3b3898-patch/oscam-string.h
---- oscam-d3b3898/oscam-string.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/oscam-string.h	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/oscam-string.h oscam-26ad530-patch/oscam-string.h
+--- oscam-26ad530/oscam-string.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/oscam-string.h	2018-02-23 12:26:42.519834164 +0200
 @@ -37,6 +37,7 @@ void get_random_bytes_init(void);
  void get_random_bytes(uint8_t *dst, uint32_t dst_len);
  
@@ -12769,9 +12778,9 @@ diff -Naurp oscam-d3b3898/oscam-string.h oscam-d3b3898-patch/oscam-string.h
  uint16_t ccitt_crc(uint8_t *data, size_t length, uint16_t seed, uint16_t final);
  uint32_t jhash(const char *key, size_t len);
  
-diff -Naurp oscam-d3b3898/reader-common.c oscam-d3b3898-patch/reader-common.c
---- oscam-d3b3898/reader-common.c	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/reader-common.c	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/reader-common.c oscam-26ad530-patch/reader-common.c
+--- oscam-26ad530/reader-common.c	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/reader-common.c	2018-02-23 12:26:42.519834164 +0200
 @@ -15,6 +15,7 @@
  #include "reader-common.h"
  //#include "csctapi/atr.h"
@@ -12800,9 +12809,9 @@ diff -Naurp oscam-d3b3898/reader-common.c oscam-d3b3898-patch/reader-common.c
  	for(i = 0; cardsystems[i]; i++)
  	{
  		NULLFREE(reader->csystem_data);
-diff -Naurp oscam-d3b3898/readers.h oscam-d3b3898-patch/readers.h
---- oscam-d3b3898/readers.h	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/readers.h	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/readers.h oscam-26ad530-patch/readers.h
+--- oscam-26ad530/readers.h	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/readers.h	2018-02-23 12:26:42.519834164 +0200
 @@ -16,5 +16,6 @@ extern const struct s_cardsystem reader_
  extern const struct s_cardsystem reader_bulcrypt;
  extern const struct s_cardsystem reader_griffin;
@@ -12810,9 +12819,9 @@ diff -Naurp oscam-d3b3898/readers.h oscam-d3b3898-patch/readers.h
 +extern const struct s_cardsystem reader_emu;
  
  #endif
-diff -Naurp oscam-d3b3898/webif/config/dvbapi.html oscam-d3b3898-patch/webif/config/dvbapi.html
---- oscam-d3b3898/webif/config/dvbapi.html	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/webif/config/dvbapi.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/config/dvbapi.html oscam-26ad530-patch/webif/config/dvbapi.html
+--- oscam-26ad530/webif/config/dvbapi.html	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/webif/config/dvbapi.html	2018-02-23 12:26:42.519834164 +0200
 @@ -53,7 +53,7 @@
  			</TD>
  		</TR>
@@ -12845,9 +12854,9 @@ diff -Naurp oscam-d3b3898/webif/config/dvbapi.html oscam-d3b3898-patch/webif/con
 +			</TD>
 +		</TR>
 \ No newline at end of file
-diff -Naurp oscam-d3b3898/webif/config/menu.html oscam-d3b3898-patch/webif/config/menu.html
---- oscam-d3b3898/webif/config/menu.html	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/webif/config/menu.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/config/menu.html oscam-26ad530-patch/webif/config/menu.html
+--- oscam-26ad530/webif/config/menu.html	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/webif/config/menu.html	2018-02-23 12:26:42.519834164 +0200
 @@ -16,6 +16,7 @@
  ##TPLCONFIGMENUDVBAPI##		<!-- CMENUACTIVE13 -->
  ##TPLCONFIGMENULCD##		<!-- CMENUACTIVE14 -->
@@ -12856,14 +12865,14 @@ diff -Naurp oscam-d3b3898/webif/config/menu.html oscam-d3b3898-patch/webif/confi
  			<LI CLASS="##CMENUACTIVE16##"><A HREF="config.html?part=webif">WebIf</A></LI>
  	</UL>
  </DIV>
-diff -Naurp oscam-d3b3898/webif/config/menu_streamrelay.html oscam-d3b3898-patch/webif/config/menu_streamrelay.html
---- oscam-d3b3898/webif/config/menu_streamrelay.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/webif/config/menu_streamrelay.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/config/menu_streamrelay.html oscam-26ad530-patch/webif/config/menu_streamrelay.html
+--- oscam-26ad530/webif/config/menu_streamrelay.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/webif/config/menu_streamrelay.html	2018-02-23 12:26:42.519834164 +0200
 @@ -0,0 +1 @@
 +			<LI CLASS="##CMENUACTIVE17##"><A HREF="config.html?part=streamrelay">Stream Relay</A></LI>
-diff -Naurp oscam-d3b3898/webif/config/streamrelay.html oscam-d3b3898-patch/webif/config/streamrelay.html
---- oscam-d3b3898/webif/config/streamrelay.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/webif/config/streamrelay.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/config/streamrelay.html oscam-26ad530-patch/webif/config/streamrelay.html
+--- oscam-26ad530/webif/config/streamrelay.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/webif/config/streamrelay.html	2018-02-23 12:26:42.519834164 +0200
 @@ -0,0 +1,25 @@
 +		<input name="part" type="hidden" value="streamrelay">
 +		<TABLE CLASS="config">
@@ -12891,9 +12900,9 @@ diff -Naurp oscam-d3b3898/webif/config/streamrelay.html oscam-d3b3898-patch/webi
 +				</TD>
 +			</TR>
 \ No newline at end of file
-diff -Naurp oscam-d3b3898/webif/files/menu.html oscam-d3b3898-patch/webif/files/menu.html
---- oscam-d3b3898/webif/files/menu.html	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/webif/files/menu.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/files/menu.html oscam-26ad530-patch/webif/files/menu.html
+--- oscam-26ad530/webif/files/menu.html	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/webif/files/menu.html	2018-02-23 12:26:42.519834164 +0200
 @@ -10,7 +10,7 @@
  		<LI CLASS="##CMENUACTIVE7##"><A HREF="files.html?file=logfile">logfile</A></LI>
  		<LI CLASS="##CMENUACTIVE8##"><A HREF="files.html?file=userfile">userfile</A></LI>
@@ -12911,14 +12920,14 @@ diff -Naurp oscam-d3b3898/webif/files/menu.html oscam-d3b3898-patch/webif/files/
  			</UL>
  		</LI>
  	</UL>
-diff -Naurp oscam-d3b3898/webif/files/menu_softcamkey.html oscam-d3b3898-patch/webif/files/menu_softcamkey.html
---- oscam-d3b3898/webif/files/menu_softcamkey.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/webif/files/menu_softcamkey.html	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/files/menu_softcamkey.html oscam-26ad530-patch/webif/files/menu_softcamkey.html
+--- oscam-26ad530/webif/files/menu_softcamkey.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/webif/files/menu_softcamkey.html	2018-02-23 12:26:42.519834164 +0200
 @@ -0,0 +1 @@
 +			<LI CLASS="##CMENUACTIVE30##"><A HREF="files.html?file=SoftCam.Key">SoftCam.Key</A></LI>
-diff -Naurp oscam-d3b3898/webif/pages_index.txt oscam-d3b3898-patch/webif/pages_index.txt
---- oscam-d3b3898/webif/pages_index.txt	2018-01-07 20:08:37.000000000 +0200
-+++ oscam-d3b3898-patch/webif/pages_index.txt	2018-01-22 10:46:41.490770398 +0200
+diff -Naurp oscam-26ad530/webif/pages_index.txt oscam-26ad530-patch/webif/pages_index.txt
+--- oscam-26ad530/webif/pages_index.txt	2018-02-17 17:38:27.000000000 +0200
++++ oscam-26ad530-patch/webif/pages_index.txt	2018-02-23 12:26:42.519834164 +0200
 @@ -80,11 +80,13 @@ CONFIGMENUMONITOR             config/men
  CONFIGMENUNEWCAMD             config/menu_newcamd.html                                    MODULE_NEWCAMD
  CONFIGMENURADEGAST            config/menu_radegast.html                                   MODULE_RADEGAST
@@ -12949,9 +12958,9 @@ diff -Naurp oscam-d3b3898/webif/pages_index.txt oscam-d3b3898-patch/webif/pages_
  READERCONFIGCS378XBIT         readerconfig/readerconfig_cs378xbit.html                    MODULE_CAMD35_TCP
  READERCONFIGGBOXBIT           readerconfig/readerconfig_gboxbit.html                      MODULE_GBOX
  READERCONFIGGHTTPBIT          readerconfig/readerconfig_ghttpbit.html                     MODULE_GHTTP
-diff -Naurp oscam-d3b3898/webif/readerconfig/readerconfig_emubit.html oscam-d3b3898-patch/webif/readerconfig/readerconfig_emubit.html
---- oscam-d3b3898/webif/readerconfig/readerconfig_emubit.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-d3b3898-patch/webif/readerconfig/readerconfig_emubit.html	2018-01-22 10:46:41.494770352 +0200
+diff -Naurp oscam-26ad530/webif/readerconfig/readerconfig_emubit.html oscam-26ad530-patch/webif/readerconfig/readerconfig_emubit.html
+--- oscam-26ad530/webif/readerconfig/readerconfig_emubit.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-26ad530-patch/webif/readerconfig/readerconfig_emubit.html	2018-02-23 12:26:42.519834164 +0200
 @@ -0,0 +1,6 @@
 +			<TR><TD><A>AU providers:</A></TD><TD><textarea name="emu_auproviders" rows="3" class="bt">##EMUAUPROVIDERS##</textarea></TD></TR>
 +			<TR><TD><A>[BISS] Enable date-coded keys:</A></TD><TD><input name="emu_datecodedenabled" type="hidden" value="0"><input name="emu_datecodedenabled" type="checkbox" value="1" ##EMUDATECODEDENABLED##><label></label></TD></TR>

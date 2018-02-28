@@ -6,6 +6,8 @@
 
 # oscam config
 OSCAM_HOME="/storage/.config/oscam"
+OSCAM_BIN="/usr/bin/oscam"
+OSCAM_ARGS="-r 2 -u"
 
 mkdir -p $OSCAM_HOME/config
 mkdir -p $OSCAM_HOME/log
@@ -19,17 +21,7 @@ do
   [ ! -f $OSCAM_HOME/config/$config_name ] && touch $OSCAM_HOME/config/$config_name
 done
 
-if [ -x $OSCAM_HOME/bin/oscam ]; then
-  BIN_CAM="$OSCAM_HOME/bin/oscam"
-else
-  BIN_CAM="/usr/bin/oscam"
-fi
+[ -x $OSCAM_HOME/bin/oscam ] && OSCAM_BIN="$OSCAM_HOME/bin/oscam"
+[ -f $OSCAM_HOME/bin/oscam.cfg ] && . $OSCAM_HOME/bin/oscam.cfg
 
-if [ -f $OSCAM_HOME/bin/oscam.cfg ]; then
-  . $OSCAM_HOME/bin/oscam.cfg
-  ARG_CAM="$OSCAM_ARGS"
-else
-  ARG_CAM="-r 2 -u"
-fi
-
-exec $BIN_CAM $ARG_CAM -c $OSCAM_HOME/config > /dev/null 2>&1
+exec $OSCAM_BIN $OSCAM_ARGS -c $OSCAM_HOME/config > /dev/null 2>&1
