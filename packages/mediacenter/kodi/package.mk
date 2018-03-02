@@ -267,6 +267,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/forcergb.start $INSTALL/usr/bin
 # Wait network service
     cp $PKG_DIR/scripts/wait-net.run $INSTALL/usr/bin
+# Update Ace playlists
+    cp $PKG_DIR/scripts/aceupdplist.sh $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
@@ -402,4 +404,6 @@ post_install() {
   enable_service drop-ram.service
 # RGB service
   enable_service forcergb.service
+# Update Ace playlists service
+  enable_service aceupd-playlist.service
 }
