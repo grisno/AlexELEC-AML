@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="HTTPAceProxy"
-PKG_VERSION="f7961c7"
+PKG_VERSION="e18c12a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
