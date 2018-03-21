@@ -1,0 +1,44 @@
+diff -Naurp kodi-language-addons-67cd53f/resource.language.ru_ru/resources/strings.po kodi-language-addons-67cd53f-patch/resource.language.ru_ru/resources/strings.po
+--- kodi-language-addons-67cd53f/resource.language.ru_ru/resources/strings.po	2018-03-21 16:29:26.000000000 +0200
++++ kodi-language-addons-67cd53f-patch/resource.language.ru_ru/resources/strings.po	2018-03-21 16:47:42.000000000 +0200
+@@ -4605,6 +4605,14 @@ msgctxt "#13132"
+ msgid "Blank displays"
+ msgstr "Погасить дисплеи"
+ 
++msgctxt "#13133"
++msgid "Enable deinterlacing"
++msgstr "Включить деинтерлейсинг"
++
++msgctxt "#13134"
++msgid "Enable noise reduction"
++msgstr "Включить подавление шума"
++
+ msgctxt "#13140"
+ msgid "Active connections detected!"
+ msgstr "Обнаружены активные соединения."
+@@ -6073,6 +6081,10 @@ msgctxt "#14237"
+ msgid "Music Library"
+ msgstr "Музыкальная медиатека"
+ 
++msgctxt "#14238"
++msgid "Amlogic Deinterlacing and Noise reduction"
++msgstr "Amlogic: Деинтерлейсинг и Подавление шума"
++
+ msgctxt "#14240"
+ msgid "Lists & Views"
+ msgstr "Списки и Виды"
+@@ -14217,6 +14229,14 @@ msgctxt "#36461"
+ msgid "Notification event describe regular processes and actions performed by the system or the user."
+ msgstr "Уведомление оповещает о процессах и действиях, выполняемых системой или пользователем."
+ 
++msgctxt "#36462"
++msgid "Enable Amlogic deinterlacing. May cause green / pink lines on S905W devices. Requires reboot."
++msgstr "Включить деинтерлейсинг Amlogic. Может вызывать зеленые/розовые линии на устройствах S905W. Требуется перезагрузка."
++
++msgctxt "#36463"
++msgid "Enable Amlogic noise reduction. May cause ghost / smokey effect. Requires reboot."
++msgstr "Включить подавление шума Amlogic. Может вызвать дымчатый эффект. Требуется перезагрузка."
++
+ msgctxt "#36500"
+ msgid "Stereoscopic 3D mode / Current"
+ msgstr "Стереоскопический 3D режим / Текущий"
