@@ -63,12 +63,12 @@ diff -Naurp kodi-17.6-7e52c1d/system/settings/settings.xml kodi-17.6-7e52c1d-pat
 +      <group id="4" label="14238">
 +        <setting id="videoscreen.deinterlacing" type="boolean" label="13133" help="36462">
 +          <level>1</level>
-+          <default>true</default>
++          <default>false</default>
 +          <control type="toggle" />
 +        </setting>
 +        <setting id="videoscreen.noisereduction" type="boolean" label="13134" help="36463">
 +          <level>1</level>
-+          <default>true</default>
++          <default>false</default>
 +          <control type="toggle" />
 +        </setting>
 +      </group>
