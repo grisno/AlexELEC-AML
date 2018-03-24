@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="oscam"
-PKG_VERSION="da389ed"
+PKG_VERSION="f783daf"
 PKG_VERSION_NUMBER="11401"
 PKG_REV="1"
 PKG_ARCH="any"
