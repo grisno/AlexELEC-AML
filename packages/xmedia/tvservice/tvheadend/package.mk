@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="b16e53c"
+PKG_VERSION="6311cf7"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -40,7 +40,6 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --cpu=$TARGET_CPU \
                            --cc=$CC \
                            --disable-uriparser \
-                           --disable-dvbscan \
                            --disable-ffmpeg_static \
                            --disable-libav \
                            --disable-vaapi \
@@ -48,6 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="--prefix=/usr \
                            --disable-hdhomerun_static \
                            --disable-avahi \
                            --disable-dbus_1 \
+                           --disable-dvbscan \
                            --enable-dvbcsa \
                            --enable-tvhcsa \
                            --enable-bundle \
@@ -81,6 +81,10 @@ post_makeinstall_target() {
     cp -P support/sat_xml_scan.py $INSTALL/usr/bin/sat_xml_scan
 
   #sat files
+  echo "-----------------------------------------------------------"
+  echo -e $YELLOW"****** Tvheadend: get transponder files...******"$ENDCOLOR
+  echo "-----------------------------------------------------------"
+  git clone -b 'master' https://github.com/tvheadend/dtv-scan-tables.git data/dvb-scan
   mkdir -p $INSTALL/usr/config/tvheadend
   mkdir -p $INSTALL/usr/config/tvheadend/dvb-scan
     cp -a data/dvb-scan/atsc $INSTALL/usr/config/tvheadend/dvb-scan

@@ -26,6 +26,7 @@
 
   UPDATE_ROOT=/storage/.update
   UPDATE_DIR="$UPDATE_ROOT"
+  UPDATE_KODI_ADDONS=/storage/.kodi/update.addons
 
   UPDATE_KERNEL="KERNEL"
   UPDATE_SYSTEM="SYSTEM"
@@ -901,6 +902,7 @@
     update_file "System" "$UPDATE_SYSTEM" "/flash/$IMAGE_SYSTEM"
     update_bootloader
     do_cleanup
+    touch $UPDATE_KODI_ADDONS
     do_reboot
   }
 

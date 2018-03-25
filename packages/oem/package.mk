@@ -1,6 +1,6 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="oem"
@@ -33,7 +33,7 @@ post_install() {
 
 # services net
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET acestream-aml"
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET aceproxy"
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET HTTPAceProxy"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET acephproxy"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET transmission"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET minidlna"
@@ -63,6 +63,4 @@ post_install() {
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libretro-picodrive"
 
 # dvb drivers
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET media_build"
-  #PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET s2-liplianin"
   PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET media_build_cc"

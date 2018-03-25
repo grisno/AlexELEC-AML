@@ -1,0 +1,132 @@
+diff -Naurp kodi-17.6-7e52c1d/addons/resource.language.en_gb/resources/strings.po kodi-17.6-7e52c1d-patch/addons/resource.language.en_gb/resources/strings.po
+--- kodi-17.6-7e52c1d/addons/resource.language.en_gb/resources/strings.po	2018-03-21 12:05:52.000000000 +0200
++++ kodi-17.6-7e52c1d-patch/addons/resource.language.en_gb/resources/strings.po	2018-03-21 12:24:04.000000000 +0200
+@@ -5845,7 +5845,17 @@ msgctxt "#13132"
+ msgid "Blank displays"
+ msgstr ""
+ 
+-#empty strings from id 13133 to 13139
++#: unknown
++msgctxt "#13133"
++msgid "Enable deinterlacing"
++msgstr ""
++
++#: unknown
++msgctxt "#13134"
++msgid "Enable noise reduction"
++msgstr ""
++
++#empty strings from id 13135 to 13139
+ 
+ #: xbmc/network/NetworkServices.cpp
+ msgctxt "#13140"
+@@ -7685,7 +7695,12 @@ msgctxt "#14237"
+ msgid "Music Library"
+ msgstr ""
+ 
+-#empty strings from id 14238 to 14239
++#: system/settings/settings.xml
++msgctxt "#14238"
++msgid "Amlogic Deinterlacing and Noise reduction"
++msgstr ""
++
++#empty strings from id 14239 to 14239
+ 
+ #: system/settings/settings.xml
+ msgctxt "#14240"
+@@ -18491,7 +18506,17 @@ msgctxt "#36461"
+ msgid "Notification event describe regular processes and actions performed by the system or the user."
+ msgstr ""
+ 
+-#empty strings from id 36462 to 36499
++#: Description of display setting with label # 13133
++msgctxt "#36462"
++msgid "Enable Amlogic deinterlacing. May cause green / pink lines on S905W devices. Requires reboot."
++msgstr ""
++
++#: Description of display setting with label # 13134
++msgctxt "#36463"
++msgid "Enable Amlogic noise reduction. May cause ghost / smokey effect. Requires reboot."
++msgstr ""
++
++#empty strings from id 36464 to 36499
+ #end reservation
+ 
+ #. label of a setting for the stereoscopic 3D mode of the GUI that is/should be applied
+diff -Naurp kodi-17.6-7e52c1d/system/settings/settings.xml kodi-17.6-7e52c1d-patch/system/settings/settings.xml
+--- kodi-17.6-7e52c1d/system/settings/settings.xml	2018-03-21 12:05:52.000000000 +0200
++++ kodi-17.6-7e52c1d-patch/system/settings/settings.xml	2018-03-21 13:15:40.000000000 +0200
+@@ -2328,6 +2328,18 @@
+           <control type="button" format="action" />
+         </setting>
+       </group>
++      <group id="4" label="14238">
++        <setting id="videoscreen.deinterlacing" type="boolean" label="13133" help="36462">
++          <level>1</level>
++          <default>false</default>
++          <control type="toggle" />
++        </setting>
++        <setting id="videoscreen.noisereduction" type="boolean" label="13134" help="36463">
++          <level>1</level>
++          <default>false</default>
++          <control type="toggle" />
++        </setting>
++      </group>
+     </category>
+     <category id="audio" label="14221" help="36360">
+       <group id="1" label="14250">
+diff -Naurp kodi-17.6-7e52c1d/xbmc/settings/Settings.cpp kodi-17.6-7e52c1d-patch/xbmc/settings/Settings.cpp
+--- kodi-17.6-7e52c1d/xbmc/settings/Settings.cpp	2018-03-21 12:05:52.000000000 +0200
++++ kodi-17.6-7e52c1d-patch/xbmc/settings/Settings.cpp	2018-03-21 12:31:05.000000000 +0200
+@@ -352,6 +352,8 @@ const std::string CSettings::SETTING_VID
+ const std::string CSettings::SETTING_VIDEOSCREEN_TESTPATTERN = "videoscreen.testpattern";
+ const std::string CSettings::SETTING_VIDEOSCREEN_LIMITEDRANGE = "videoscreen.limitedrange";
+ const std::string CSettings::SETTING_VIDEOSCREEN_FRAMEPACKING = "videoscreen.framepacking";
++const std::string CSettings::SETTING_VIDEOSCREEN_DEINTERLACING = "videoscreen.deinterlacing";
++const std::string CSettings::SETTING_VIDEOSCREEN_NOISEREDUCTION = "videoscreen.noisereduction";
+ const std::string CSettings::SETTING_AUDIOOUTPUT_AUDIODEVICE = "audiooutput.audiodevice";
+ const std::string CSettings::SETTING_AUDIOOUTPUT_CHANNELS = "audiooutput.channels";
+ const std::string CSettings::SETTING_AUDIOOUTPUT_CONFIG = "audiooutput.config";
+diff -Naurp kodi-17.6-7e52c1d/xbmc/settings/Settings.h kodi-17.6-7e52c1d-patch/xbmc/settings/Settings.h
+--- kodi-17.6-7e52c1d/xbmc/settings/Settings.h	2018-03-21 12:05:52.000000000 +0200
++++ kodi-17.6-7e52c1d-patch/xbmc/settings/Settings.h	2018-03-21 12:32:03.000000000 +0200
+@@ -308,6 +308,8 @@ public:
+   static const std::string SETTING_VIDEOSCREEN_TESTPATTERN;
+   static const std::string SETTING_VIDEOSCREEN_LIMITEDRANGE;
+   static const std::string SETTING_VIDEOSCREEN_FRAMEPACKING;
++  static const std::string SETTING_VIDEOSCREEN_DEINTERLACING;
++  static const std::string SETTING_VIDEOSCREEN_NOISEREDUCTION;
+   static const std::string SETTING_AUDIOOUTPUT_AUDIODEVICE;
+   static const std::string SETTING_AUDIOOUTPUT_CHANNELS;
+   static const std::string SETTING_AUDIOOUTPUT_CONFIG;
+diff -Naurp kodi-17.6-7e52c1d/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp kodi-17.6-7e52c1d-patch/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp
+--- kodi-17.6-7e52c1d/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp	2018-03-21 12:05:52.000000000 +0200
++++ kodi-17.6-7e52c1d-patch/xbmc/windowing/egl/EGLNativeTypeAmlogic.cpp	2018-03-21 13:11:07.000000000 +0200
+@@ -25,6 +25,8 @@
+ #include "utils/StringUtils.h"
+ #include "utils/SysfsUtils.h"
+ #include "filesystem/SpecialProtocol.h"
++#include "settings/Settings.h"
++#include "utils/log.h"
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -75,6 +77,18 @@ void CEGLNativeTypeAmlogic::Destroy()
+ 
+ bool CEGLNativeTypeAmlogic::CreateNativeDisplay()
+ {
++  if (CSettings::GetInstance().GetBool(CSettings::SETTING_VIDEOSCREEN_DEINTERLACING))
++  {
++     CLog::Log(LOGDEBUG, "CEGLNativeTypeAmlogic::CreateNativeDisplay -- enabling deinterlacing");
++     SysfsUtils::SetString("/sys/module/di/parameters/bypass_all", "0");
++  }
++
++  if (CSettings::GetInstance().GetBool(CSettings::SETTING_VIDEOSCREEN_NOISEREDUCTION))
++  {
++     CLog::Log(LOGDEBUG, "CEGLNativeTypeAmlogic::CreateNativeDisplay -- enabling noise reduction");
++     SysfsUtils::SetString("/sys/module/di/parameters/nr2_en", "1");
++  }
++
+   m_nativeDisplay = EGL_DEFAULT_DISPLAY;
+   return true;
+ }

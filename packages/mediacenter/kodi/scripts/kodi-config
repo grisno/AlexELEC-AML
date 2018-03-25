@@ -23,8 +23,9 @@ if [ ! -f $HOME/.kodi/userdata/guisettings.xml ] ; then
   fi
 fi
 
-# add AlexELEC addons
-if [ ! -d $HOME/.kodi/addons ]; then
+# add/update AlexELEC addons
+if [ ! -d $HOME/.kodi/addons ] || [ -f $HOME/.kodi/update.addons ]; then
+  rm -f $HOME/.kodi/update.addons
   if [ -e /usr/share/kodi/config/addons-alexelec/plugins.tbz2 ]; then
     mkdir -p $HOME/.kodi/addons
     tar xjf /usr/share/kodi/config/addons-alexelec/plugins.tbz2 -C $HOME/.kodi/addons
@@ -57,6 +58,13 @@ if [ ! -d $HOME/.kodi/userdata/addon_data/pvr.hts ]; then
   if [ -d /usr/share/kodi/config/pvr.hts ]; then
     mkdir -p $HOME/.kodi/userdata/addon_data
     cp -R /usr/share/kodi/config/pvr.hts $HOME/.kodi/userdata/addon_data
+  fi
+fi
+
+if [ ! -d $HOME/.kodi/userdata/addon_data/service.system.settings ]; then
+  if [ -d /usr/share/kodi/config/service.system.settings ]; then
+    mkdir -p $HOME/.kodi/userdata/addon_data
+    cp -R /usr/share/kodi/config/service.system.settings $HOME/.kodi/userdata/addon_data
   fi
 fi
 

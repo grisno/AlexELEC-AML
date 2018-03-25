@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="kodi"
-GIT_VERSION="816d15e"
+GIT_VERSION="7e52c1d"
 PKG_VERSION="17.6-$GIT_VERSION"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -267,6 +267,8 @@ post_makeinstall_target() {
     cp $PKG_DIR/scripts/forcergb.start $INSTALL/usr/bin
 # Wait network service
     cp $PKG_DIR/scripts/wait-net.run $INSTALL/usr/bin
+# Update Ace playlists
+    cp $PKG_DIR/scripts/aceupdplist.sh $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/share/kodi/addons
     cp -R $PKG_DIR/config/os.alexelec $INSTALL/usr/share/kodi/addons
@@ -326,12 +328,14 @@ post_makeinstall_target() {
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.system.settings" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "service.alexelec.settings" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "resource.language.ru_ru" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "weather.gismeteo" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.skinshortcuts" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "skin.aeon.nox.5ae" $ADDON_MANIFEST
-  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.search.db" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.unidecode" $ADDON_MANIFEST
   xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simplejson" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "skin.aeon.nox.5ae" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "repository.search.db" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.future" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "script.module.simpleplugin3" $ADDON_MANIFEST
+  xmlstarlet ed -L --subnode "/addons" -t elem -n "addon" -v "weather.gismeteo" $ADDON_MANIFEST
 
   # more binaddons cross compile badness meh
   sed -e "s:INCLUDE_DIR /usr/include/kodi:INCLUDE_DIR $SYSROOT_PREFIX/usr/include/kodi:g" \
@@ -366,6 +370,10 @@ post_makeinstall_target() {
       cp -R $PKG_DIR/config/pvr.hts $INSTALL/usr/share/kodi/config
   fi
 
+  if [ -d $PKG_DIR/config/service.system.settings ]; then
+      cp -R $PKG_DIR/config/service.system.settings $INSTALL/usr/share/kodi/config
+  fi
+
 # install AV-output (cvbs)
   if [ -f $PKG_DIR/config/cvbs_fallback ]; then
       cp -R $PKG_DIR/config/cvbs_fallback $INSTALL/usr/share/kodi/config
@@ -396,4 +404,6 @@ post_install() {
   enable_service drop-ram.service
 # RGB service
   enable_service forcergb.service
+# Update Ace playlists service
+  enable_service aceupd-playlist.service
 }

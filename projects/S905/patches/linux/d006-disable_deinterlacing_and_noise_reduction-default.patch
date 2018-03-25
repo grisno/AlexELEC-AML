@@ -1,0 +1,24 @@
+diff -Naurp linux-d560977/drivers/amlogic/deinterlace/deinterlace.c linux-d560977-patch/drivers/amlogic/deinterlace/deinterlace.c
+--- linux-d560977/drivers/amlogic/deinterlace/deinterlace.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/deinterlace/deinterlace.c	2018-03-22 09:16:53.000000000 +0200
+@@ -177,7 +177,7 @@ static int bypass_hd = 1;
+ static int bypass_hd;
+ #endif
+ static int bypass_superd = 1;
+-static int bypass_all;
++static int bypass_all = 1;
+ /*1:enable bypass pre,ei only;
+  * 2:debug force bypass pre,ei for post
+  */
+diff -Naurp linux-d560977/drivers/amlogic/deinterlace/deinterlace_hw.c linux-d560977-patch/drivers/amlogic/deinterlace/deinterlace_hw.c
+--- linux-d560977/drivers/amlogic/deinterlace/deinterlace_hw.c	2017-06-04 11:16:08.000000000 +0300
++++ linux-d560977-patch/drivers/amlogic/deinterlace/deinterlace_hw.c	2018-03-22 09:14:01.000000000 +0200
+@@ -265,7 +265,7 @@ static void pre_bit_mode_config(unsigned
+ 		RDMA_WR_BITS(DI_NRWR_CTRL, 0x3, 22, 2);
+ }
+ 
+-unsigned int nr2_en = 0x1;
++unsigned int nr2_en = 0x0;
+ module_param(nr2_en, uint, 0644);
+ MODULE_PARM_DESC(nr2_en, "\n nr2_en\n");
+ 
