@@ -1,0 +1,198 @@
+From af9b41cc4b0a58dd87f56e334a8d478f238f074d Mon Sep 17 00:00:00 2001
+From: dev-jjc <dev.jjc@gmail.com>
+Date: Fri, 19 Oct 2012 10:50:10 -0500
+Subject: [PATCH] Fixed MODE_OFB requiring padding
+
+Closes: https://bugs.launchpad.net/pycrypto/+bug/996193
+Closes: https://github.com/dlitz/pycrypto/pull/26
+[dlitz: Squashed and fixed whitespace.]
+---
+ lib/Crypto/Cipher/blockalgo.py         | 12 +++----
+ lib/Crypto/SelfTest/Cipher/common.py   |  2 +-
+ lib/Crypto/SelfTest/Cipher/test_AES.py | 24 +++++++++++++
+ src/block_template.c                   | 62 +++++++++++++++++++++++-----------
+ 4 files changed, 73 insertions(+), 27 deletions(-)
+
+diff --git a/lib/Crypto/Cipher/blockalgo.py b/lib/Crypto/Cipher/blockalgo.py
+index dd183dcb..a11487dc 100644
+--- a/lib/Crypto/Cipher/blockalgo.py
++++ b/lib/Crypto/Cipher/blockalgo.py
+@@ -202,13 +202,13 @@ def encrypt(self, plaintext):
+ 
+         This function does not perform any padding.
+        
+-         - For `MODE_ECB`, `MODE_CBC`, and `MODE_OFB`, *plaintext* length
+-           (in bytes) must be a multiple of *block_size*.
++         - For `MODE_ECB` and `MODE_CBC`, *plaintext* length (in bytes) must be
++           a multiple of *block_size*.
+ 
+          - For `MODE_CFB`, *plaintext* length (in bytes) must be a multiple
+            of *segment_size*/8.
+ 
+-         - For `MODE_CTR`, *plaintext* can be of any length.
++         - For `MODE_OFB` and `MODE_CTR`, *plaintext* can be of any length.
+ 
+          - For `MODE_OPENPGP`, *plaintext* must be a multiple of *block_size*,
+            unless it is the last chunk of the message.
+@@ -261,13 +261,13 @@ def decrypt(self, ciphertext):
+ 
+         This function does not perform any padding.
+        
+-         - For `MODE_ECB`, `MODE_CBC`, and `MODE_OFB`, *ciphertext* length
+-           (in bytes) must be a multiple of *block_size*.
++         - For `MODE_ECB` and `MODE_CBC`, *ciphertext* length (in bytes) must
++           be a multiple of *block_size*.
+ 
+          - For `MODE_CFB`, *ciphertext* length (in bytes) must be a multiple
+            of *segment_size*/8.
+ 
+-         - For `MODE_CTR`, *ciphertext* can be of any length.
++         - For `MODE_OFB` and `MODE_CTR`, *ciphertext* can be of any length.
+ 
+          - For `MODE_OPENPGP`, *plaintext* must be a multiple of *block_size*,
+            unless it is the last chunk of the message.
+diff --git a/lib/Crypto/SelfTest/Cipher/common.py b/lib/Crypto/SelfTest/Cipher/common.py
+index 4d6edf0a..a20a3aa3 100644
+--- a/lib/Crypto/SelfTest/Cipher/common.py
++++ b/lib/Crypto/SelfTest/Cipher/common.py
+@@ -371,7 +371,7 @@ def make_block_tests(module, module_name, test_data, additional_params=dict()):
+         tests.append(CipherSelfTest(module, params))
+ 
+         # When using CTR mode, test that the interface behaves like a stream cipher
+-        if p_mode == 'CTR':
++        if p_mode in ('OFB', 'CTR'):
+             tests.append(CipherStreamingSelfTest(module, params))
+ 
+         # When using CTR mode, test the non-shortcut code path.
+diff --git a/lib/Crypto/SelfTest/Cipher/test_AES.py b/lib/Crypto/SelfTest/Cipher/test_AES.py
+index c387020f..8fd4a6fa 100644
+--- a/lib/Crypto/SelfTest/Cipher/test_AES.py
++++ b/lib/Crypto/SelfTest/Cipher/test_AES.py
+@@ -1323,6 +1323,30 @@
+      'NIST 800-38A, F.4.5, OFB and AES-256',
+      dict(mode='OFB', iv='000102030405060708090a0b0c0d0e0f')),
+ 
++    ('6bc1bee22e409f96e93d7e117393172a'+'ae2d8a571e03ac9c9eb76fac45af8e51'+
++     '30c81c46a35ce411e5fbc1191a0a52ef'+'f69f2445df4f9b17',
++     '3b3fd92eb72dad20333449f8e83cfb4a'+'7789508d16918f03f53c52dac54ed825'+
++     '9740051e9c5fecf64344f7a82260edcc'+'304c6528f659c778',
++     '2b7e151628aed2a6abf7158809cf4f3c',
++     'NIST 800-38A, F.4.1, OFB and AES-128 (partial last block)',
++     dict(mode='OFB', iv='000102030405060708090a0b0c0d0e0f')),
++
++    ('6bc1bee22e409f96e93d7e117393172a'+'ae2d8a571e03ac9c9eb76fac45af8e51'+
++     '30c81c46a35ce411e5fbc1191a0a52ef'+'f69f2445df4f9b17',
++     'cdc80d6fddf18cab34c25909c99a4174'+'fcc28b8d4c63837c09e81700c1100401'+
++     '8d9a9aeac0f6596f559c6d4daf59a5f2'+'6d9f200857ca6c3e',
++     '8e73b0f7da0e6452c810f32b809079e562f8ead2522c6b7b',
++     'NIST 800-38A, F.4.3, OFB and AES-192 (partial last block)',
++     dict(mode='OFB', iv='000102030405060708090a0b0c0d0e0f')),
++
++    ('6bc1bee22e409f96e93d7e117393172a'+'ae2d8a571e03ac9c9eb76fac45af8e51'+
++     '30c81c46a35ce411e5fbc1191a0a52ef'+'f69f2445df4f9b17',
++     'dc7e84bfda79164b7ecd8486985d3860'+'4febdc6740d20b3ac88f6ad82a4fb08d'+
++     '71ab47a086e86eedf39d1c5bba97c408'+'0126141d67f37be8',
++     '603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4',
++     'NIST 800-38A, F.4.5, OFB and AES-256 (partial last block)',
++     dict(mode='OFB', iv='000102030405060708090a0b0c0d0e0f')),
++
+     ('6bc1bee22e409f96e93d7e117393172a'+'ae2d8a571e03ac9c9eb76fac45af8e51'+
+      '30c81c46a35ce411e5fbc1191a0a52ef'+'f69f2445df4f9b17ad2b417be66c3710',
+      '874d6191b620e3261bef6864990db6ce'+'9806f66b7970fdff8617187bb9fffdff'+
+diff --git a/src/block_template.c b/src/block_template.c
+index 436a4ccb..964a6f3c 100644
+--- a/src/block_template.c
++++ b/src/block_template.c
+@@ -248,6 +248,7 @@ ALG_Encrypt(ALGobject *self, PyObject *args)
+ 	}
+ 	if ( (len % BLOCK_SIZE) !=0 && 
+ 	     (self->mode!=MODE_CFB) &&
++	     (self->mode!=MODE_OFB) &&
+ 	     (self->mode!=MODE_CTR))
+ 	{
+ 		PyErr_Format(PyExc_ValueError, 
+@@ -322,15 +323,48 @@ ALG_Encrypt(ALGobject *self, PyObject *args)
+ 		break;
+ 
+ 	case(MODE_OFB):
+-		for(i=0; i<len; i+=BLOCK_SIZE) 
++		/* OFB mode is a stream cipher whose keystream is generated by encrypting the previous ciphered output.
++		 * - self->IV stores the current keystream block
++		 * - self->count indicates the current offset within the current keystream block
++		 * - str stores the input string
++		 * - buffer stores the output string
++		 * - len indicates the length of the input and output strings
++		 * - i indicates the current offset within the input and output strings
++		 * (len-i) is the number of bytes remaining to encrypt
++		 * (BLOCK_SIZE-self->count) is the number of bytes remaining in the current keystream block
++		 */
++		i = 0;
++		while(i < len)
+ 		{
++			/* If we don't need more than what remains of the current keystream block, then just XOR it in */
++			if (len-i <= BLOCK_SIZE-self->count) { /* remaining_bytes_to_encrypt <= remaining_bytes_in_IV */
++				/* XOR until the input is used up */
++				for(j=0; j<(len-i); j++) {
++					assert(i+j < len);
++					assert(self->count+j < BLOCK_SIZE);
++					buffer[i+j] = self->IV[self->count+j] ^ str[i+j];
++				}
++				self->count += len-i;
++				i = len;
++				continue;
++			}
++
++			/* Use up the current keystream block */
++			for(j=0; j<BLOCK_SIZE-self->count; j++) {
++				assert(i+j < len);
++				assert(self->count+j < BLOCK_SIZE);
++				buffer[i+j] = self->IV[self->count+j] ^ str[i+j];
++			}
++			i += BLOCK_SIZE-self->count;
++			self->count = BLOCK_SIZE;
++
++			/* Generate a new keystream block */
+ 			block_encrypt(&(self->st), self->IV, temp);
+ 			memcpy(self->IV, temp, BLOCK_SIZE);
+-			for(j=0; j<BLOCK_SIZE; j++)
+-			{
+-				buffer[i+j] = str[i+j] ^ temp[j];
+-			}
+-		}      
++
++			/* Move the pointer to the start of the keystream */
++			self->count = 0;
++		}
+ 		break;
+ 
+ 	case(MODE_CTR):
+@@ -464,8 +498,8 @@ ALG_Decrypt(ALGobject *self, PyObject *args)
+ 	int i, j, len;
+ 	PyObject *result;
+ 
+-	/* CTR mode decryption is identical to encryption */
+-	if (self->mode == MODE_CTR)
++	/* CTR and OFB mode decryption is identical to encryption */
++	if (self->mode == MODE_CTR || self->mode == MODE_OFB)
+ 		return ALG_Encrypt(self, args);
+ 
+ 	if (!PyArg_Parse(args, "s#", &str, &len))
+@@ -547,18 +581,6 @@ ALG_Decrypt(ALGobject *self, PyObject *args)
+ 		}
+ 		break;
+ 
+-	case (MODE_OFB):
+-		for(i=0; i<len; i+=BLOCK_SIZE) 
+-		{
+-			block_encrypt(&(self->st), self->IV, temp);
+-			memcpy(self->IV, temp, BLOCK_SIZE);
+-			for(j=0; j<BLOCK_SIZE; j++)
+-			{
+-				buffer[i+j] = str[i+j] ^ self->IV[j];
+-			}
+-		}      
+-		break;
+-
+ 	default:
+ 		Py_BLOCK_THREADS;
+ 		PyErr_Format(PyExc_SystemError, 
