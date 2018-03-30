@@ -3,17 +3,17 @@
 #      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-PKG_NAME="M2Crypto"
-PKG_VERSION="0.25.1"
+PKG_NAME="typing"
+PKG_VERSION="3.6.4"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="OSS"
-PKG_SITE="https://pypi.python.org/pypi/M2Crypto"
-PKG_URL="https://pypi.python.org/packages/9c/58/7e8d8c04995a422c3744929721941c400af0a2a8b8633f129d92f313cfb8/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python distutilscross:host typing"
+PKG_LICENSE="LGPL"
+PKG_SITE="https://pypi.python.org/pypi/typing"
+PKG_URL="https://pypi.python.org/packages/ec/cc/28444132a25c113149cec54618abc909596f0b272a74c55bab9593f8876c/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain Python distutilscross:host"
 PKG_SECTION="xmedia/torrent"
-PKG_SHORTDESC="M2Crypto is the most complete Python wrapper for OpenSSL"
-PKG_LONGDESC="M2Crypto is the most complete Python wrapper for OpenSSL."
+PKG_SHORTDESC="Typing – Type Hints for Python"
+PKG_LONGDESC="Typing defines a standard notation for Python function and variable type annotations."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
@@ -23,11 +23,11 @@ pre_configure_target() {
 }
 
 make_target() {
-  python setup.py build build_ext --openssl=$LIB_PREFIX
+  python setup.py build --cross-compile
 }
 
 makeinstall_target() {
-  python setup.py install --root=$INSTALL --prefix=/usr build_ext --openssl=$LIB_PREFIX
+  python setup.py install --root=$INSTALL --prefix=/usr
 }
 
 post_makeinstall_target() {
