@@ -1,6 +1,6 @@
-diff -Naurp oscam-da389ed/CMakeLists.txt oscam-da389ed-patch/CMakeLists.txt
---- oscam-da389ed/CMakeLists.txt	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/CMakeLists.txt	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/CMakeLists.txt oscam-f783daf-patch/CMakeLists.txt
+--- oscam-f783daf/CMakeLists.txt	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/CMakeLists.txt	2018-03-31 10:20:23.243984886 +0300
 @@ -101,6 +101,7 @@ include_directories (
      ${CMAKE_CURRENT_SOURCE_DIR}/csctapi
      ${CMAKE_CURRENT_SOURCE_DIR}/cscrypt
@@ -92,9 +92,9 @@ diff -Naurp oscam-da389ed/CMakeLists.txt oscam-da389ed-patch/CMakeLists.txt
 +endif (WITH_EMU)
 +
  message (STATUS "")
-diff -Naurp oscam-da389ed/config.h oscam-da389ed-patch/config.h
---- oscam-da389ed/config.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/config.h	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/config.h oscam-f783daf-patch/config.h
+--- oscam-f783daf/config.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/config.h	2018-03-31 10:20:23.247984803 +0300
 @@ -1,6 +1,7 @@
  #ifndef CONFIG_H_
  #define CONFIG_H_
@@ -103,9 +103,9 @@ diff -Naurp oscam-da389ed/config.h oscam-da389ed-patch/config.h
  #define WEBIF 1
  #define WEBIF_LIVELOG 1
  #define WEBIF_JQUERY 1
-diff -Naurp oscam-da389ed/config.sh oscam-da389ed-patch/config.sh
---- oscam-da389ed/config.sh	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/config.sh	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/config.sh oscam-f783daf-patch/config.sh
+--- oscam-f783daf/config.sh	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/config.sh	2018-03-31 10:20:23.247984803 +0300
 @@ -1,6 +1,6 @@
  #!/bin/sh
  
@@ -161,9 +161,9 @@ diff -Naurp oscam-da389ed/config.sh oscam-da389ed-patch/config.sh
  		2> ${tempfile}
  
  	opt=${?}
-diff -Naurp oscam-da389ed/cscrypt/aes.c oscam-da389ed-patch/cscrypt/aes.c
---- oscam-da389ed/cscrypt/aes.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/cscrypt/aes.c	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/cscrypt/aes.c oscam-f783daf-patch/cscrypt/aes.c
+--- oscam-f783daf/cscrypt/aes.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/cscrypt/aes.c	2018-03-31 10:20:23.247984803 +0300
 @@ -1250,4 +1250,71 @@ void AES_decrypt(const unsigned char *in
  		rk[3];
  	PUTU32(out + 12, s3);
@@ -236,9 +236,9 @@ diff -Naurp oscam-da389ed/cscrypt/aes.c oscam-da389ed-patch/cscrypt/aes.c
 +	}
 +}
  #endif
-diff -Naurp oscam-da389ed/cscrypt/aes.h oscam-da389ed-patch/cscrypt/aes.h
---- oscam-da389ed/cscrypt/aes.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/cscrypt/aes.h	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/cscrypt/aes.h oscam-f783daf-patch/cscrypt/aes.h
+--- oscam-f783daf/cscrypt/aes.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/cscrypt/aes.h	2018-03-31 10:20:23.247984803 +0300
 @@ -42,6 +42,9 @@ void AES_encrypt(const unsigned char *in
  void AES_decrypt(const unsigned char *in, unsigned char *out,
  				 const AES_KEY *key);
@@ -249,9 +249,9 @@ diff -Naurp oscam-da389ed/cscrypt/aes.h oscam-da389ed-patch/cscrypt/aes.h
  #endif /* !HEADER_AES_H */
  
  #endif
-diff -Naurp oscam-da389ed/cscrypt/md5.c oscam-da389ed-patch/cscrypt/md5.c
---- oscam-da389ed/cscrypt/md5.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/cscrypt/md5.c	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/cscrypt/md5.c oscam-f783daf-patch/cscrypt/md5.c
+--- oscam-f783daf/cscrypt/md5.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/cscrypt/md5.c	2018-03-31 10:20:23.247984803 +0300
 @@ -25,13 +25,6 @@
  
  #if !defined(WITH_SSL) && !defined(WITH_LIBCRYPTO)
@@ -293,9 +293,9 @@ diff -Naurp oscam-da389ed/cscrypt/md5.c oscam-da389ed-patch/cscrypt/md5.c
  {
  	unsigned count;
  	unsigned char *p;
-diff -Naurp oscam-da389ed/cscrypt/md5.h oscam-da389ed-patch/cscrypt/md5.h
---- oscam-da389ed/cscrypt/md5.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/cscrypt/md5.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/cscrypt/md5.h oscam-f783daf-patch/cscrypt/md5.h
+--- oscam-f783daf/cscrypt/md5.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/cscrypt/md5.h	2018-03-31 10:20:23.247984803 +0300
 @@ -7,8 +7,16 @@
  #define MD5_DIGEST_LENGTH 16
  
@@ -315,9 +315,9 @@ diff -Naurp oscam-da389ed/cscrypt/md5.h oscam-da389ed-patch/cscrypt/md5.h
 +#endif
 +char *__md5_crypt(const char *text_pass, const char *salt, char *crypted_passwd);
  #endif
-diff -Naurp oscam-da389ed/csctapi/cardreaders.h oscam-da389ed-patch/csctapi/cardreaders.h
---- oscam-da389ed/csctapi/cardreaders.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/csctapi/cardreaders.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/csctapi/cardreaders.h oscam-f783daf-patch/csctapi/cardreaders.h
+--- oscam-f783daf/csctapi/cardreaders.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/csctapi/cardreaders.h	2018-03-31 10:20:23.247984803 +0300
 @@ -14,5 +14,6 @@ extern const struct s_cardreader cardrea
  extern const struct s_cardreader cardreader_stapi;
  extern const struct s_cardreader cardreader_stinger;
@@ -325,9 +325,9 @@ diff -Naurp oscam-da389ed/csctapi/cardreaders.h oscam-da389ed-patch/csctapi/card
 +extern const struct s_cardreader cardreader_emu;
  
  #endif
-diff -Naurp oscam-da389ed/ffdecsa/CMakeLists.txt oscam-da389ed-patch/ffdecsa/CMakeLists.txt
---- oscam-da389ed/ffdecsa/CMakeLists.txt	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/CMakeLists.txt	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/CMakeLists.txt oscam-f783daf-patch/ffdecsa/CMakeLists.txt
+--- oscam-f783daf/ffdecsa/CMakeLists.txt	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/CMakeLists.txt	2018-03-31 10:20:23.247984803 +0300
 @@ -0,0 +1,8 @@
 +project (ffdecsa)
 +
@@ -337,9 +337,9 @@ diff -Naurp oscam-da389ed/ffdecsa/CMakeLists.txt oscam-da389ed-patch/ffdecsa/CMa
 +set (lib_name "ffdecsa")
 +
 +add_library (${lib_name} STATIC ${ffdecsa_srcs} ${ffdecsa_hdrs})
-diff -Naurp oscam-da389ed/ffdecsa/COPYING oscam-da389ed-patch/ffdecsa/COPYING
---- oscam-da389ed/ffdecsa/COPYING	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/COPYING	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/COPYING oscam-f783daf-patch/ffdecsa/COPYING
+--- oscam-f783daf/ffdecsa/COPYING	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/COPYING	2018-03-31 10:20:23.247984803 +0300
 @@ -0,0 +1,339 @@
 +		    GNU GENERAL PUBLIC LICENSE
 +		       Version 2, June 1991
@@ -680,9 +680,9 @@ diff -Naurp oscam-da389ed/ffdecsa/COPYING oscam-da389ed-patch/ffdecsa/COPYING
 +consider it more useful to permit linking proprietary applications with the
 +library.  If this is what you want to do, use the GNU Library General
 +Public License instead of this License.
-diff -Naurp oscam-da389ed/ffdecsa/ffdecsa.c oscam-da389ed-patch/ffdecsa/ffdecsa.c
---- oscam-da389ed/ffdecsa/ffdecsa.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/ffdecsa.c	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/ffdecsa.c oscam-f783daf-patch/ffdecsa/ffdecsa.c
+--- oscam-f783daf/ffdecsa/ffdecsa.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/ffdecsa.c	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,926 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1610,9 +1610,9 @@ diff -Naurp oscam-da389ed/ffdecsa/ffdecsa.c oscam-da389ed-patch/ffdecsa/ffdecsa.
 +
 +  return advanced;
 +}
-diff -Naurp oscam-da389ed/ffdecsa/ffdecsa.h oscam-da389ed-patch/ffdecsa/ffdecsa.h
---- oscam-da389ed/ffdecsa/ffdecsa.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/ffdecsa.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/ffdecsa.h oscam-f783daf-patch/ffdecsa/ffdecsa.h
+--- oscam-f783daf/ffdecsa/ffdecsa.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/ffdecsa.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,62 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1676,9 +1676,9 @@ diff -Naurp oscam-da389ed/ffdecsa/ffdecsa.h oscam-da389ed-patch/ffdecsa/ffdecsa.
 +int decrypt_packets(void *keys, unsigned char **cluster);
 +
 +#endif
-diff -Naurp oscam-da389ed/ffdecsa/fftable.h oscam-da389ed-patch/ffdecsa/fftable.h
---- oscam-da389ed/ffdecsa/fftable.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/fftable.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/fftable.h oscam-f783daf-patch/ffdecsa/fftable.h
+--- oscam-f783daf/ffdecsa/fftable.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/fftable.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,56 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1736,15 +1736,15 @@ diff -Naurp oscam-da389ed/ffdecsa/fftable.h oscam-da389ed-patch/ffdecsa/fftable.
 +}
 +
 +#endif //FFTABLE_H 
-diff -Naurp oscam-da389ed/ffdecsa/Makefile oscam-da389ed-patch/ffdecsa/Makefile
---- oscam-da389ed/ffdecsa/Makefile	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/Makefile	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/Makefile oscam-f783daf-patch/ffdecsa/Makefile
+--- oscam-f783daf/ffdecsa/Makefile	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/Makefile	2018-03-31 10:20:23.247984803 +0300
 @@ -0,0 +1,2 @@
 +parent:
 +	@$(MAKE) --no-print-directory -C ..
-diff -Naurp oscam-da389ed/ffdecsa/parallel_032_int.h oscam-da389ed-patch/ffdecsa/parallel_032_int.h
---- oscam-da389ed/ffdecsa/parallel_032_int.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/parallel_032_int.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/parallel_032_int.h oscam-f783daf-patch/ffdecsa/parallel_032_int.h
+--- oscam-f783daf/ffdecsa/parallel_032_int.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/parallel_032_int.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,55 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1801,9 +1801,9 @@ diff -Naurp oscam-da389ed/ffdecsa/parallel_032_int.h oscam-da389ed-patch/ffdecsa
 +#define B_FFN_ALL_80() 0x80808080
 +
 +#define M_EMPTY()
-diff -Naurp oscam-da389ed/ffdecsa/parallel_064_long.h oscam-da389ed-patch/ffdecsa/parallel_064_long.h
---- oscam-da389ed/ffdecsa/parallel_064_long.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/parallel_064_long.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/parallel_064_long.h oscam-f783daf-patch/ffdecsa/parallel_064_long.h
+--- oscam-f783daf/ffdecsa/parallel_064_long.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/parallel_064_long.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,39 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1844,9 +1844,9 @@ diff -Naurp oscam-da389ed/ffdecsa/parallel_064_long.h oscam-da389ed-patch/ffdecs
 +#define M_EMPTY()
 +
 +#include "fftable.h"
-diff -Naurp oscam-da389ed/ffdecsa/parallel_128_sse2.h oscam-da389ed-patch/ffdecsa/parallel_128_sse2.h
---- oscam-da389ed/ffdecsa/parallel_128_sse2.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/parallel_128_sse2.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/parallel_128_sse2.h oscam-f783daf-patch/ffdecsa/parallel_128_sse2.h
+--- oscam-f783daf/ffdecsa/parallel_128_sse2.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/parallel_128_sse2.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,82 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -1930,9 +1930,9 @@ diff -Naurp oscam-da389ed/ffdecsa/parallel_128_sse2.h oscam-da389ed-patch/ffdecs
 +}
 +
 +#include "fftable.h"
-diff -Naurp oscam-da389ed/ffdecsa/parallel_generic.h oscam-da389ed-patch/ffdecsa/parallel_generic.h
---- oscam-da389ed/ffdecsa/parallel_generic.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/parallel_generic.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/parallel_generic.h oscam-f783daf-patch/ffdecsa/parallel_generic.h
+--- oscam-f783daf/ffdecsa/parallel_generic.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/parallel_generic.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,102 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2036,9 +2036,9 @@ diff -Naurp oscam-da389ed/ffdecsa/parallel_generic.h oscam-da389ed-patch/ffdecsa
 +
 +#define END_MM             do{ }while(0);
 +#endif
-diff -Naurp oscam-da389ed/ffdecsa/parallel_std_def.h oscam-da389ed-patch/ffdecsa/parallel_std_def.h
---- oscam-da389ed/ffdecsa/parallel_std_def.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/parallel_std_def.h	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/parallel_std_def.h oscam-f783daf-patch/ffdecsa/parallel_std_def.h
+--- oscam-f783daf/ffdecsa/parallel_std_def.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/parallel_std_def.h	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,29 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2069,9 +2069,9 @@ diff -Naurp oscam-da389ed/ffdecsa/parallel_std_def.h oscam-da389ed-patch/ffdecsa
 +#define B_FFXOR(a,b) ((a)^(b))
 +#define B_FFSH8L(a,n) ((a)<<(n))
 +#define B_FFSH8R(a,n) ((a)>>(n))
-diff -Naurp oscam-da389ed/ffdecsa/stream.c oscam-da389ed-patch/ffdecsa/stream.c
---- oscam-da389ed/ffdecsa/stream.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/ffdecsa/stream.c	2018-03-20 09:46:21.832448833 +0200
+diff -Naurp oscam-f783daf/ffdecsa/stream.c oscam-f783daf-patch/ffdecsa/stream.c
+--- oscam-f783daf/ffdecsa/stream.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/ffdecsa/stream.c	2018-03-31 10:20:23.251984719 +0300
 @@ -0,0 +1,906 @@
 +/* FFdecsa -- fast decsa algorithm
 + *
@@ -2979,9 +2979,9 @@ diff -Naurp oscam-da389ed/ffdecsa/stream.c oscam-da389ed-patch/ffdecsa/stream.c
 +
 +}
 +
-diff -Naurp oscam-da389ed/globals.h oscam-da389ed-patch/globals.h
---- oscam-da389ed/globals.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/globals.h	2018-03-20 09:46:21.836448805 +0200
+diff -Naurp oscam-f783daf/globals.h oscam-f783daf-patch/globals.h
+--- oscam-f783daf/globals.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/globals.h	2018-03-31 10:20:23.251984719 +0300
 @@ -389,17 +389,17 @@ typedef unsigned char uchar;
  #define CS_ECM_RINGBUFFER_MAX 0x10 // max size for ECM last responsetimes ringbuffer. Keep this set to power of 2 values!
  
@@ -3085,9 +3085,9 @@ diff -Naurp oscam-da389ed/globals.h oscam-da389ed-patch/globals.h
 +#endif
 +
  #endif
-diff -Naurp oscam-da389ed/Makefile oscam-da389ed-patch/Makefile
---- oscam-da389ed/Makefile	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/Makefile	2018-03-20 09:46:21.828448862 +0200
+diff -Naurp oscam-f783daf/Makefile oscam-f783daf-patch/Makefile
+--- oscam-f783daf/Makefile	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/Makefile	2018-03-31 10:20:23.247984803 +0300
 @@ -65,6 +65,13 @@ STRIP = $(CROSS_DIR)$(CROSS)strip
  
  LDFLAGS = -Wl,--gc-sections
@@ -3133,9 +3133,9 @@ diff -Naurp oscam-da389ed/Makefile oscam-da389ed-patch/Makefile
  	@-printf "\
  +-------------------------------------------------------------------------------\n\
  | OSCam ver: $(VER) rev: $(SVN_REV) target: $(TARGET)\n\
-diff -Naurp oscam-da389ed/module-dvbapi.c oscam-da389ed-patch/module-dvbapi.c
---- oscam-da389ed/module-dvbapi.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-dvbapi.c	2018-03-20 09:46:21.836448805 +0200
+diff -Naurp oscam-f783daf/module-dvbapi.c oscam-f783daf-patch/module-dvbapi.c
+--- oscam-f783daf/module-dvbapi.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-dvbapi.c	2018-03-31 10:20:23.255984636 +0300
 @@ -1471,7 +1471,15 @@ void dvbapi_start_emm_filter(int32_t dem
  			}
  			if(match)
@@ -3328,9 +3328,9 @@ diff -Naurp oscam-da389ed/module-dvbapi.c oscam-da389ed-patch/module-dvbapi.c
  		switch(selected_api)
  		{
  #if defined(WITH_STAPI) || defined(WITH_STAPI5)
-diff -Naurp oscam-da389ed/module-dvbapi.h oscam-da389ed-patch/module-dvbapi.h
---- oscam-da389ed/module-dvbapi.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-dvbapi.h	2018-03-20 09:46:21.836448805 +0200
+diff -Naurp oscam-f783daf/module-dvbapi.h oscam-f783daf-patch/module-dvbapi.h
+--- oscam-f783daf/module-dvbapi.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-dvbapi.h	2018-03-31 10:20:23.255984636 +0300
 @@ -136,6 +136,7 @@ struct s_ecmpids
  	int8_t useMultipleIndices;
  	uint32_t streams;
@@ -3349,9 +3349,9 @@ diff -Naurp oscam-da389ed/module-dvbapi.h oscam-da389ed-patch/module-dvbapi.h
  } FILTERTYPE;
  
  struct s_emmpids
-diff -Naurp oscam-da389ed/module-emulator.c oscam-da389ed-patch/module-emulator.c
---- oscam-da389ed/module-emulator.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/module-emulator.c	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-emulator.c oscam-f783daf-patch/module-emulator.c
+--- oscam-f783daf/module-emulator.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/module-emulator.c	2018-03-31 10:20:23.259984553 +0300
 @@ -0,0 +1,904 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
@@ -4257,10 +4257,10 @@ diff -Naurp oscam-da389ed/module-emulator.c oscam-da389ed-patch/module-emulator.
 +
 +	cs_log("OSCam-Emu version %d", GetOSemuVersion());
 +}
-diff -Naurp oscam-da389ed/module-emulator-osemu.c oscam-da389ed-patch/module-emulator-osemu.c
---- oscam-da389ed/module-emulator-osemu.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/module-emulator-osemu.c	2018-03-20 09:46:21.840448777 +0200
-@@ -0,0 +1,6479 @@
+diff -Naurp oscam-f783daf/module-emulator-osemu.c oscam-f783daf-patch/module-emulator-osemu.c
+--- oscam-f783daf/module-emulator-osemu.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/module-emulator-osemu.c	2018-03-31 10:20:23.259984553 +0300
+@@ -0,0 +1,6488 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
 +#include "globals.h"
@@ -4295,7 +4295,7 @@ diff -Naurp oscam-da389ed/module-emulator-osemu.c oscam-da389ed-patch/module-emu
 +// Version info
 +uint32_t GetOSemuVersion(void)
 +{
-+	return atoi("$Version: 768 $"+10);
++	return atoi("$Version: 769 $"+10);
 +}
 +
 +/*
@@ -7801,6 +7801,11 @@ diff -Naurp oscam-da389ed/module-emulator-osemu.c oscam-da389ed-patch/module-emu
 +					  0x10, 0x11, 0x14, 0x12, 0x13, 0x15, 0x19, 0x16, 0x29, 0x26, 0x03, 0x17, 0x1A, 0x1C, 0x1C, 0x1E,
 +					  0x30, 0x31, 0x34, 0x32, 0x37, 0x3A, 0x3B, 0x3D, 0x3C, 0x3E, 0x3F, 0x1B, 0x05, 0x18, 0x27, 0x1F };
 +
++uint8_t table0A[] = { 0x00, 0x04, 0x05, 0x0B, 0x0C, 0x06, 0x09, 0x0A, 0x0E, 0x0D, 0x0F, 0x25, 0x15, 0x1B, 0x1C, 0x16,
++					  0x10, 0x11, 0x01, 0x02, 0x03, 0x07, 0x08, 0x12, 0x13, 0x17, 0x18, 0x14, 0x23, 0x27, 0x28, 0x24,
++					  0x30, 0x31, 0x32, 0x33, 0x37, 0x38, 0x34, 0x35, 0x3B, 0x3C, 0x20, 0x21, 0x22, 0x2B, 0x2C, 0x26,
++					  0x36, 0x39, 0x3A, 0x3E, 0x3D, 0x19, 0x1A, 0x1E, 0x1C, 0x1F, 0x3F, 0x29, 0x2A, 0x2E, 0x2D, 0x2F };
++
 +static void PowervuHashModes04to0ATables(uint8_t *data, uint8_t *hash, uint8_t *table)
 +{
 +	int i;
@@ -7860,6 +7865,10 @@ diff -Naurp oscam-da389ed/module-emulator-osemu.c oscam-da389ed-patch/module-emu
 +
 +		case 9:
 +			PowervuHashModes04to0ATables(dataPadded, hash, table09);
++			break;
++
++		case 10:
++			PowervuHashModes04to0ATables(dataPadded, hash, table0A);
 +			break;
 +
 +		default:
@@ -10740,9 +10749,9 @@ diff -Naurp oscam-da389ed/module-emulator-osemu.c oscam-da389ed-patch/module-emu
 +
 +	return result;
 +}
-diff -Naurp oscam-da389ed/module-emulator-osemu.h oscam-da389ed-patch/module-emulator-osemu.h
---- oscam-da389ed/module-emulator-osemu.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/module-emulator-osemu.h	2018-03-20 09:46:21.840448777 +0200
+diff -Naurp oscam-f783daf/module-emulator-osemu.h oscam-f783daf-patch/module-emulator-osemu.h
+--- oscam-f783daf/module-emulator-osemu.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/module-emulator-osemu.h	2018-03-31 10:20:23.259984553 +0300
 @@ -0,0 +1,127 @@
 +#include "globals.h"
 +#include "module-emulator-stream.h"
@@ -10871,9 +10880,9 @@ diff -Naurp oscam-da389ed/module-emulator-osemu.h oscam-da389ed-patch/module-emu
 +#endif
 +
 +#endif
-diff -Naurp oscam-da389ed/module-emulator-stream.c oscam-da389ed-patch/module-emulator-stream.c
---- oscam-da389ed/module-emulator-stream.c	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/module-emulator-stream.c	2018-03-20 09:46:21.840448777 +0200
+diff -Naurp oscam-f783daf/module-emulator-stream.c oscam-f783daf-patch/module-emulator-stream.c
+--- oscam-f783daf/module-emulator-stream.c	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/module-emulator-stream.c	2018-03-31 10:20:23.259984553 +0300
 @@ -0,0 +1,1105 @@
 +#define MODULE_LOG_PREFIX "emu"
 +
@@ -11980,9 +11989,9 @@ diff -Naurp oscam-da389ed/module-emulator-stream.c oscam-da389ed-patch/module-em
 +	shutdown(glistenfd, 2);
 +	close(glistenfd);
 +}
-diff -Naurp oscam-da389ed/module-emulator-stream.h oscam-da389ed-patch/module-emulator-stream.h
---- oscam-da389ed/module-emulator-stream.h	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/module-emulator-stream.h	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-emulator-stream.h oscam-f783daf-patch/module-emulator-stream.h
+--- oscam-f783daf/module-emulator-stream.h	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/module-emulator-stream.h	2018-03-31 10:20:23.259984553 +0300
 @@ -0,0 +1,75 @@
 +#ifndef EMU_STREAM_SERVER_H_
 +#define EMU_STREAM_SERVER_H_
@@ -12059,9 +12068,9 @@ diff -Naurp oscam-da389ed/module-emulator-stream.h oscam-da389ed-patch/module-em
 +#endif
 +
 +#endif
-diff -Naurp oscam-da389ed/module-newcamd.c oscam-da389ed-patch/module-newcamd.c
---- oscam-da389ed/module-newcamd.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-newcamd.c	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-newcamd.c oscam-f783daf-patch/module-newcamd.c
+--- oscam-f783daf/module-newcamd.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-newcamd.c	2018-03-31 10:20:23.263984469 +0300
 @@ -919,6 +919,13 @@ static int8_t newcamd_auth_client(IN_ADD
  			// set userfilter for au enabled clients
  			if(aureader)
@@ -12132,9 +12141,9 @@ diff -Naurp oscam-da389ed/module-newcamd.c oscam-da389ed-patch/module-newcamd.c
  					if(!found)
  					{
  						mbuf[22 + 11 * j] = 0x00;
-diff -Naurp oscam-da389ed/module-newcamd-des.c oscam-da389ed-patch/module-newcamd-des.c
---- oscam-da389ed/module-newcamd-des.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-newcamd-des.c	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-newcamd-des.c oscam-f783daf-patch/module-newcamd-des.c
+--- oscam-f783daf/module-newcamd-des.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-newcamd-des.c	2018-03-31 10:20:23.259984553 +0300
 @@ -5,10 +5,7 @@
  #define DES_IP              1
  #define DES_IP_1            2
@@ -12155,9 +12164,9 @@ diff -Naurp oscam-da389ed/module-newcamd-des.c oscam-da389ed-patch/module-newcam
  {
  	unsigned char i;
  	unsigned char left[8];
-diff -Naurp oscam-da389ed/module-newcamd-des.h oscam-da389ed-patch/module-newcamd-des.h
---- oscam-da389ed/module-newcamd-des.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-newcamd-des.h	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-newcamd-des.h oscam-f783daf-patch/module-newcamd-des.h
+--- oscam-f783daf/module-newcamd-des.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-newcamd-des.h	2018-03-31 10:20:23.263984469 +0300
 @@ -1,8 +1,15 @@
  #ifndef MODULE_NEWCAMD_DES_H_
  #define MODULE_NEWCAMD_DES_H_
@@ -12174,9 +12183,9 @@ diff -Naurp oscam-da389ed/module-newcamd-des.h oscam-da389ed-patch/module-newcam
 +	void nc_des(unsigned char key[], unsigned char mode, unsigned char data[]);
 +
  #endif
-diff -Naurp oscam-da389ed/module-stat.c oscam-da389ed-patch/module-stat.c
---- oscam-da389ed/module-stat.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-stat.c	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-stat.c oscam-f783daf-patch/module-stat.c
+--- oscam-f783daf/module-stat.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-stat.c	2018-03-31 10:20:23.263984469 +0300
 @@ -903,7 +903,7 @@ void check_lb_auto_betatunnel_mode(ECM_R
  
  uint16_t get_rdr_caid(struct s_reader *rdr)
@@ -12195,9 +12204,9 @@ diff -Naurp oscam-da389ed/module-stat.c oscam-da389ed-patch/module-stat.c
  			{
  				prv = ea;
  				continue; // proxy can convert or reject
-diff -Naurp oscam-da389ed/module-webif.c oscam-da389ed-patch/module-webif.c
---- oscam-da389ed/module-webif.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-webif.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/module-webif.c oscam-f783daf-patch/module-webif.c
+--- oscam-f783daf/module-webif.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-webif.c	2018-03-31 10:20:23.263984469 +0300
 @@ -101,6 +101,7 @@ static bool use_srvid2 = false;
  #define MNU_CFG_LCD			14
  #define MNU_CFG_MONITOR		15
@@ -12403,9 +12412,9 @@ diff -Naurp oscam-da389ed/module-webif.c oscam-da389ed-patch/module-webif.c
  		{
  			cs_log("error: too much data received from %s", cs_inet_ntoa(in));
  			NULLFREE(*result);
-diff -Naurp oscam-da389ed/module-webif-tpl.c oscam-da389ed-patch/module-webif-tpl.c
---- oscam-da389ed/module-webif-tpl.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/module-webif-tpl.c	2018-03-20 09:46:21.844448748 +0200
+diff -Naurp oscam-f783daf/module-webif-tpl.c oscam-f783daf-patch/module-webif-tpl.c
+--- oscam-f783daf/module-webif-tpl.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/module-webif-tpl.c	2018-03-31 10:20:23.263984469 +0300
 @@ -457,6 +457,7 @@ char *tpl_getUnparsedTpl(const char *nam
  											check_conf(WITH_SSL, ptr2);
  											check_conf(WITH_STAPI, ptr2);
@@ -12414,9 +12423,9 @@ diff -Naurp oscam-da389ed/module-webif-tpl.c oscam-da389ed-patch/module-webif-tp
  										} // for
  										if(ok == 0)
  										{
-diff -Naurp oscam-da389ed/oscam-aes.c oscam-da389ed-patch/oscam-aes.c
---- oscam-da389ed/oscam-aes.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-aes.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-aes.c oscam-f783daf-patch/oscam-aes.c
+--- oscam-f783daf/oscam-aes.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-aes.c	2018-03-31 10:20:23.263984469 +0300
 @@ -37,6 +37,16 @@ void aes_encrypt_idx(struct aes_keys *ae
  	}
  }
@@ -12434,9 +12443,9 @@ diff -Naurp oscam-da389ed/oscam-aes.c oscam-da389ed-patch/oscam-aes.c
  /* Creates an AES_ENTRY and adds it to the given linked list. */
  void add_aes_entry(AES_ENTRY **list, uint16_t caid, uint32_t ident, int32_t keyid, uchar *aesKey)
  {
-diff -Naurp oscam-da389ed/oscam-aes.h oscam-da389ed-patch/oscam-aes.h
---- oscam-da389ed/oscam-aes.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-aes.h	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-aes.h oscam-f783daf-patch/oscam-aes.h
+--- oscam-f783daf/oscam-aes.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-aes.h	2018-03-31 10:20:23.267984386 +0300
 @@ -5,6 +5,8 @@ void aes_set_key(struct aes_keys *aes, c
  bool aes_set_key_alloc(struct aes_keys **aes, char *key);
  void aes_decrypt(struct aes_keys *aes, uchar *buf, int32_t n);
@@ -12446,9 +12455,9 @@ diff -Naurp oscam-da389ed/oscam-aes.h oscam-da389ed-patch/oscam-aes.h
  
  void add_aes_entry(AES_ENTRY **list, uint16_t caid, uint32_t ident, int32_t keyid, uchar *aesKey);
  void parse_aes_entry(AES_ENTRY **list, char *label, char *value);
-diff -Naurp oscam-da389ed/oscam.c oscam-da389ed-patch/oscam.c
---- oscam-da389ed/oscam.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam.c	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/oscam.c oscam-f783daf-patch/oscam.c
+--- oscam-f783daf/oscam.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam.c	2018-03-31 10:20:23.267984386 +0300
 @@ -41,6 +41,11 @@
  #include "reader-common.h"
  #include "module-gbox.h"
@@ -12499,9 +12508,9 @@ diff -Naurp oscam-da389ed/oscam.c oscam-da389ed-patch/oscam.c
  	webif_close();
  	azbox_close();
  	coolapi_close_all();
-diff -Naurp oscam-da389ed/oscam-chk.c oscam-da389ed-patch/oscam-chk.c
---- oscam-da389ed/oscam-chk.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-chk.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-chk.c oscam-f783daf-patch/oscam-chk.c
+--- oscam-f783daf/oscam-chk.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-chk.c	2018-03-31 10:20:23.267984386 +0300
 @@ -758,7 +758,7 @@ int32_t matching_reader(ECM_REQUEST *er,
  		return 0;
  	}
@@ -12538,9 +12547,9 @@ diff -Naurp oscam-da389ed/oscam-chk.c oscam-da389ed-patch/oscam-chk.c
  	{
  		return 1; //reader caid is not real caid
  	}
-diff -Naurp oscam-da389ed/oscam-config-global.c oscam-da389ed-patch/oscam-config-global.c
---- oscam-da389ed/oscam-config-global.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-config-global.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-config-global.c oscam-f783daf-patch/oscam-config-global.c
+--- oscam-f783daf/oscam-config-global.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-config-global.c	2018-03-31 10:20:23.267984386 +0300
 @@ -854,6 +854,30 @@ static const struct config_list scam_opt
  #else
  static const struct config_list scam_opts[] = { DEF_LAST_OPT };
@@ -12588,9 +12597,9 @@ diff -Naurp oscam-da389ed/oscam-config-global.c oscam-da389ed-patch/oscam-config
  	{ "dvbapi",	dvbapi_opts },
  	{ "monitor",	monitor_opts },
  	{ "webif",	webif_opts },
-diff -Naurp oscam-da389ed/oscam-config.h oscam-da389ed-patch/oscam-config.h
---- oscam-da389ed/oscam-config.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-config.h	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-config.h oscam-f783daf-patch/oscam-config.h
+--- oscam-f783daf/oscam-config.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-config.h	2018-03-31 10:20:23.267984386 +0300
 @@ -22,6 +22,7 @@ void    free_reader(struct s_reader *rdr
  int32_t free_readerdb(void);
  int32_t write_server(void);
@@ -12609,9 +12618,9 @@ diff -Naurp oscam-da389ed/oscam-config.h oscam-da389ed-patch/oscam-config.h
  };
  
  void ftab_fn(const char *token, char *value, void *setting, long ftab_type, FILE *f);
-diff -Naurp oscam-da389ed/oscam-config-reader.c oscam-da389ed-patch/oscam-config-reader.c
---- oscam-da389ed/oscam-config-reader.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-config-reader.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-config-reader.c oscam-f783daf-patch/oscam-config-reader.c
+--- oscam-f783daf/oscam-config-reader.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-config-reader.c	2018-03-31 10:20:23.267984386 +0300
 @@ -109,6 +109,7 @@ static void protocol_fn(const char *toke
  			{ "newcamd525", R_NEWCAMD },
  			{ "newcamd524", R_NEWCAMD },
@@ -12654,9 +12663,9 @@ diff -Naurp oscam-da389ed/oscam-config-reader.c oscam-da389ed-patch/oscam-config
  	DEF_OPT_INT8("deprecated"           , OFS(deprecated),              0),
  	DEF_OPT_INT8("audisabled"           , OFS(audisabled),              0),
  	DEF_OPT_FUNC("auprovid"             , 0,                            auprovid_fn),
-diff -Naurp oscam-da389ed/oscam-ecm.c oscam-da389ed-patch/oscam-ecm.c
---- oscam-da389ed/oscam-ecm.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-ecm.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-ecm.c oscam-f783daf-patch/oscam-ecm.c
+--- oscam-f783daf/oscam-ecm.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-ecm.c	2018-03-31 10:20:23.267984386 +0300
 @@ -1585,7 +1585,7 @@ int32_t write_ecm_answer(struct s_reader
  
  	if(reader && cw && rc < E_NOTFOUND)
@@ -12666,9 +12675,9 @@ diff -Naurp oscam-da389ed/oscam-ecm.c oscam-da389ed-patch/oscam-ecm.c
  		{
  			uint8_t selectedForIgnChecksum = chk_if_ignore_checksum(er, cfg.disablecrccws, &cfg.disablecrccws_only_for)
  					+ chk_if_ignore_checksum(er, reader->disablecrccws, &reader->disablecrccws_only_for);
-diff -Naurp oscam-da389ed/oscam-emm.c oscam-da389ed-patch/oscam-emm.c
---- oscam-da389ed/oscam-emm.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-emm.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-emm.c oscam-f783daf-patch/oscam-emm.c
+--- oscam-f783daf/oscam-emm.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-emm.c	2018-03-31 10:20:23.267984386 +0300
 @@ -50,7 +50,14 @@ static int8_t do_simple_emm_filter(struc
  	unsigned int j, filter_count = 0;
  
@@ -12710,9 +12719,9 @@ diff -Naurp oscam-da389ed/oscam-emm.c oscam-da389ed-patch/oscam-emm.c
  	if(prid == provid)
  	{
  		rdr_log_dbg(reader, D_EMM, "reader auprovid = %06X matching with emm provid = %06X -> SEND!", prid, provid);
-diff -Naurp oscam-da389ed/oscam-string.c oscam-da389ed-patch/oscam-string.c
---- oscam-da389ed/oscam-string.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-string.c	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-string.c oscam-f783daf-patch/oscam-string.c
+--- oscam-f783daf/oscam-string.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-string.c	2018-03-31 10:20:23.267984386 +0300
 @@ -510,6 +510,62 @@ uint32_t crc32(uint32_t crc, const uint8
  	return crc ^ 0xffffffffL;
  }
@@ -12776,9 +12785,9 @@ diff -Naurp oscam-da389ed/oscam-string.c oscam-da389ed-patch/oscam-string.c
  static uint16_t ccitt_crc_table [256] =
  {
  	0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5,
-diff -Naurp oscam-da389ed/oscam-string.h oscam-da389ed-patch/oscam-string.h
---- oscam-da389ed/oscam-string.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/oscam-string.h	2018-03-20 09:46:21.848448720 +0200
+diff -Naurp oscam-f783daf/oscam-string.h oscam-f783daf-patch/oscam-string.h
+--- oscam-f783daf/oscam-string.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/oscam-string.h	2018-03-31 10:20:23.267984386 +0300
 @@ -37,6 +37,7 @@ void get_random_bytes_init(void);
  void get_random_bytes(uint8_t *dst, uint32_t dst_len);
  
@@ -12787,9 +12796,9 @@ diff -Naurp oscam-da389ed/oscam-string.h oscam-da389ed-patch/oscam-string.h
  uint16_t ccitt_crc(uint8_t *data, size_t length, uint16_t seed, uint16_t final);
  uint32_t jhash(const char *key, size_t len);
  
-diff -Naurp oscam-da389ed/reader-common.c oscam-da389ed-patch/reader-common.c
---- oscam-da389ed/reader-common.c	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/reader-common.c	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/reader-common.c oscam-f783daf-patch/reader-common.c
+--- oscam-f783daf/reader-common.c	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/reader-common.c	2018-03-31 10:20:23.271984303 +0300
 @@ -15,6 +15,7 @@
  #include "reader-common.h"
  //#include "csctapi/atr.h"
@@ -12818,9 +12827,9 @@ diff -Naurp oscam-da389ed/reader-common.c oscam-da389ed-patch/reader-common.c
  	for(i = 0; cardsystems[i]; i++)
  	{
  		NULLFREE(reader->csystem_data);
-diff -Naurp oscam-da389ed/readers.h oscam-da389ed-patch/readers.h
---- oscam-da389ed/readers.h	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/readers.h	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/readers.h oscam-f783daf-patch/readers.h
+--- oscam-f783daf/readers.h	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/readers.h	2018-03-31 10:20:23.271984303 +0300
 @@ -16,5 +16,6 @@ extern const struct s_cardsystem reader_
  extern const struct s_cardsystem reader_bulcrypt;
  extern const struct s_cardsystem reader_griffin;
@@ -12828,9 +12837,9 @@ diff -Naurp oscam-da389ed/readers.h oscam-da389ed-patch/readers.h
 +extern const struct s_cardsystem reader_emu;
  
  #endif
-diff -Naurp oscam-da389ed/webif/config/dvbapi.html oscam-da389ed-patch/webif/config/dvbapi.html
---- oscam-da389ed/webif/config/dvbapi.html	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/webif/config/dvbapi.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/config/dvbapi.html oscam-f783daf-patch/webif/config/dvbapi.html
+--- oscam-f783daf/webif/config/dvbapi.html	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/webif/config/dvbapi.html	2018-03-31 10:20:23.271984303 +0300
 @@ -53,7 +53,7 @@
  			</TD>
  		</TR>
@@ -12863,9 +12872,9 @@ diff -Naurp oscam-da389ed/webif/config/dvbapi.html oscam-da389ed-patch/webif/con
 +			</TD>
 +		</TR>
 \ No newline at end of file
-diff -Naurp oscam-da389ed/webif/config/menu.html oscam-da389ed-patch/webif/config/menu.html
---- oscam-da389ed/webif/config/menu.html	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/webif/config/menu.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/config/menu.html oscam-f783daf-patch/webif/config/menu.html
+--- oscam-f783daf/webif/config/menu.html	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/webif/config/menu.html	2018-03-31 10:20:23.271984303 +0300
 @@ -16,6 +16,7 @@
  ##TPLCONFIGMENUDVBAPI##		<!-- CMENUACTIVE13 -->
  ##TPLCONFIGMENULCD##		<!-- CMENUACTIVE14 -->
@@ -12874,14 +12883,14 @@ diff -Naurp oscam-da389ed/webif/config/menu.html oscam-da389ed-patch/webif/confi
  			<LI CLASS="##CMENUACTIVE16##"><A HREF="config.html?part=webif">WebIf</A></LI>
  	</UL>
  </DIV>
-diff -Naurp oscam-da389ed/webif/config/menu_streamrelay.html oscam-da389ed-patch/webif/config/menu_streamrelay.html
---- oscam-da389ed/webif/config/menu_streamrelay.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/webif/config/menu_streamrelay.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/config/menu_streamrelay.html oscam-f783daf-patch/webif/config/menu_streamrelay.html
+--- oscam-f783daf/webif/config/menu_streamrelay.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/webif/config/menu_streamrelay.html	2018-03-31 10:20:23.271984303 +0300
 @@ -0,0 +1 @@
 +			<LI CLASS="##CMENUACTIVE17##"><A HREF="config.html?part=streamrelay">Stream Relay</A></LI>
-diff -Naurp oscam-da389ed/webif/config/streamrelay.html oscam-da389ed-patch/webif/config/streamrelay.html
---- oscam-da389ed/webif/config/streamrelay.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/webif/config/streamrelay.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/config/streamrelay.html oscam-f783daf-patch/webif/config/streamrelay.html
+--- oscam-f783daf/webif/config/streamrelay.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/webif/config/streamrelay.html	2018-03-31 10:20:23.271984303 +0300
 @@ -0,0 +1,25 @@
 +		<input name="part" type="hidden" value="streamrelay">
 +		<TABLE CLASS="config">
@@ -12909,9 +12918,9 @@ diff -Naurp oscam-da389ed/webif/config/streamrelay.html oscam-da389ed-patch/webi
 +				</TD>
 +			</TR>
 \ No newline at end of file
-diff -Naurp oscam-da389ed/webif/files/menu.html oscam-da389ed-patch/webif/files/menu.html
---- oscam-da389ed/webif/files/menu.html	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/webif/files/menu.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/files/menu.html oscam-f783daf-patch/webif/files/menu.html
+--- oscam-f783daf/webif/files/menu.html	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/webif/files/menu.html	2018-03-31 10:20:23.271984303 +0300
 @@ -10,7 +10,7 @@
  		<LI CLASS="##CMENUACTIVE7##"><A HREF="files.html?file=logfile">logfile</A></LI>
  		<LI CLASS="##CMENUACTIVE8##"><A HREF="files.html?file=userfile">userfile</A></LI>
@@ -12929,14 +12938,14 @@ diff -Naurp oscam-da389ed/webif/files/menu.html oscam-da389ed-patch/webif/files/
  			</UL>
  		</LI>
  	</UL>
-diff -Naurp oscam-da389ed/webif/files/menu_softcamkey.html oscam-da389ed-patch/webif/files/menu_softcamkey.html
---- oscam-da389ed/webif/files/menu_softcamkey.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/webif/files/menu_softcamkey.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/files/menu_softcamkey.html oscam-f783daf-patch/webif/files/menu_softcamkey.html
+--- oscam-f783daf/webif/files/menu_softcamkey.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/webif/files/menu_softcamkey.html	2018-03-31 10:20:23.271984303 +0300
 @@ -0,0 +1 @@
 +			<LI CLASS="##CMENUACTIVE30##"><A HREF="files.html?file=SoftCam.Key">SoftCam.Key</A></LI>
-diff -Naurp oscam-da389ed/webif/pages_index.txt oscam-da389ed-patch/webif/pages_index.txt
---- oscam-da389ed/webif/pages_index.txt	2018-03-20 09:45:03.000000000 +0200
-+++ oscam-da389ed-patch/webif/pages_index.txt	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/pages_index.txt oscam-f783daf-patch/webif/pages_index.txt
+--- oscam-f783daf/webif/pages_index.txt	2018-03-02 13:40:23.000000000 +0200
++++ oscam-f783daf-patch/webif/pages_index.txt	2018-03-31 10:20:23.271984303 +0300
 @@ -80,11 +80,13 @@ CONFIGMENUMONITOR             config/men
  CONFIGMENUNEWCAMD             config/menu_newcamd.html                                    MODULE_NEWCAMD
  CONFIGMENURADEGAST            config/menu_radegast.html                                   MODULE_RADEGAST
@@ -12967,9 +12976,9 @@ diff -Naurp oscam-da389ed/webif/pages_index.txt oscam-da389ed-patch/webif/pages_
  READERCONFIGCS378XBIT         readerconfig/readerconfig_cs378xbit.html                    MODULE_CAMD35_TCP
  READERCONFIGGBOXBIT           readerconfig/readerconfig_gboxbit.html                      MODULE_GBOX
  READERCONFIGGHTTPBIT          readerconfig/readerconfig_ghttpbit.html                     MODULE_GHTTP
-diff -Naurp oscam-da389ed/webif/readerconfig/readerconfig_emubit.html oscam-da389ed-patch/webif/readerconfig/readerconfig_emubit.html
---- oscam-da389ed/webif/readerconfig/readerconfig_emubit.html	1970-01-01 03:00:00.000000000 +0300
-+++ oscam-da389ed-patch/webif/readerconfig/readerconfig_emubit.html	2018-03-20 09:46:21.852448692 +0200
+diff -Naurp oscam-f783daf/webif/readerconfig/readerconfig_emubit.html oscam-f783daf-patch/webif/readerconfig/readerconfig_emubit.html
+--- oscam-f783daf/webif/readerconfig/readerconfig_emubit.html	1970-01-01 03:00:00.000000000 +0300
++++ oscam-f783daf-patch/webif/readerconfig/readerconfig_emubit.html	2018-03-31 10:20:23.271984303 +0300
 @@ -0,0 +1,6 @@
 +			<TR><TD><A>AU providers:</A></TD><TD><textarea name="emu_auproviders" rows="3" class="bt">##EMUAUPROVIDERS##</textarea></TD></TR>
 +			<TR><TD><A>[BISS] Enable date-coded keys:</A></TD><TD><input name="emu_datecodedenabled" type="hidden" value="0"><input name="emu_datecodedenabled" type="checkbox" value="1" ##EMUDATECODEDENABLED##><label></label></TD></TR>
