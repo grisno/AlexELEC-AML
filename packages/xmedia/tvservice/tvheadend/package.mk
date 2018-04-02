@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="25dfdb6"
+PKG_VERSION="c76c7e0"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -18,11 +18,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
-unpack() {
+#colors
   RED="\033[0;31m"
   YELLOW="\033[1;33m"
   ENDCOLOR="\033[0m"
 
+unpack() {
   git clone -b 'master' https://github.com/tvheadend/tvheadend.git $PKG_BUILD
   cd $PKG_BUILD
   git reset --hard $PKG_VERSION
