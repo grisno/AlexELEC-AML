@@ -1,11 +1,10 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vdr-plugin-dvbapi"
-PKG_VERSION="8395491"
-PKG_REV="1"
+PKG_VERSION="7d51cc4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/manio/vdr-plugin-dvbapi"
@@ -28,9 +27,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  VDR_DIR=$(get_build_dir vdr)
-  make VDRDIR=$VDR_DIR \
-       LIBDVBCSA=1 \
+  make LIBDVBCSA=1 \
+       GITTAG=$PKG_VERSION \
        DESTDIR=$INSTALL \
        install
 }
