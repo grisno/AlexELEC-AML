@@ -1,0 +1,12 @@
+diff -Naurp vdr-2.3.8/thread.c vdr-2.3.8-patch/thread.c
+--- vdr-2.3.8/thread.c	2017-06-25 15:08:16.000000000 +0300
++++ vdr-2.3.8-patch/thread.c	2018-03-12 16:48:03.000000000 +0200
+@@ -694,7 +694,7 @@ void cStateLockLog::Check(const char *Na
+         if (++logIndex >= SLL_SIZE)
+            logIndex = 0;
+         if (DoDump) {
+-           Dump(Name, ThreadId);
++           //Dump(Name, ThreadId);
+            dumped = true;
+            }
+         }
