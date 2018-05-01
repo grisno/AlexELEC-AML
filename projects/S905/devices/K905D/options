@@ -1,0 +1,2 @@
+# Kernel extra targets to build
+  KERNEL_UBOOT_EXTRA_TARGET="gxl_p231_1g_dvb.dtb gxl_p231_2g_dvb.dtb"
