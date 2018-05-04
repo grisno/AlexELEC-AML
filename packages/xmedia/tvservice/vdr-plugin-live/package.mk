@@ -1,15 +1,14 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vdr-plugin-live"
-PKG_VERSION="8343f81"
-PKG_REV="1"
+PKG_VERSION="e582514"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="http://live.vdr-developer.org/en/index.php"
-PKG_URL="https://github.com/jasmin-j/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="https://github.com/vdr-projects/vdr-plugin-live"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain vdr tntnet pcre:host pcre"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr-live: the LIVE Interactive VDR Environment/"
@@ -18,19 +17,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
-pre_make_target() {
-  # dont build parallel
-  MAKEFLAGS=-j1
-}
-
 make_target() {
-  : not
+  : # none
 }
 
 makeinstall_target() {
-  VDR_DIR=$(get_build_dir vdr)
-  make VDRDIR=$VDR_DIR \
-       LIBDIR="/usr/lib/vdr" \
+  make LIBDIR=/usr/lib/vdr \
        DESTDIR="$INSTALL" \
        install
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 . /etc/profile
@@ -35,9 +35,9 @@ load_firmware () {
     done
     killall -9 vdr > /dev/null 2>&1
     logger -t vdr "Load DVB firmware: $HD_STAR_ID completed."
-    touch $LOCK_DIR/dvb-fw.load
     usleep 1000000
   fi
+  touch $LOCK_DIR/dvb-fw.load
 }
 
 [ ! -f "$LOCK_DIR/dvb-fw.load" ] && load_firmware

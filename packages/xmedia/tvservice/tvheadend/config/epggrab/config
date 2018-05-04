@@ -8,17 +8,6 @@
 	"ota_cron": "# Default config (02:04 and 14:04 everyday)\n4 2 * * *\n4 14 * * *",
 	"ota_timeout": 600,
 	"modules": {
-		"/storage/.config/tvheadend/bin/tv_grab_sample": {
-			"class": "epggrab_mod_int_xmltv",
-			"dn_chnum": 0,
-			"scrape_extra": false,
-			"scrape_onto_desc": false,
-			"use_category_not_genre": false,
-			"name": "XMLTV: sample grabber",
-			"type": "Internal",
-			"enabled": false,
-			"priority": 3
-		},
 		"/storage/.config/tvheadend/bin/tv_grab_ttv": {
 			"class": "epggrab_mod_int_xmltv",
 			"dn_chnum": 0,
@@ -26,6 +15,17 @@
 			"scrape_onto_desc": false,
 			"use_category_not_genre": false,
 			"name": "XMLTV: torrent-tv.ru grabber",
+			"type": "Internal",
+			"enabled": true,
+			"priority": 3
+		},
+		"/storage/.config/tvheadend/bin/tv_grab_sample": {
+			"class": "epggrab_mod_int_xmltv",
+			"dn_chnum": 0,
+			"scrape_extra": false,
+			"scrape_onto_desc": false,
+			"use_category_not_genre": false,
+			"name": "XMLTV: sample grabber",
 			"type": "Internal",
 			"enabled": false,
 			"priority": 3
@@ -51,13 +51,6 @@
 			"type": "External",
 			"enabled": false,
 			"priority": 3
-		},
-		"pyepg": {
-			"class": "epggrab_mod_ext_pyepg",
-			"name": "PyEPG",
-			"type": "External",
-			"enabled": false,
-			"priority": 4
 		},
 		"opentv-ausat": {
 			"class": "epggrab_mod_ota",
@@ -94,9 +87,22 @@
 			"enabled": false,
 			"priority": 1
 		},
+		"eit": {
+			"class": "epggrab_mod_eit",
+			"short_target": 0,
+			"running_immediate": false,
+			"scrape_episode": false,
+			"scrape_title": false,
+			"scrape_subtitle": false,
+			"scrape_summary": false,
+			"name": "EIT: DVB Grabber",
+			"type": "Over-the-air",
+			"enabled": true,
+			"priority": 1
+		},
 		"uk_cable_virgin": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
@@ -109,7 +115,7 @@
 		},
 		"Bulsatcom_39E": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
@@ -122,7 +128,7 @@
 		},
 		"viasat_baltic": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
@@ -133,22 +139,35 @@
 			"enabled": false,
 			"priority": 5
 		},
-		"nz_freeview": {
+		"nz_freeview1": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
 			"scrape_subtitle": false,
 			"scrape_summary": false,
-			"name": "New Zealand: Freeview",
+			"name": "New Zealand: Freeview Base",
+			"type": "Over-the-air",
+			"enabled": false,
+			"priority": 1
+		},
+		"nz_freeview2": {
+			"class": "epggrab_mod_eit",
+			"short_target": 0,
+			"running_immediate": false,
+			"scrape_episode": false,
+			"scrape_title": false,
+			"scrape_subtitle": false,
+			"scrape_summary": false,
+			"name": "New Zealand: Freeview Local",
 			"type": "Over-the-air",
 			"enabled": false,
 			"priority": 5
 		},
 		"uk_freeview": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
@@ -161,7 +180,7 @@
 		},
 		"uk_freesat": {
 			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
+			"short_target": 0,
 			"running_immediate": false,
 			"scrape_episode": false,
 			"scrape_title": false,
@@ -171,19 +190,6 @@
 			"type": "Over-the-air",
 			"enabled": false,
 			"priority": 5
-		},
-		"eit": {
-			"class": "epggrab_mod_eit",
-			"subtitle_summary": false,
-			"running_immediate": false,
-			"scrape_episode": false,
-			"scrape_title": false,
-			"scrape_subtitle": false,
-			"scrape_summary": false,
-			"name": "EIT: DVB Grabber",
-			"type": "Over-the-air",
-			"enabled": true,
-			"priority": 1
 		}
 	}
 }

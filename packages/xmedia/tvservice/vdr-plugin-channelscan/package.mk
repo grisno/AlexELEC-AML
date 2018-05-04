@@ -1,15 +1,16 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vdr-plugin-channelscan"
-PKG_VERSION="7ef0c46"
+PKG_VERSION="cb39428"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://bitbucket.org/ua0lnj/channelscan"
-PKG_URL="$ALEXELEC_SRC/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="$PKG_SITE/get/$PKG_VERSION.tar.gz"
+PKG_SOURCE_DIR="ua0lnj-channelscan-*"
 PKG_DEPENDS_TARGET="toolchain vdr"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="VDR -- channel scan plugin"
@@ -23,9 +24,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  VDR_DIR=$(get_build_dir vdr)
-  make VDRDIR=$VDR_DIR \
-       DVBCHANPATCH=1 \
+  make DVBCHANPATCH=1 \
+       LDFLAGS="$LDFLAGS -lbz2 -lz" \
 	   DESTDIR=$INSTALL \
        install
 }

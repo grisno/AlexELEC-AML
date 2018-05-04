@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="tvheadend"
-PKG_VERSION="6311cf7"
+PKG_VERSION="595fd17"
 PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -18,11 +18,12 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
-unpack() {
+#colors
   RED="\033[0;31m"
   YELLOW="\033[1;33m"
   ENDCOLOR="\033[0m"
 
+unpack() {
   git clone -b 'master' https://github.com/tvheadend/tvheadend.git $PKG_BUILD
   cd $PKG_BUILD
   git reset --hard $PKG_VERSION
@@ -97,6 +98,9 @@ post_makeinstall_target() {
     rm -f $INSTALL/usr/config/tvheadend/dvb-scan/dvb-s/Amos-*
     rm -f $INSTALL/usr/config/tvheadend/dvb-scan/dvb-s/Sirius-*
     cp -a $PKG_DIR/config/* $INSTALL/usr/config/tvheadend
+  #TTV IPTV config
+  mkdir -p $INSTALL/usr/share/tvheadend
+    cp -a $PKG_DIR/ttv/iptv $INSTALL/usr/share/tvheadend
 }
 
 post_install() {

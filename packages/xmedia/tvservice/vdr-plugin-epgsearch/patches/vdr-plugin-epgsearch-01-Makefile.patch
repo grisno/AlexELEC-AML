@@ -1,0 +1,24 @@
+diff -Naurp vdr-plugin-epgsearch-c7c02e2/Makefile vdr-plugin-epgsearch-c7c02e2-patch/Makefile
+--- vdr-plugin-epgsearch-c7c02e2/Makefile	2017-10-15 12:22:55.000000000 +0300
++++ vdr-plugin-epgsearch-c7c02e2-patch/Makefile	2018-02-23 15:54:04.000000000 +0200
+@@ -135,9 +135,8 @@ endif
+ OBJS = afuzzy.o blacklist.o changrp.o confdloader.o conflictcheck.o conflictcheck_thread.o distance.o $(PLUGIN).o epgsearchcats.o epgsearchcfg.o epgsearchext.o epgsearchsetup.o  epgsearchsvdrp.o epgsearchtools.o mail.o md5.o menu_announcelist.o menu_blacklistedit.o menu_blacklists.o menu_commands.o menu_conflictcheck.o menu_deftimercheckmethod.o menu_dirselect.o menu_event.o menu_favorites.o menu_main.o menu_myedittimer.o menu_quicksearch.o menu_recsdone.o menu_search.o menu_searchactions.o menu_searchedit.o menu_searchresults.o menu_searchtemplate.o menu_switchtimers.o menu_templateedit.o menu_timersdone.o menu_whatson.o noannounce.o pending_notifications.o rcfile.o  recdone.o recdone_thread.o recstatus.o searchtimer_thread.o services.o switchtimer.o switchtimer_thread.o templatefile.o timer_thread.o timerdone.o timerstatus.o uservars.o varparser.o
+ 
+ ifeq ($(REGEXLIB), pcre)
+-LIBS += $(shell pcre-config --libs-posix)
+-#LIBS += -L/usr/lib -lpcreposix -lpcre
+-INCLUDE += $(shell pcre-config --cflags)
++LIBS += $(shell pkg-config --libs libpcreposix libpcre)
++INCLUDES += $(shell pkg-config --cflags libpcre)
+ DEFINES += -DHAVE_PCREPOSIX
+ else ifeq ($(REGEXLIB), tre)
+ LIBS += -L$(shell pkg-config --variable=libdir tre) $(shell pkg-config --libs tre)
+@@ -325,7 +324,7 @@ install-bin: createcats
+ 	mkdir -p $(DESTDIR)$(BINDIR)
+ 	cp createcats $(DESTDIR)$(BINDIR)
+ 
+-install: install-lib install-i18n install-conf install-doc install-bin
++install: install-lib install-i18n install-conf install-bin
+ 
+ install-lib: install-$(PLUGIN) install-$(PLUGIN2) install-$(PLUGIN3) install-$(PLUGIN4)
+ 

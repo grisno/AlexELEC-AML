@@ -23,14 +23,16 @@ pre_configure_target() {
   export LDFLAGS="$LDFLAGS -fPIC"
 }
 
+pre_make_target(){
+  [ -f $ROOT/private/$PKG_NAME/ttv-logo.src ] && cp $ROOT/private/$PKG_NAME/ttv-logo.src $ROOT/$PKG_BUILD
+}
+
 make_target() {
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f m3u_info.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f scan-m3u.src
-  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f scan-ttv.src
-  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f live-ttv-get.src
   CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-direct-get.src
-  CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-logo.src
+  [ -f ttv-logo.src ] && CC=$CC CFLAGS=$CFLAGS ./shc -v -r -B -f ttv-logo.src
 }
 
 makeinstall_target() {
@@ -38,11 +40,9 @@ makeinstall_target() {
     cp m3u_kill $INSTALL/usr/bin/m3u_kill
     cp m3u_info.src.x $INSTALL/usr/bin/m3u_info
     cp scan-m3u.src.x $INSTALL/usr/bin/scan-m3u
-    cp scan-ttv.src.x $INSTALL/usr/bin/scan-ttv
-    cp live-ttv.src.x $INSTALL/usr/bin/live-ttv
     cp live-ttv-get.src.x $INSTALL/usr/bin/live-ttv-get
     cp ttv-direct-get.src.x $INSTALL/usr/bin/ttv-direct-get
-    cp ttv-logo.src.x $INSTALL/usr/bin/ttv-logo
+    [ -e ttv-logo.src.x ] && cp ttv-logo.src.x $INSTALL/usr/bin/ttv-logo
   mkdir -p $INSTALL/usr/config/acestream
     cp $PKG_DIR/config/* $INSTALL/usr/config/acestream
 }

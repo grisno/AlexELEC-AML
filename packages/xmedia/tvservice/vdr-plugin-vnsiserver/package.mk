@@ -4,23 +4,25 @@
 ################################################################################
 
 PKG_NAME="vdr-plugin-vnsiserver"
-PKG_VERSION="1fd5aee"
-PKG_REV="1"
+PKG_VERSION="0c84792"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/FernetMenta/vdr-plugin-vnsiserver"
-PKG_URL="https://github.com/FernetMenta/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain vdr"
 PKG_SECTION="xmedia/tvservice"
-PKG_SHORTDESC="TV"
-PKG_LONGDESC="TV"
+PKG_SHORTDESC="VDR plugin to handle KODI clients"
+PKG_LONGDESC="The vdr-plugin-vnsiserver is able to handle serveral KODI clients connecting via the VNSI addon."
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {
-  VDR_DIR=$(get_build_dir vdr)
-  make VDRDIR=$VDR_DIR
+  : none
+}
+
+makeinstall_target() {
+  make DESTDIR=$INSTALL install
 }
 
 post_makeinstall_target() {

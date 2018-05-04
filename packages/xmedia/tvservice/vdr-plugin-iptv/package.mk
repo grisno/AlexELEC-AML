@@ -1,15 +1,15 @@
 ################################################################################
 #      This file is part of Alex@ELEC - http://www.alexelec.in.ua
-#      Copyright (C) 2011-2017 Alexandr Zuyev (alex@alexelec.in.ua)
+#      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
 PKG_NAME="vdr-plugin-iptv"
-PKG_VERSION="0fe1cb7"
-PKG_REV="1"
+PKG_VERSION="5ae793f"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.saunalahti.fi/~rahrenbe/vdr/iptv/"
-PKG_URL="https://github.com/rofafor/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_SITE="https://github.com/rofafor/vdr-plugin-iptv"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain vdr curl"
 PKG_SECTION="xmedia/tvservice"
 PKG_SHORTDESC="vdr-iptv: an IPTV plugin for the Video Disk Recorder (VDR)"
@@ -19,8 +19,13 @@ PKG_AUTORECONF="no"
 PKG_LOCALE_INSTALL="yes"
 
 make_target() {
-  VDR_DIR=$(get_build_dir vdr)
-  make VDRDIR=$VDR_DIR
+  : # none
+}
+
+makeinstall_target() {
+  make GITTAG=$PKG_VERSION \
+       DESTDIR=$INSTALL \
+       install
 }
 
 post_makeinstall_target() {
