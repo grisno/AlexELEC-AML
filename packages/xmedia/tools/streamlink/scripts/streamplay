@@ -4,4 +4,4 @@
 #      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-/usr/bin/streamlink --hds-segment-threads 3 "$1" best -O | /usr/bin/ffmpeg -loglevel quiet -i pipe:0 -c copy -map 0 -r 25 -f mpegts pipe:1
+/usr/bin/streamlink --stdout --hds-segment-threads 3 --hls-segment-threads 3 --ringbuffer-size 3M "$1" best | /usr/bin/ffmpeg -loglevel quiet -i pipe:0 -c copy -map 0 -r 25 -f mpegts pipe:1
