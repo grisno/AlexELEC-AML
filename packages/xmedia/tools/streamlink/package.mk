@@ -39,4 +39,6 @@ post_makeinstall_target() {
     cp -P $PKG_DIR/scripts/* $INSTALL/usr/config/streamlink
   mkdir -p $INSTALL/usr/bin
     ln -sf /storage/.config/streamlink/streamplay $INSTALL/usr/bin/streamplay
+    ln -sf /storage/.config/streamlink/vodplay $INSTALL/usr/bin/vodplay
+    ln -sf /storage/.config/streamlink/youtube-dl $INSTALL/usr/bin/youtube-dl
 }
