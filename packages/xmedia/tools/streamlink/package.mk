@@ -4,7 +4,7 @@
 ################################################################################
 
 PKG_NAME="streamlink"
-PKG_VERSION="ce6de2c"
+PKG_VERSION="416c834"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="BSD"
