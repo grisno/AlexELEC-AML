@@ -4,4 +4,4 @@
 #      Copyright (C) 2011-present Alexandr Zuyev (alex@alexelec.in.ua)
 ################################################################################
 
-/usr/bin/youtube-dl -o - "$1" | /usr/bin/ffmpeg -loglevel quiet -i pipe:0 -c copy -map 0 -f mpegts pipe:1
+/usr/bin/youtube-dl -f 'mp4' --rm-cache-dir --buffer-size 2048 -o - "$1" | /usr/bin/ffmpeg -loglevel quiet -i pipe:0 -c copy -map 0 -f mpegts pipe:1
